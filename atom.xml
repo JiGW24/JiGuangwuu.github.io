@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-21T15:08:54.818Z</updated>
+  <updated>2019-03-21T15:16:46.469Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,24 +17,22 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>换电脑或重装系统时的博客配置</title>
-    <link href="http://yoursite.com/2019/01/21/%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%80%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
-    <id>http://yoursite.com/2019/01/21/多态的一道面试题/</id>
-    <published>2019-01-21T05:25:29.000Z</published>
-    <updated>2019-03-21T15:08:54.818Z</updated>
+    <title>关于多态的一道面试题</title>
+    <link href="http://yoursite.com/2019/02/11/%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%80%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://yoursite.com/2019/02/11/多态的一道面试题/</id>
+    <published>2019-02-11T06:55:29.000Z</published>
+    <updated>2019-03-21T15:16:46.469Z</updated>
     
-    <content type="html"><![CDATA[<p>##多态##<br>关于多态的一道面试题</p><p>类A：</p><pre><code>class A {     public String show(D obj){         return (&quot;A and D&quot;);      }       public String show(A obj){                return (&quot;A and A&quot;);     }   }   </code></pre><p>类B：</p><pre><code>class B extends A{      public String show(B obj){         return (&quot;B and B&quot;);      }      public String show(A obj){         return (&quot;B and A&quot;);      }   }  </code></pre><p>类C：</p><pre><code>class C extends B{}</code></pre><p>类D：</p><pre><code>class D extends B{}</code></pre><p>测试类：</p><pre><code>class  DynamicTest{       public static void main(String[] args){   A a1 = new A();     A a2 = new B();     B b = new B();     C c = new C();      D d = new D();     System.out.println(a1.show(b));      System.out.println(a1.show(c));     System.out.println(a1.show(d));     System.out.println(a2.show(b));                                  System.out.println(a2.show(c));                                System.out.println(a2.show(d));           System.out.println(b.show(b));       System.out.println(b.show(c));     System.out.println(b.show(d));         }}</code></pre>]]></content>
+    <content type="html"><![CDATA[<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>类A：</p><pre><code>class A {     public String show(D obj){         return (&quot;A and D&quot;);      }       public String show(A obj){                return (&quot;A and A&quot;);     }   }   </code></pre><p>类B：</p><pre><code>class B extends A{      public String show(B obj){         return (&quot;B and B&quot;);      }      public String show(A obj){         return (&quot;B and A&quot;);      }   }  </code></pre><p>类C：</p><pre><code>class C extends B{}</code></pre><p>类D：</p><pre><code>class D extends B{}</code></pre><p>测试类：</p><pre><code>class  DynamicTest{       public static void main(String[] args){   A a1 = new A();     A a2 = new B();     B b = new B();     C c = new C();      D d = new D();     System.out.println(a1.show(b));      System.out.println(a1.show(c));     System.out.println(a1.show(d));     System.out.println(a2.show(b));                                  System.out.println(a2.show(c));                                System.out.println(a2.show(d));           System.out.println(b.show(b));       System.out.println(b.show(c));     System.out.println(b.show(d));         }}</code></pre>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;##多态##&lt;br&gt;关于多态的一道面试题&lt;/p&gt;
-&lt;p&gt;类A：&lt;/p&gt;
+        &lt;h2 id=&quot;多态&quot;&gt;&lt;a href=&quot;#多态&quot; class=&quot;headerlink&quot; title=&quot;多态&quot;&gt;&lt;/a&gt;多态&lt;/h2&gt;&lt;p&gt;类A：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;class A {  
    public String show(D obj){  
-       return (&amp;quot;A and D&amp;quot;);  
-    }  
+       
       
     
     </summary>
