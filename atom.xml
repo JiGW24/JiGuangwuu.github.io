@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-21T09:23:11.052Z</updated>
+  <updated>2019-03-21T09:41:27.858Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,21 +21,16 @@
     <link href="http://yoursite.com/2019/01/21/%E5%8D%9A%E5%AE%A2%E9%87%8D%E9%85%8D%E7%BD%AE/"/>
     <id>http://yoursite.com/2019/01/21/博客重配置/</id>
     <published>2019-01-21T05:25:29.000Z</published>
-    <updated>2019-03-21T09:23:11.052Z</updated>
+    <updated>2019-03-21T09:41:27.858Z</updated>
     
-    <content type="html"><![CDATA[<p>#前言#<br>首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。</p><p>##准备##</p><ul><li>安装node.js</li><li>安装Git</li><li>备份你的本地博客目录的部分文件夹</li></ul><p><a href="http://jiguangwu.top/2018/01/10/hexo/#more" title="下载点此" target="_blank" rel="noopener">node.js和Git的安装包参考</a></p><p>拷贝文件夹如下</p><blockquote><p>_config.yml</p><p>theme/</p><p>source/</p><p>scaffolds/</p><p>package.json</p><p>.gitignore</p></blockquote><p>##配置你的Git##<br>桌面右键选择bash here,设置用户名称和邮件地址。</p><blockquote><p>1 $ git config –global user.name “username”</p><p>2 $ git config –global user.email “<a href="mailto:username@xxxx.com" target="_blank" rel="noopener">username@xxxx.com</a>“</p></blockquote><p>##配置SSH Key##<br>输入</p><blockquote><p>$ ssh-keygen -t rsa -C “你的邮件地址”</p></blockquote><p>然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh<br>打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.<br>这里名称随便取，在下面粘贴内容保存即可。</p><p>我们回来测试下是否把SSH配置成功了。<br>继续在bash里输入</p><blockquote><p> $ ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a></p></blockquote><p>如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..<br>看到这个意味着已成功！</p><p>##正式工作##<br>接下来时hexo和一些组件的安装，恭喜了很快了。</p><p>#安装hexo#<br>我们打开cmd命令行，输入</p><blockquote><p>npm install -g hexo</p></blockquote><p>这里可能会很慢，所以推荐使用淘宝镜像。</p><blockquote><p>npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a></p></blockquote><p>验证是否安装成功使用：</p><blockquote><p>cnpm -v</p></blockquote><p>安装了淘宝镜像后，都使用cnpm指令：</p><blockquote><p>cnpm install -g hexo   // 安装 hexo</p></blockquote><p>验证Hexo是否安装成功使用：</p><blockquote><p>hexo -v</p></blockquote><p>#安装一些组件#</p><blockquote><p> npm install hexo-deployer-git –save  // 文章部署到 git 的模块（下面为选择安装）</p><p> npm install hexo-generator-feed –save  // 建立 RSS 订阅</p><p> npm install hexo-generator-sitemap –save // 建立站点地图</p></blockquote><p>#部署到Github#<br>输入指令</p><blockquote><p>hexo generate</p><p>hexo deploy</p></blockquote><p>没有报错就OK了。<br>这里讲讲hexo的一些快捷命令</p><blockquote><p>hexo g == hexo generate</p><p>hexo d == hexo deploy</p><p>hexo s == hexo server</p><p>hexo n == hexo new</p></blockquote><p>#测试#<br>尝试部署文章并使用以下指令更新部署</p><blockquote><p>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p></blockquote><p>成功部署，恭喜你！博客重配置成功！</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。</p><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul><li>安装node.js</li><li>安装Git</li><li>备份你的本地博客目录的部分文件夹</li></ul><p><a href="http://jiguangwu.top/2018/01/10/hexo/#more" title="下载点此" target="_blank" rel="noopener">node.js和Git的安装包参考</a></p><p>拷贝文件夹如下</p><blockquote><p>_config.yml</p><p>theme/</p><p>source/</p><p>scaffolds/</p><p>package.json</p><p>.gitignore</p></blockquote><h2 id="配置你的Git"><a href="#配置你的Git" class="headerlink" title="配置你的Git"></a>配置你的Git</h2><p>桌面右键选择bash here,设置用户名称和邮件地址。</p><blockquote><p>1 $ git config –global user.name “username”</p><p>2 $ git config –global user.email “<a href="mailto:username@xxxx.com" target="_blank" rel="noopener">username@xxxx.com</a>“</p></blockquote><h2 id="配置SSH-Key"><a href="#配置SSH-Key" class="headerlink" title="配置SSH Key"></a>配置SSH Key</h2><p>输入</p><blockquote><p>$ ssh-keygen -t rsa -C “你的邮件地址”</p></blockquote><p>然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh<br>打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.<br>这里名称随便取，在下面粘贴内容保存即可。</p><p>我们回来测试下是否把SSH配置成功了。<br>继续在bash里输入</p><blockquote><p> $ ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a></p></blockquote><p>如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..<br>看到这个意味着已成功！</p><h2 id="正式工作"><a href="#正式工作" class="headerlink" title="正式工作"></a>正式工作</h2><p>接下来时hexo和一些组件的安装，恭喜了很快了。</p><h1 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h1><p>我们打开cmd命令行，输入</p><blockquote><p>npm install -g hexo</p></blockquote><p>这里可能会很慢，所以推荐使用淘宝镜像。</p><blockquote><p>npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a></p></blockquote><p>验证是否安装成功使用：</p><blockquote><p>cnpm -v</p></blockquote><p>安装了淘宝镜像后，都使用cnpm指令：</p><blockquote><p>cnpm install -g hexo   // 安装 hexo</p></blockquote><p>验证Hexo是否安装成功使用：</p><blockquote><p>hexo -v</p></blockquote><h1 id="安装一些组件"><a href="#安装一些组件" class="headerlink" title="安装一些组件"></a>安装一些组件</h1><blockquote><p> npm install hexo-deployer-git –save  // 文章部署到 git 的模块（下面为选择安装）</p><p> npm install hexo-generator-feed –save  // 建立 RSS 订阅</p><p> npm install hexo-generator-sitemap –save // 建立站点地图</p></blockquote><h1 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h1><p>输入指令</p><blockquote><p>hexo generate</p><p>hexo deploy</p></blockquote><p>没有报错就OK了。<br>这里讲讲hexo的一些快捷命令</p><blockquote><p>hexo g == hexo generate</p><p>hexo d == hexo deploy</p><p>hexo s == hexo server</p><p>hexo n == hexo new</p></blockquote><h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>尝试部署文章并使用以下指令更新部署</p><blockquote><p>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p></blockquote><p>成功部署，恭喜你！博客重配置成功！</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;#前言#&lt;br&gt;首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。&lt;/p&gt;
-&lt;p&gt;##准备##&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;安装node.js&lt;/li&gt;
-&lt;li&gt;安装Git&lt;/li&gt;
-&lt;li&gt;备份你的本地博客目录的部分文件夹&lt;/li&gt;
-
+        &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。&lt;/p&gt;
+&lt;h2 id=&quot;准备&quot;&gt;&lt;a href=
       
     
     </summary>
