@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-21T09:41:27.858Z</updated>
+  <updated>2019-03-21T15:08:54.818Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -18,10 +18,42 @@
   
   <entry>
     <title>换电脑或重装系统时的博客配置</title>
+    <link href="http://yoursite.com/2019/01/21/%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%80%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://yoursite.com/2019/01/21/多态的一道面试题/</id>
+    <published>2019-01-21T05:25:29.000Z</published>
+    <updated>2019-03-21T15:08:54.818Z</updated>
+    
+    <content type="html"><![CDATA[<p>##多态##<br>关于多态的一道面试题</p><p>类A：</p><pre><code>class A {     public String show(D obj){         return (&quot;A and D&quot;);      }       public String show(A obj){                return (&quot;A and A&quot;);     }   }   </code></pre><p>类B：</p><pre><code>class B extends A{      public String show(B obj){         return (&quot;B and B&quot;);      }      public String show(A obj){         return (&quot;B and A&quot;);      }   }  </code></pre><p>类C：</p><pre><code>class C extends B{}</code></pre><p>类D：</p><pre><code>class D extends B{}</code></pre><p>测试类：</p><pre><code>class  DynamicTest{       public static void main(String[] args){   A a1 = new A();     A a2 = new B();     B b = new B();     C c = new C();      D d = new D();     System.out.println(a1.show(b));      System.out.println(a1.show(c));     System.out.println(a1.show(d));     System.out.println(a2.show(b));                                  System.out.println(a2.show(c));                                System.out.println(a2.show(d));           System.out.println(b.show(b));       System.out.println(b.show(c));     System.out.println(b.show(d));         }}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;##多态##&lt;br&gt;关于多态的一道面试题&lt;/p&gt;
+&lt;p&gt;类A：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class A {  
+   public String show(D obj){  
+       return (&amp;quot;A and D&amp;quot;);  
+    }  
+      
+    
+    </summary>
+    
+      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+    
+    
+      <category term="Java语法" scheme="http://yoursite.com/tags/Java%E8%AF%AD%E6%B3%95/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>换电脑或重装系统时的博客配置</title>
     <link href="http://yoursite.com/2019/01/21/%E5%8D%9A%E5%AE%A2%E9%87%8D%E9%85%8D%E7%BD%AE/"/>
     <id>http://yoursite.com/2019/01/21/博客重配置/</id>
     <published>2019-01-21T05:25:29.000Z</published>
-    <updated>2019-03-21T09:41:27.858Z</updated>
+    <updated>2019-03-21T14:57:41.984Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。</p><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul><li>安装node.js</li><li>安装Git</li><li>备份你的本地博客目录的部分文件夹</li></ul><p><a href="http://jiguangwu.top/2018/01/10/hexo/#more" title="下载点此" target="_blank" rel="noopener">node.js和Git的安装包参考</a></p><p>拷贝文件夹如下</p><blockquote><p>_config.yml</p><p>theme/</p><p>source/</p><p>scaffolds/</p><p>package.json</p><p>.gitignore</p></blockquote><h2 id="配置你的Git"><a href="#配置你的Git" class="headerlink" title="配置你的Git"></a>配置你的Git</h2><p>桌面右键选择bash here,设置用户名称和邮件地址。</p><blockquote><p>1 $ git config –global user.name “username”</p><p>2 $ git config –global user.email “<a href="mailto:username@xxxx.com" target="_blank" rel="noopener">username@xxxx.com</a>“</p></blockquote><h2 id="配置SSH-Key"><a href="#配置SSH-Key" class="headerlink" title="配置SSH Key"></a>配置SSH Key</h2><p>输入</p><blockquote><p>$ ssh-keygen -t rsa -C “你的邮件地址”</p></blockquote><p>然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh<br>打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.<br>这里名称随便取，在下面粘贴内容保存即可。</p><p>我们回来测试下是否把SSH配置成功了。<br>继续在bash里输入</p><blockquote><p> $ ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a></p></blockquote><p>如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..<br>看到这个意味着已成功！</p><h2 id="正式工作"><a href="#正式工作" class="headerlink" title="正式工作"></a>正式工作</h2><p>接下来时hexo和一些组件的安装，恭喜了很快了。</p><h1 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h1><p>我们打开cmd命令行，输入</p><blockquote><p>npm install -g hexo</p></blockquote><p>这里可能会很慢，所以推荐使用淘宝镜像。</p><blockquote><p>npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a></p></blockquote><p>验证是否安装成功使用：</p><blockquote><p>cnpm -v</p></blockquote><p>安装了淘宝镜像后，都使用cnpm指令：</p><blockquote><p>cnpm install -g hexo   // 安装 hexo</p></blockquote><p>验证Hexo是否安装成功使用：</p><blockquote><p>hexo -v</p></blockquote><h1 id="安装一些组件"><a href="#安装一些组件" class="headerlink" title="安装一些组件"></a>安装一些组件</h1><blockquote><p> npm install hexo-deployer-git –save  // 文章部署到 git 的模块（下面为选择安装）</p><p> npm install hexo-generator-feed –save  // 建立 RSS 订阅</p><p> npm install hexo-generator-sitemap –save // 建立站点地图</p></blockquote><h1 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h1><p>输入指令</p><blockquote><p>hexo generate</p><p>hexo deploy</p></blockquote><p>没有报错就OK了。<br>这里讲讲hexo的一些快捷命令</p><blockquote><p>hexo g == hexo generate</p><p>hexo d == hexo deploy</p><p>hexo s == hexo server</p><p>hexo n == hexo new</p></blockquote><h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>尝试部署文章并使用以下指令更新部署</p><blockquote><p>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p></blockquote><p>成功部署，恭喜你！博客重配置成功！</p>]]></content>
     
@@ -49,7 +81,7 @@
     <link href="http://yoursite.com/2018/03/03/%E6%8E%92%E5%BA%8F1/"/>
     <id>http://yoursite.com/2018/03/03/排序1/</id>
     <published>2018-03-03T08:34:33.000Z</published>
-    <updated>2018-03-10T10:43:09.721Z</updated>
+    <updated>2019-03-21T15:00:08.392Z</updated>
     
     <content type="html"><![CDATA[<h1 id="问题的引入"><a href="#问题的引入" class="headerlink" title="问题的引入"></a>问题的引入</h1><h2 id="从键盘输入10个整数并按从大到小的顺序排列，输出结果"><a href="#从键盘输入10个整数并按从大到小的顺序排列，输出结果" class="headerlink" title="从键盘输入10个整数并按从大到小的顺序排列，输出结果"></a><em>从键盘输入10个整数并按从大到小的顺序排列，输出结果</em></h2><h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>基本思想：比较所有相邻的两个元素，如果第一个数比第二个数大就交换它们两个。最后的数字应该最大得到升序排列。</p><p><img src="https://i.imgur.com/sTuENJp.png" alt></p><pre><code>package top.jgw;import java.util.Arrays;import java.util.Scanner;public class BubbleSort { public static void main(String[] args) {   Scanner ra = new Scanner(System.in);   System.out.print(&quot;请输入10个数：&quot;);   int[] arr = new int[10];   for(int a=0;a&lt;10;a++){    arr[a] = ra.nextInt();    }  System.out.println(&quot;排序前的arr：&quot;+Arrays.toString(arr));   for(int i=arr.length-1;i&gt;0;i--){    for(int j=1;j&lt;=i;j++){    if(arr[j-1]&gt;arr[j]){     int temp = arr[j-1];     arr[j-1] = arr[j];     arr[j] = temp;      }    }  }  System.out.println(&quot;排序后的arr ：&quot;+Arrays.toString(arr));   }}</code></pre><p>结论：冒泡排序是一种稳定的排序方法。　</p><ul><li>若文件初状为正序，则一趟起泡就可完成排序，排序码的比较次数为n-1，且没有记录移动，时间复杂度是O(n)</li><li>若文件初态为逆序，则需要n-1趟起泡，每趟进行n-i次排序码的比较，且每次比较都移动三次，比较和移动次数均达到最大值∶O(n2)</li><li>起泡排序平均时间复杂度为O(n2)</li></ul><h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>基本思想：每一步将一个待排序的记录，按其顺序码大小插入到前面已经排序的序列的合适位置（从后向前找到合适位置后），直到全部插入排序完为止。</p><p><img src="https://i.imgur.com/rrF3K6J.png" alt></p><pre><code>package top.jgw;import java.util.Arrays;import java.util.Scanner;public class InsertionSort {    public static void main(String[] args){        int i,j;        int temp=0;        Scanner ra=new Scanner(System.in);        System.out.print(&quot;请输入10个数：&quot;);        int arr[]=new int[10];        for(int a=0;a&lt;10;a++){            arr[a]=ra.nextInt();        }    System.out.println(&quot;排序前的arr: &quot;+Arrays.toString(arr));    for(i=1;i&lt;arr.length;i++){        temp=arr[i];        for(j=i-1;j&gt;=0 &amp;&amp; temp&lt;arr[j];j--){            arr[j+1]=arr[j];        }            arr[j+1]=temp;        }    System.out.println(&quot;排序后的arr：&quot;+Arrays.toString(arr));    }}</code></pre><p>结论：直接插入排序也是稳定的排序。<br>文件初态不同时，直接插入排序所耗费的时间有很大差异。若文件初态为正序，则每个待插入的记录只需要比较一次就能够找到合适的位置插入，故算法的时间复杂度为O(n)，这时最好的情况。若初态为反序，则第i个待插入记录需要比较i+1次才能找到合适位置插入，故时间复杂度为O(n2)，这时最坏的情况。</p><h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>基本思想：每一次排序都从待排序序列中选择一个最小元素放到已排好的序列的末端，重复此步骤可得到升序序列。</p><p><img src="https://i.imgur.com/Cmkm5Do.png" alt></p><pre><code>package top.jgw;import java.util.Arrays;import java.util.Scanner;public class SelectionSort {public static void main(String[] args){    Scanner ra=new Scanner(System.in);    System.out.print(&quot;请输入10个数: &quot;);    int arr[]=new int[10];    for(int a=0;a&lt;10;a++){        arr[a]=ra.nextInt();    }    System.out.println(&quot;排序前的arr: &quot;+Arrays.toString(arr));    int temp=0;    for(int i=0;i&lt;arr.length-1;i++){        for(int j=i+1;j&lt;arr.length;j++){            if(arr[i]&gt;arr[j]){                temp=arr[i];                arr[i]=arr[j];                arr[j]=temp;            }        }        }    System.out.println(&quot;排序后的arr: &quot;+Arrays.toString(arr));    }}</code></pre><p>结论：简单选择排序是不稳定的排序，时间复杂度：T(n)=O(n2)。</p><p><em>日后补充…</em></p>]]></content>
     
@@ -67,8 +99,6 @@
     
       <category term="排序" scheme="http://yoursite.com/tags/%E6%8E%92%E5%BA%8F/"/>
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
   </entry>
   
   <entry>
@@ -76,7 +106,7 @@
     <link href="http://yoursite.com/2018/02/07/eclipse%E6%8F%92%E4%BB%B6maven/"/>
     <id>http://yoursite.com/2018/02/07/eclipse插件maven/</id>
     <published>2018-02-07T05:25:29.000Z</published>
-    <updated>2018-02-08T13:37:43.322Z</updated>
+    <updated>2019-03-21T15:00:13.320Z</updated>
     
     <content type="html"><![CDATA[<p>以eclipse kepler为例，<br>官网下载地址：<a href="http://www.eclipse.org/downloads/packages/release/Kepler/SR2" target="_blank" rel="noopener">http://www.eclipse.org/downloads/packages/release/Kepler/SR2</a></p><p>1.打开eclipse，help–install new software…</p><p>2.workwith里输入：<a href="http://download.eclipse.org/releases/kepler，输入完会有提示地址出现，点击回车静待.." target="_blank" rel="noopener">http://download.eclipse.org/releases/kepler，输入完会有提示地址出现，点击回车静待..</a>.</p><p>3.在filter框中输入maven便能定位要安装的插件<br><img src="https://i.imgur.com/vyBFPux.png" alt></p><p>4.选择“Collaboration”-“m2e - Maven Integration for Eclipse”，并点击next按钮进行安装</p><p>5.安装完成重启eclipse即可</p><p>6.配置你的maven</p>]]></content>
     
@@ -103,7 +133,7 @@
     <link href="http://yoursite.com/2018/01/10/hexo/"/>
     <id>http://yoursite.com/2018/01/10/hexo/</id>
     <published>2018-01-10T05:25:29.000Z</published>
-    <updated>2019-03-21T09:26:40.618Z</updated>
+    <updated>2019-03-21T15:00:20.286Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本人开始并非使用next主题，这个大家可以去hexo官网<a href="https://hexo.io/themes/" target="_blank" rel="noopener">themes</a>处挑选自己喜欢的。<br>注意：点击主题预览图可以去预览下，点击主题名就可以去GitHub页面copy了。<br>但个人觉得next主题更好，bug少，拓展性强。好了，废话少说，进入正题。</p><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul><li>注册github账号</li><li>安装node.js  </li><li>链接：<a href="https://pan.baidu.com/s/1mji9SmO" target="_blank" rel="noopener">https://pan.baidu.com/s/1mji9SmO</a> 密码：fjw1</li><li>安装git </li><li>链接：<a href="https://pan.baidu.com/s/1dGUlqEH" target="_blank" rel="noopener">https://pan.baidu.com/s/1dGUlqEH</a> 密码：q9ws<br>我的电脑是Windows10，其他你根据我提供的百度云链接下载即可。安装git时全打勾。</li></ul><h2 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h2><p>新建一个 你的用户名.github.io的仓库，比如说你的GitHub用户名是abc,那么你新建仓库名叫abc.github.io,你的博客搭建好之后访问的网站也就是 <a href="https://abc.github.io了。" target="_blank" rel="noopener">https://abc.github.io了。</a><br><img src="https://i.imgur.com/XX5RNhw.png" alt><br><img src="https://i.imgur.com/0V6q1lA.png" alt><br>那怎么删除仓库呢？？？<br>打开settings<br><img src="https://i.imgur.com/q2FOtK3.png" alt><br><img src="https://i.imgur.com/QCDx764.png" alt></p><h2 id="创建博客根目录"><a href="#创建博客根目录" class="headerlink" title="创建博客根目录"></a>创建博客根目录</h2><p>在一个磁盘里创建一个文件夹，比如我，在D盘创建了一个blog文件夹。</p><h1 id="正式工作"><a href="#正式工作" class="headerlink" title="正式工作"></a>正式工作</h1><h2 id="配置SSH-Key"><a href="#配置SSH-Key" class="headerlink" title="配置SSH Key"></a>配置SSH Key</h2><p>桌面右键打开git bash here,输入</p><blockquote><p> $ cd ~/. ssh // 检查本机已存在的 ssh 密钥</p></blockquote><p>再接着输入</p><blockquote><p>ssh-keygen -t rsa -C “你的邮件地址”</p></blockquote><p>然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh<br>打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.<br>这里名称随便取，在下面粘贴内容保存即可，有需要打勾就打勾。</p><p>我们回来测试下是否把SSH配置成功了。<br>继续在bash里输入</p><blockquote><p>$ ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a></p></blockquote><p>如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..<br>看到这个意味着已成功！</p><h2 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h2><blockquote><p> $ git config –global user.name “xxx”// 你的github用户名，比如上面的abc<br>$ git config –global user.email  “<a href="mailto:xxx@qq.com" target="_blank" rel="noopener">xxx@qq.com</a>“// 填写你的github注册邮箱</p></blockquote><h1 id="使用hexo"><a href="#使用hexo" class="headerlink" title="使用hexo"></a>使用hexo</h1><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>我们打开cmd命令行，输入</p><blockquote><p> npm install -g hexo</p></blockquote><p>这里可能会很慢，所以推荐使用淘宝镜像。</p><blockquote><p>安装：<code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code> </p><p>验证是否安装成功使用：<code>cnpm -v</code><br>这里使用使用： <code>cnpm install -g hexo安装</code>hexo</p><p>验证Hexo是否安装成功使用：<code>hexo -v</code> </p></blockquote><h2 id="初始化hexo"><a href="#初始化hexo" class="headerlink" title="初始化hexo"></a>初始化hexo</h2><p>打开我们之前创建的文件夹，比如我的blog，右击鼠标，打开git bash here,输入</p><blockquote><p>$ hexo init</p></blockquote><p>我们的文件夹会自动下载一些文件到这个blog目录里。</p><p>继续输入</p><blockquote><p>$ hexo g<br>$ hexo s</p></blockquote><p>hexo s是指启动服务，成功打开后会有提示，登录localhost:4000即可看到初始页面，到这里你的blog就基本搭建好了。</p><h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><p>在bash里输入</p><blockquote><p> $ hexo new post “文章名”</p></blockquote><p>然后去blog/source/_posts就可以看到</p><h2 id="上传到GitHub"><a href="#上传到GitHub" class="headerlink" title="上传到GitHub"></a>上传到GitHub</h2><p>配置_config.yml中的deploy部分，注意这里的_config.yml文件是blog根目录，并非themes里的同名文件。<br>配置如下(xxx为你的GitHub名)</p><blockquote><p> deploy:<br>  type: git<br>  repository: <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:xxx/xxx.github.io.git<br>  branch: master</p></blockquote><p>再次注意：关于_config.yml文件的配置，冒号后一定要加个空格，否则就无法部署了。</p><p>一切完成后在bash中继续输入</p><blockquote><p> npm install hexo-deployer-git –save #这里是安装插件，不然无法deploy</p></blockquote><p>然后输入以下就可以了</p><blockquote><p> hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p></blockquote><p>成功后会提示：Deploy done：git  证明成功啦。这是打开你的xxx.github.io就可以看到网页啦！</p><h2 id="主题设置"><a href="#主题设置" class="headerlink" title="主题设置"></a>主题设置</h2><p>打开<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">next使用文档</a>有详细的教程。<br>主题教程以及拓展：<br><img src="https://i.imgur.com/lotL1do.png" alt></p><h1 id="绑定个性域名"><a href="#绑定个性域名" class="headerlink" title="绑定个性域名"></a>绑定个性域名</h1><h2 id="申请域名"><a href="#申请域名" class="headerlink" title="申请域名"></a>申请域名</h2><p>在阿里云或腾讯云申请域名。我是在阿里云申请的，实名认证很快，推荐。</p><h2 id="解析域名"><a href="#解析域名" class="headerlink" title="解析域名"></a>解析域名</h2><p>按我的内容来即可。<br><img src="https://i.imgur.com/BApgoy3.png" alt></p><h2 id="部署域名"><a href="#部署域名" class="headerlink" title="部署域名"></a>部署域名</h2><p>在blog根目录的source文件夹中新建无后缀文件 CNAME。里面内容只写上你的域名即可，注意不需要www<br>按之前的顺序deploy即可</p>]]></content>
     
@@ -130,7 +160,7 @@
     <link href="http://yoursite.com/2018/01/07/%E5%87%BA%E5%8F%91/"/>
     <id>http://yoursite.com/2018/01/07/出发/</id>
     <published>2018-01-07T12:18:31.000Z</published>
-    <updated>2018-01-07T12:27:19.134Z</updated>
+    <updated>2019-03-21T15:00:06.499Z</updated>
     
     <content type="html"><![CDATA[<p>去做就是啦。</p><p>总结了一七再去展望一八，哈哈我是真想做个技术流人才然后……<br>忙着结束手头上的事情，项目等等，想着去全身心投入到学习中，这是促进我去搭建自己的独立博客的初衷，去学习，去整理，去分享。<br>大学也浪了大半了，两次六级考试都几乎零准备，湖泊你说咋写来着？</p><p>要说新年计划的话，最近打算好好总结Java的知识，以及对基本框架，数据结构与算法的学习，对博客的维护与优化，还有考研的准备！</p><p>新年快乐！<br><img src="https://i.loli.net/2018/01/07/5a5211e581fdc.png" alt></p>]]></content>
     

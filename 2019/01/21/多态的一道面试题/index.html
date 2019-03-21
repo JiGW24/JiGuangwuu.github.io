@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="hexo,blog,">
+  <meta name="keywords" content="Java语法,面试,">
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="前言首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。 准备 安装node.js 安装Git 备份你的本地博客目录的部分文件夹  node.js和Git的安装包参考 拷贝文件夹如下  _config.yml theme/ source/ scaffolds/ package.json .gitignore  配置你的Git桌面右键选择bash here,设置">
-<meta name="keywords" content="hexo,blog">
+<meta name="description" content="##多态##关于多态的一道面试题 类A： class A {      public String show(D obj){          return (&amp;quot;A and D&amp;quot;);       }        public String show(A obj){                 return (&amp;quot;A and A&amp;quot;);      }">
+<meta name="keywords" content="Java语法,面试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="换电脑或重装系统时的博客配置">
-<meta property="og:url" content="http://yoursite.com/2019/01/21/博客重配置/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/01/21/多态的一道面试题/index.html">
 <meta property="og:site_name" content="JiGuangwu&#39;s Blog">
-<meta property="og:description" content="前言首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。 准备 安装node.js 安装Git 备份你的本地博客目录的部分文件夹  node.js和Git的安装包参考 拷贝文件夹如下  _config.yml theme/ source/ scaffolds/ package.json .gitignore  配置你的Git桌面右键选择bash here,设置">
+<meta property="og:description" content="##多态##关于多态的一道面试题 类A： class A {      public String show(D obj){          return (&amp;quot;A and D&amp;quot;);       }        public String show(A obj){                 return (&amp;quot;A and A&amp;quot;);      }">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-21T14:57:41.984Z">
+<meta property="og:updated_time" content="2019-03-21T15:08:54.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="换电脑或重装系统时的博客配置">
-<meta name="twitter:description" content="前言首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。 准备 安装node.js 安装Git 备份你的本地博客目录的部分文件夹  node.js和Git的安装包参考 拷贝文件夹如下  _config.yml theme/ source/ scaffolds/ package.json .gitignore  配置你的Git桌面右键选择bash here,设置">
+<meta name="twitter:description" content="##多态##关于多态的一道面试题 类A： class A {      public String show(D obj){          return (&amp;quot;A and D&amp;quot;);       }        public String show(A obj){                 return (&amp;quot;A and A&amp;quot;);      }">
 
 
 
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/01/21/博客重配置/">
+  <link rel="canonical" href="http://yoursite.com/2019/01/21/多态的一道面试题/">
 
 
 
@@ -265,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/21/博客重配置/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/21/多态的一道面试题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="杂 涅">
@@ -317,8 +317,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -336,8 +336,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2019/01/21/博客重配置/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/01/21/博客重配置/" itemprop="commentsCount"></span>
+                <a href="/2019/01/21/多态的一道面试题/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2019/01/21/多态的一道面试题/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -359,7 +359,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  543
+                  155
                 </span>
               
 
@@ -375,7 +375,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  1
                 </span>
               
             </div>
@@ -396,81 +396,53 @@
       
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。</p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
-<li>安装node.js</li>
-<li>安装Git</li>
-<li>备份你的本地博客目录的部分文件夹</li>
-</ul>
-<p><a href="http://jiguangwu.top/2018/01/10/hexo/#more" title="下载点此" target="_blank" rel="noopener">node.js和Git的安装包参考</a></p>
-<p>拷贝文件夹如下</p>
-<blockquote>
-<p>_config.yml</p>
-<p>theme/</p>
-<p>source/</p>
-<p>scaffolds/</p>
-<p>package.json</p>
-<p>.gitignore</p>
-</blockquote>
-<h2 id="配置你的Git"><a href="#配置你的Git" class="headerlink" title="配置你的Git"></a>配置你的Git</h2><p>桌面右键选择bash here,设置用户名称和邮件地址。</p>
-<blockquote>
-<p>1 $ git config –global user.name “username”</p>
-<p>2 $ git config –global user.email “<a href="mailto:username@xxxx.com" target="_blank" rel="noopener">username@xxxx.com</a>“</p>
-</blockquote>
-<h2 id="配置SSH-Key"><a href="#配置SSH-Key" class="headerlink" title="配置SSH Key"></a>配置SSH Key</h2><p>输入</p>
-<blockquote>
-<p>$ ssh-keygen -t rsa -C “你的邮件地址”</p>
-</blockquote>
-<p>然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh<br>打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.<br>这里名称随便取，在下面粘贴内容保存即可。</p>
-<p>我们回来测试下是否把SSH配置成功了。<br>继续在bash里输入</p>
-<blockquote>
-<p> $ ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a></p>
-</blockquote>
-<p>如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..<br>看到这个意味着已成功！</p>
-<h2 id="正式工作"><a href="#正式工作" class="headerlink" title="正式工作"></a>正式工作</h2><p>接下来时hexo和一些组件的安装，恭喜了很快了。</p>
-<h1 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h1><p>我们打开cmd命令行，输入</p>
-<blockquote>
-<p>npm install -g hexo</p>
-</blockquote>
-<p>这里可能会很慢，所以推荐使用淘宝镜像。</p>
-<blockquote>
-<p>npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a></p>
-</blockquote>
-<p>验证是否安装成功使用：</p>
-<blockquote>
-<p>cnpm -v</p>
-</blockquote>
-<p>安装了淘宝镜像后，都使用cnpm指令：</p>
-<blockquote>
-<p>cnpm install -g hexo   // 安装 hexo</p>
-</blockquote>
-<p>验证Hexo是否安装成功使用：</p>
-<blockquote>
-<p>hexo -v</p>
-</blockquote>
-<h1 id="安装一些组件"><a href="#安装一些组件" class="headerlink" title="安装一些组件"></a>安装一些组件</h1><blockquote>
-<p> npm install hexo-deployer-git –save  // 文章部署到 git 的模块（下面为选择安装）</p>
-<p> npm install hexo-generator-feed –save  // 建立 RSS 订阅</p>
-<p> npm install hexo-generator-sitemap –save // 建立站点地图</p>
-</blockquote>
-<h1 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h1><p>输入指令</p>
-<blockquote>
-<p>hexo generate</p>
-<p>hexo deploy</p>
-</blockquote>
-<p>没有报错就OK了。<br>这里讲讲hexo的一些快捷命令</p>
-<blockquote>
-<p>hexo g == hexo generate</p>
-<p>hexo d == hexo deploy</p>
-<p>hexo s == hexo server</p>
-<p>hexo n == hexo new</p>
-</blockquote>
-<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>尝试部署文章并使用以下指令更新部署</p>
-<blockquote>
-<p>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p>
-</blockquote>
-<p>成功部署，恭喜你！博客重配置成功！</p>
+        <p>##多态##<br>关于多态的一道面试题</p>
+<p>类A：</p>
+<pre><code>class A {  
+   public String show(D obj){  
+       return (&quot;A and D&quot;);  
+    }   
+    public String show(A obj){         
+       return (&quot;A and A&quot;);  
+   }   
+}   
+</code></pre><p>类B：</p>
+<pre><code>class B extends A{  
 
+    public String show(B obj){  
+       return (&quot;B and B&quot;);  
+    }  
+    public String show(A obj){  
+       return (&quot;B and A&quot;);  
+    }   
+}  
+</code></pre><p>类C：</p>
+<pre><code>class C extends B{}
+</code></pre><p>类D：</p>
+<pre><code>class D extends B{}
+</code></pre><p>测试类：</p>
+<pre><code>class  DynamicTest{    
+   public static void main(String[] args){
+
+   A a1 = new A();  
+   A a2 = new B();  
+   B b = new B();  
+   C c = new C();   
+   D d = new D();  
+
+   System.out.println(a1.show(b));   
+   System.out.println(a1.show(c));  
+   System.out.println(a1.show(d));  
+   System.out.println(a2.show(b));                               
+   System.out.println(a2.show(c));                             
+   System.out.println(a2.show(d));        
+   System.out.println(b.show(b));    
+   System.out.println(b.show(c));  
+   System.out.println(b.show(d));      
+
+   }
+}
+</code></pre>
       
     </div>
     
@@ -528,9 +500,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hexo/" rel="tag"><i class="fa fa-tag"></i> hexo</a>
+            <a href="/tags/Java语法/" rel="tag"><i class="fa fa-tag"></i> Java语法</a>
           
-            <a href="/tags/blog/" rel="tag"><i class="fa fa-tag"></i> blog</a>
+            <a href="/tags/面试/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
           
         </div>
       
@@ -543,8 +515,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/03/排序1/" rel="next" title="从简单排序题看几种排序算法">
-                <i class="fa fa-chevron-left"></i> 从简单排序题看几种排序算法
+              <a href="/2019/01/21/博客重配置/" rel="next" title="换电脑或重装系统时的博客配置">
+                <i class="fa fa-chevron-left"></i> 换电脑或重装系统时的博客配置
               </a>
             
           </div>
@@ -552,10 +524,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/01/21/多态的一道面试题/" rel="prev" title="换电脑或重装系统时的博客配置">
-                换电脑或重装系统时的博客配置 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -638,17 +606,8 @@ var jiathis_config={
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -739,22 +698,6 @@ var jiathis_config={
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">1.1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置你的Git"><span class="nav-number">1.2.</span> <span class="nav-text">配置你的Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置SSH-Key"><span class="nav-number">1.3.</span> <span class="nav-text">配置SSH Key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正式工作"><span class="nav-number">1.4.</span> <span class="nav-text">正式工作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装hexo"><span class="nav-number">2.</span> <span class="nav-text">安装hexo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装一些组件"><span class="nav-number">3.</span> <span class="nav-text">安装一些组件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#部署到Github"><span class="nav-number">4.</span> <span class="nav-text">部署到Github</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试"><span class="nav-number">5.</span> <span class="nav-text">测试</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
