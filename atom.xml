@@ -70,9 +70,9 @@ console.log(&amp;quot;Hello!&amp;quot;);
       <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
-    
       <category term="Java语法" scheme="http://yoursite.com/tags/Java%E8%AF%AD%E6%B3%95/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
     
   </entry>
   
@@ -127,9 +127,34 @@ console.log(&amp;quot;Hello!&amp;quot;);
       <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
     
     
+      <category term="Java语法" scheme="http://yoursite.com/tags/Java%E8%AF%AD%E6%B3%95/"/>
+    
       <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="Java语法" scheme="http://yoursite.com/tags/Java%E8%AF%AD%E6%B3%95/"/>
+  </entry>
+  
+  <entry>
+    <title>20190405</title>
+    <link href="http://yoursite.com/2019/02/05/190405/"/>
+    <id>http://yoursite.com/2019/02/05/190405/</id>
+    <published>2019-02-05T01:28:09.000Z</published>
+    <updated>2019-04-05T15:18:50.661Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="So-Sad"><a href="#So-Sad" class="headerlink" title="So Sad"></a>So Sad</h1><p><img src="https://i.loli.net/2019/04/05/5ca771980ba09.png" alt="1"></p><h1 id="So-Nice"><a href="#So-Nice" class="headerlink" title="So Nice"></a>So Nice</h1><p><img src="https://i.loli.net/2019/04/05/5ca771586dfb4.jpg" alt="2"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;So-Sad&quot;&gt;&lt;a href=&quot;#So-Sad&quot; class=&quot;headerlink&quot; title=&quot;So Sad&quot;&gt;&lt;/a&gt;So Sad&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2019/04/05/5ca771980ba09.
+      
+    
+    </summary>
+    
+      <category term="生活" scheme="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="心情" scheme="http://yoursite.com/tags/%E5%BF%83%E6%83%85/"/>
     
   </entry>
   
@@ -157,31 +182,6 @@ console.log(&amp;quot;Hello!&amp;quot;);
       <category term="git" scheme="http://yoursite.com/tags/git/"/>
     
       <category term="repository" scheme="http://yoursite.com/tags/repository/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>20190405</title>
-    <link href="http://yoursite.com/2019/02/05/190405/"/>
-    <id>http://yoursite.com/2019/02/05/190405/</id>
-    <published>2019-02-05T01:28:09.000Z</published>
-    <updated>2019-04-05T15:18:50.661Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="So-Sad"><a href="#So-Sad" class="headerlink" title="So Sad"></a>So Sad</h1><p><img src="https://i.loli.net/2019/04/05/5ca771980ba09.png" alt="1"></p><h1 id="So-Nice"><a href="#So-Nice" class="headerlink" title="So Nice"></a>So Nice</h1><p><img src="https://i.loli.net/2019/04/05/5ca771586dfb4.jpg" alt="2"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;So-Sad&quot;&gt;&lt;a href=&quot;#So-Sad&quot; class=&quot;headerlink&quot; title=&quot;So Sad&quot;&gt;&lt;/a&gt;So Sad&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://i.loli.net/2019/04/05/5ca771980ba09.
-      
-    
-    </summary>
-    
-      <category term="生活" scheme="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    
-      <category term="心情" scheme="http://yoursite.com/tags/%E5%BF%83%E6%83%85/"/>
     
   </entry>
   
