@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[留个言呗]]></title>
+    <url>%2F2048%2F10%2F24%2F%E7%95%99%E8%A8%80%E8%B4%B4%2F</url>
+    <content type="text"><![CDATA[System.out.println(&quot;Hello！&quot;); echo(&quot;Hello!&quot;); alert(&quot;Hello!&quot;); console.log(&quot;Hello!&quot;); printf(&quot;Hello!\n&quot;); cout &lt;&lt; &quot;Hello!&quot; &lt;&lt; endl; print(&quot;Hello!&quot;); var_dump(&quot;Hello!&quot;); println!(&quot;Hello!&quot;);]]></content>
+      <categories>
+        <category>SunnyDay</category>
+      </categories>
+      <tags>
+        <tag>留言贴</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[构造、静态代码块面试题]]></title>
+    <url>%2F2019%2F04%2F08%2F%E6%9E%84%E9%80%A0%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%9D%97%2F</url>
+    <content type="text"><![CDATA[复习构造代码块的执行时机：每次我们调用构造方法的时候都会先执行构造代码块中的代码，然后才去执行对应的构造方法中的代码。 静态代码块的执行时机：静态代码块其实就是在类加载的时候执行，一个类只会加载一次，所以静态代码块也最多只会执行一次。 public class Test01 { { System.out.println(&quot;Test01的构造代码块&quot;); } static { System.out.println(&quot;Test01的静态代码块&quot;); } public Test01() { System.out.println(&quot;Test01的构造方法&quot;); } public static void main(String[] args) { Student stu = new Student(); Student stu2 = new Student(); } } class Student { { System.out.println(&quot;Student的构造代码块&quot;); } static { System.out.println(&quot;Student的静态代码块&quot;); } public Student() { System.out.println(&quot;Student的构造方法&quot;); } } 答案：Test01的静态代码块 Student的静态代码块 Student的构造代码块Student的构造方法 Student的构造代码块 Student的构造方法 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java语法</tag>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[单例模式]]></title>
+    <url>%2F2019%2F04%2F06%2F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%2F</url>
+    <content type="text"><![CDATA[理解设计模式（Design pattern）代表了最佳的实践，通常被有经验的面向对象的软件开发人员所采用。设计模式是软件开发人员在软件开发过程中面临的一般问题的解决方案。这些解决方案是众多软件开发人员经过相当长的一段时间的试验和错误总结出来的。 何为单例模式单例模式(Singleton)，又称单态模式或者单件模式。即保证一个类仅有一个实例，并提供一个访问它的全局访问点。目的是即控制特定的类只产生一个对象，也允许在一定情况下灵活的改变对象的个数。 如何实现先看一段代码 public class Thing { private Thing(){ } private static Thing instance = new Thing(); //这段代码保证了Thread safe public static Thing getInstance(){ return instance; ｝ ｝ 测试类 public class TestDemo { public static void main(String[] args) { Thing t1 = Thing.getInstance(); Thing t2 = Thing.getInstance(); System.out.println(t1); System.out.println(t2); } } 输出t1和t2的结果是一致的。可以发现，我们将构造方法私有化了，这使得外面的类无法通过引用来创建对象；同时为了保证类的可用性，就必须提供一个自己的对象以及访问这个对象的静态方法。因此，我们应该明白：单例模式只有一个角色，而客户通过调用类的方法来创建对象。 还有什么在上面的Thing类中我们“迫不及待”的创建了对象，但如果这个对象我们很长时间都没有使用就浪费了内存空间，因此称之为饿汉式。存在另一种写法，即懒汉式。看这段代码 private static Thing instance; public static Thing getInstance(){ if (instance==null){ instance = new Thing(); } return instance; } 很明显，当程序真正需要这个对象的时候我们才开始创建。但是这在多线程情况下是有问题的，为了防止多线程环境中产生多个实例，我们做出改进，使用同步处理。 private static Thing instance; public static Thing getInstance(){ //如果是对象还没创建的时候使用同步，如果对象已经创建完了，就不要同步了 ，这样效率就可以提高 if (instance==null){ synchronized (Thing.class){ if (instance==null){ //说明对象还没创建，所以里面使用了同步s instance = new Thing(); } } } return instance; } 这里我们使用的是同步代码块，为什么不要同步方法呢？ private static Thing instance; public synchronized static Thing getInstance(){ if (instance==null){ instance = new Thing(); } return instance; } 通过使用同步方法，迫使每个线程在进入这个方法前要等候别的进程离开该方法。但同步会降低性能，并且这里只有第一次执行该方法时才会正在需要同步。之后每一次调用这个方法，同步都是浪费的。 存在的问题在学习单例模式时，通过这方面的书籍了解到以下问题 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>单例模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[关于多态的一道面试题]]></title>
+    <url>%2F2019%2F02%2F11%2F%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%80%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[多态类A： class A { public String show(D obj){ return (&quot;A and D&quot;); } public String show(A obj){ return (&quot;A and A&quot;); } } 类B： class B extends A{ public String show(B obj){ return (&quot;B and B&quot;); } public String show(A obj){ return (&quot;B and A&quot;); } } 类C： class C extends B{} 类D： class D extends B{} 测试类： class DynamicTest{ public static void main(String[] args){ A a1 = new A(); A a2 = new B(); B b = new B(); C c = new C(); D d = new D(); System.out.println(a1.show(b)); System.out.println(a1.show(c)); System.out.println(a1.show(d)); System.out.println(a2.show(b)); System.out.println(a2.show(c)); System.out.println(a2.show(d)); System.out.println(b.show(b)); System.out.println(b.show(c)); System.out.println(b.show(d)); } } 答案： System.out.println(a1.show(b)); AA System.out.println(a1.show(c)); AA System.out.println(a1.show(d)); AD System.out.println(a2.show(b)); BA 编译看左边，看右边可有重写 System.out.println(a2.show(c)); BA 同样，看可有重写！ System.out.println(a2.show(d)); AD 编译看左边，但没有重写 System.out.println(b.show(b)); BB System.out.println(b.show(c)); BB 这里父类和爷爷类都可以，取最近的 System.out.println(b.show(d)); AD B是A的子类 ，会把A的方法都继承 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java语法</tag>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[20190405]]></title>
+    <url>%2F2019%2F02%2F05%2F190405%2F</url>
+    <content type="text"><![CDATA[So Sad So Nice]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>心情</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[如何将本地项目部署到Github]]></title>
+    <url>%2F2019%2F02%2F05%2F%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0github%2F</url>
+    <content type="text"><![CDATA[前言众所周知，GitHub是一个面向开源及私有软件项目的托管平台，那我们该如何将本地项目导入到Github上呢，这里，我写一个简单的教程，希望对你有所帮助。 准备确定你的Git安装了，如果需要点击此处 开始首先在Github上新建一个repository，命名随意（以我为例，新建了一个Demo），勾选如图，create。 然后，进入你的repository,打开settings，可以看到Github Pages的设置，在source中选择master branch。 最后，选择完会刷新页面，在去看Gith Pages时，会有显示一个网址，这就是你之后访问你项目页面的网址。 快了在一个盘里右键点击git bash here，打开bash命令行。如图，输入命令在D盘创建了文件夹Demo，第三个命令是克隆地址，格式为 https://github.com/用户名/项目名.git 这时候你会发现你的D盘会多个Demo文件夹，打开它，进入根目录。 将自己的项目文件粘贴到这个根目录中。 执行如下命令， 这里面注意，第一次操作需要你输入相关账号和密码，到时根据提示输入即可 完成利用那个网址测试即可。 如果觉得有用，不如给个starorfollow，感谢。]]></content>
+      <categories>
+        <category>Github</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+        <tag>repository</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[换电脑或重装系统时的博客配置]]></title>
+    <url>%2F2019%2F01%2F21%2F%E5%8D%9A%E5%AE%A2%E9%87%8D%E9%85%8D%E7%BD%AE%2F</url>
+    <content type="text"><![CDATA[前言首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。 准备 安装node.js 安装Git 备份你的本地博客目录的部分文件夹 node.js和Git的安装包参考 拷贝文件夹如下 _config.yml theme/ source/ scaffolds/ package.json .gitignore 配置你的Git桌面右键选择bash here,设置用户名称和邮件地址。 1 $ git config –global user.name “username” 2 $ git config –global user.email “username@xxxx.com“ 配置SSH Key输入 $ ssh-keygen -t rsa -C “你的邮件地址” 然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.这里名称随便取，在下面粘贴内容保存即可。 我们回来测试下是否把SSH配置成功了。继续在bash里输入 $ ssh -T git@github.com 如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..看到这个意味着已成功！ 正式工作接下来时hexo和一些组件的安装，恭喜了很快了。 安装hexo我们打开cmd命令行，输入 npm install -g hexo 这里可能会很慢，所以推荐使用淘宝镜像。 npm install -g cnpm –registry=https://registry.npm.taobao.org 验证是否安装成功使用： cnpm -v 安装了淘宝镜像后，都使用cnpm指令： cnpm install -g hexo // 安装 hexo 验证Hexo是否安装成功使用： hexo -v 安装一些组件 npm install hexo-deployer-git –save // 文章部署到 git 的模块（下面为选择安装） npm install hexo-generator-feed –save // 建立 RSS 订阅 npm install hexo-generator-sitemap –save // 建立站点地图 部署到Github输入指令 hexo generate hexo deploy 没有报错就OK了。这里讲讲hexo的一些快捷命令 hexo g == hexo generate hexo d == hexo deploy hexo s == hexo server hexo n == hexo new 测试尝试部署文章并使用以下指令更新部署 hexo clean &amp;&amp; hexo g &amp;&amp; hexo d 成功部署，恭喜你！博客重配置成功！ 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[从简单题目看冒泡、插入、选择排序]]></title>
+    <url>%2F2018%2F03%2F03%2F%E6%8E%92%E5%BA%8F1%2F</url>
+    <content type="text"><![CDATA[问题的引入从键盘输入10个整数并按从大到小的顺序排列，输出结果冒泡排序基本思想：比较所有相邻的两个元素，如果第一个数比第二个数大就交换它们两个。最后的数字应该最大得到升序排列。 package top.jgw; import java.util.Arrays; import java.util.Scanner; public class BubbleSort { public static void main(String[] args) { Scanner ra = new Scanner(System.in); System.out.print(&quot;请输入10个数：&quot;); int[] arr = new int[10]; for(int a=0;a&lt;10;a++){ arr[a] = ra.nextInt(); } System.out.println(&quot;排序前的arr：&quot;+Arrays.toString(arr)); for(int i=arr.length-1;i&gt;0;i--){ for(int j=1;j&lt;=i;j++){ if(arr[j-1]&gt;arr[j]){ int temp = arr[j-1]; arr[j-1] = arr[j]; arr[j] = temp; } } } System.out.println(&quot;排序后的arr ：&quot;+Arrays.toString(arr)); } } 结论：冒泡排序是一种稳定的排序方法。 若文件初状为正序，则一趟起泡就可完成排序，排序码的比较次数为n-1，且没有记录移动，时间复杂度是O(n) 若文件初态为逆序，则需要n-1趟起泡，每趟进行n-i次排序码的比较，且每次比较都移动三次，比较和移动次数均达到最大值∶O(n2) 起泡排序平均时间复杂度为O(n2) 插入排序基本思想：每一步将一个待排序的记录，按其顺序码大小插入到前面已经排序的序列的合适位置（从后向前找到合适位置后），直到全部插入排序完为止。 package top.jgw; import java.util.Arrays; import java.util.Scanner; public class InsertionSort { public static void main(String[] args){ int i,j; int temp=0; Scanner ra=new Scanner(System.in); System.out.print(&quot;请输入10个数：&quot;); int arr[]=new int[10]; for(int a=0;a&lt;10;a++){ arr[a]=ra.nextInt(); } System.out.println(&quot;排序前的arr: &quot;+Arrays.toString(arr)); for(i=1;i&lt;arr.length;i++){ temp=arr[i]; for(j=i-1;j&gt;=0 &amp;&amp; temp&lt;arr[j];j--){ arr[j+1]=arr[j]; } arr[j+1]=temp; } System.out.println(&quot;排序后的arr：&quot;+Arrays.toString(arr)); } } 结论：直接插入排序也是稳定的排序。文件初态不同时，直接插入排序所耗费的时间有很大差异。若文件初态为正序，则每个待插入的记录只需要比较一次就能够找到合适的位置插入，故算法的时间复杂度为O(n)，这时最好的情况。若初态为反序，则第i个待插入记录需要比较i+1次才能找到合适位置插入，故时间复杂度为O(n2)，这时最坏的情况。 选择排序基本思想：每一次排序都从待排序序列中选择一个最小元素放到已排好的序列的末端，重复此步骤可得到升序序列。 package top.jgw; import java.util.Arrays; import java.util.Scanner; public class SelectionSort { public static void main(String[] args){ Scanner ra=new Scanner(System.in); System.out.print(&quot;请输入10个数: &quot;); int arr[]=new int[10]; for(int a=0;a&lt;10;a++){ arr[a]=ra.nextInt(); } System.out.println(&quot;排序前的arr: &quot;+Arrays.toString(arr)); int temp=0; for(int i=0;i&lt;arr.length-1;i++){ for(int j=i+1;j&lt;arr.length;j++){ if(arr[i]&gt;arr[j]){ temp=arr[i]; arr[i]=arr[j]; arr[j]=temp; } } } System.out.println(&quot;排序后的arr: &quot;+Arrays.toString(arr)); } } 结论：简单选择排序是不稳定的排序，时间复杂度：T(n)=O(n2)。 日后补充… 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[eclipse的maven插件安装]]></title>
+    <url>%2F2018%2F02%2F07%2Feclipse%E6%8F%92%E4%BB%B6maven%2F</url>
+    <content type="text"><![CDATA[以eclipse kepler为例，官网下载地址：http://www.eclipse.org/downloads/packages/release/Kepler/SR2 1.打开eclipse，help–install new software… 2.workwith里输入：http://download.eclipse.org/releases/kepler，输入完会有提示地址出现，点击回车静待... 3.在filter框中输入maven便能定位要安装的插件 4.选择“Collaboration”-“m2e - Maven Integration for Eclipse”，并点击next按钮进行安装 5.安装完成重启eclipse即可 6.配置你的maven 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
+      <categories>
+        <category>开发工具</category>
+      </categories>
+      <tags>
+        <tag>eclipse</tag>
+        <tag>maven</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hexo＋next主题搭建GitHub blog干货教程]]></title>
+    <url>%2F2018%2F01%2F10%2Fhexo%2F</url>
+    <content type="text"><![CDATA[前言本人开始并非使用next主题，这个大家可以去hexo官网themes处挑选自己喜欢的。注意：点击主题预览图可以去预览下，点击主题名就可以去GitHub页面copy了。但个人觉得next主题更好，bug少，拓展性强。好了，废话少说，进入正题。 准备工作 注册github账号 安装node.js 链接：https://pan.baidu.com/s/1mji9SmO 密码：fjw1 安装git 链接：https://pan.baidu.com/s/1dGUlqEH 密码：q9ws我的电脑是Windows10，其他你根据我提供的百度云链接下载即可。安装git时全打勾。 创建仓库新建一个 你的用户名.github.io的仓库，比如说你的GitHub用户名是abc,那么你新建仓库名叫abc.github.io,你的博客搭建好之后访问的网站也就是 https://abc.github.io了。 那怎么删除仓库呢？？？打开settings 创建博客根目录在一个磁盘里创建一个文件夹，比如我，在D盘创建了一个blog文件夹。 正式工作配置SSH Key桌面右键打开git bash here,输入 $ cd ~/. ssh // 检查本机已存在的 ssh 密钥 再接着输入 ssh-keygen -t rsa -C “你的邮件地址” 然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.这里名称随便取，在下面粘贴内容保存即可，有需要打勾就打勾。 我们回来测试下是否把SSH配置成功了。继续在bash里输入 $ ssh -T git@github.com 如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..看到这个意味着已成功！ 配置信息 $ git config –global user.name “xxx”// 你的github用户名，比如上面的abc$ git config –global user.email “xxx@qq.com“// 填写你的github注册邮箱 使用hexo安装hexo我们打开cmd命令行，输入 npm install -g hexo 这里可能会很慢，所以推荐使用淘宝镜像。 安装：npm install -g cnpm --registry=https://registry.npm.taobao.org 验证是否安装成功使用：cnpm -v这里使用使用： cnpm install -g hexo安装hexo 验证Hexo是否安装成功使用：hexo -v 初始化hexo打开我们之前创建的文件夹，比如我的blog，右击鼠标，打开git bash here,输入 $ hexo init 我们的文件夹会自动下载一些文件到这个blog目录里。 继续输入 $ hexo g$ hexo s hexo s是指启动服务，成功打开后会有提示，登录localhost:4000即可看到初始页面，到这里你的blog就基本搭建好了。 新建文章在bash里输入 $ hexo new post “文章名” 然后去blog/source/_posts就可以看到 上传到GitHub配置_config.yml中的deploy部分，注意这里的_config.yml文件是blog根目录，并非themes里的同名文件。配置如下(xxx为你的GitHub名) deploy: type: git repository: git@github.com:xxx/xxx.github.io.git branch: master 再次注意：关于_config.yml文件的配置，冒号后一定要加个空格，否则就无法部署了。 一切完成后在bash中继续输入 npm install hexo-deployer-git –save #这里是安装插件，不然无法deploy 然后输入以下就可以了 hexo clean &amp;&amp; hexo g &amp;&amp; hexo d 成功后会提示：Deploy done：git 证明成功啦。这是打开你的xxx.github.io就可以看到网页啦！ 主题设置打开next使用文档有详细的教程。主题教程以及拓展： 绑定个性域名申请域名在阿里云或腾讯云申请域名。我是在阿里云申请的，实名认证很快，推荐。 解析域名按我的内容来即可。 部署域名在blog根目录的source文件夹中新建无后缀文件 CNAME。里面内容只写上你的域名即可，注意不需要www按之前的顺序deploy即可 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[出发永远是美好的一件事]]></title>
+    <url>%2F2018%2F01%2F07%2F%E5%87%BA%E5%8F%91%2F</url>
+    <content type="text"><![CDATA[去做就是啦。 总结了一七再去展望一八，哈哈我是真想做个技术流人才然后……忙着结束手头上的事情，项目等等，想着去全身心投入到学习中，这是促进我去搭建自己的独立博客的初衷，去学习，去整理，去分享。大学也浪了大半了，两次六级考试都几乎零准备，湖泊你说咋写来着？ 要说新年计划的话，最近打算好好总结Java的知识，以及对基本框架，数据结构与算法的学习，对博客的维护与优化，还有考研的准备！ 新年快乐！]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+</search>
