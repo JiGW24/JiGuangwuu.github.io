@@ -36,6 +36,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[关于我的考研]]></title>
+    <url>%2F2019%2F04%2F05%2F190405%2F</url>
+    <content type="text"><![CDATA[有时间写下来这一段历程]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>心情</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[关于多态的一道面试题]]></title>
     <url>%2F2019%2F02%2F11%2F%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%80%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98%2F</url>
     <content type="text"><![CDATA[多态类A： class A { public String show(D obj){ return (&quot;A and D&quot;); } public String show(A obj){ return (&quot;A and A&quot;); } } 类B： class B extends A{ public String show(B obj){ return (&quot;B and B&quot;); } public String show(A obj){ return (&quot;B and A&quot;); } } 类C： class C extends B{} 类D： class D extends B{} 测试类： class DynamicTest{ public static void main(String[] args){ A a1 = new A(); A a2 = new B(); B b = new B(); C c = new C(); D d = new D(); System.out.println(a1.show(b)); System.out.println(a1.show(c)); System.out.println(a1.show(d)); System.out.println(a2.show(b)); System.out.println(a2.show(c)); System.out.println(a2.show(d)); System.out.println(b.show(b)); System.out.println(b.show(c)); System.out.println(b.show(d)); } } 答案： System.out.println(a1.show(b)); AA System.out.println(a1.show(c)); AA System.out.println(a1.show(d)); AD System.out.println(a2.show(b)); BA 编译看左边，看右边可有重写 System.out.println(a2.show(c)); BA 同样，看可有重写！ System.out.println(a2.show(d)); AD 编译看左边，但没有重写 System.out.println(b.show(b)); BB System.out.println(b.show(c)); BB 这里父类和爷爷类都可以，取最近的 System.out.println(b.show(d)); AD B是A的子类 ，会把A的方法都继承 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
@@ -45,17 +56,6 @@
       <tags>
         <tag>Java语法</tag>
         <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[20190405]]></title>
-    <url>%2F2019%2F02%2F05%2F190405%2F</url>
-    <content type="text"><![CDATA[So Sad So Nice]]></content>
-      <categories>
-        <category>生活</category>
-      </categories>
-      <tags>
-        <tag>心情</tag>
       </tags>
   </entry>
   <entry>
