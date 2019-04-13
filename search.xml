@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[留个言呗]]></title>
-    <url>%2F2048%2F10%2F24%2F%E7%95%99%E8%A8%80%E8%B4%B4%2F</url>
-    <content type="text"><![CDATA[System.out.println(&quot;Hello！&quot;); echo(&quot;Hello!&quot;); alert(&quot;Hello!&quot;); console.log(&quot;Hello!&quot;); printf(&quot;Hello!\n&quot;); cout &lt;&lt; &quot;Hello!&quot; &lt;&lt; endl; print(&quot;Hello!&quot;); var_dump(&quot;Hello!&quot;); println!(&quot;Hello!&quot;);]]></content>
-      <categories>
-        <category>SunnyDay</category>
-      </categories>
-      <tags>
-        <tag>留言贴</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[构造、静态代码块面试题]]></title>
     <url>%2F2019%2F04%2F08%2F%E6%9E%84%E9%80%A0%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%9D%97%2F</url>
     <content type="text"><![CDATA[复习构造代码块的执行时机：每次我们调用构造方法的时候都会先执行构造代码块中的代码，然后才去执行对应的构造方法中的代码。 静态代码块的执行时机：静态代码块其实就是在类加载的时候执行，一个类只会加载一次，所以静态代码块也最多只会执行一次。 public class Test01 { { System.out.println(&quot;Test01的构造代码块&quot;); } static { System.out.println(&quot;Test01的静态代码块&quot;); } public Test01() { System.out.println(&quot;Test01的构造方法&quot;); } public static void main(String[] args) { Student stu = new Student(); Student stu2 = new Student(); } } class Student { { System.out.println(&quot;Student的构造代码块&quot;); } static { System.out.println(&quot;Student的静态代码块&quot;); } public Student() { System.out.println(&quot;Student的构造方法&quot;); } } 答案：Test01的静态代码块 Student的静态代码块 Student的构造代码块Student的构造方法 Student的构造代码块 Student的构造方法 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
@@ -81,6 +70,14 @@
         <tag>hexo</tag>
         <tag>blog</tag>
       </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>%2F2019%2F01%2F01%2F%E7%95%99%E8%A8%80%E8%B4%B4%2F</url>
+    <content type="text"><![CDATA[System.out.println(&quot;Hello！&quot;); echo(&quot;Hello!&quot;); alert(&quot;Hello!&quot;); console.log(&quot;Hello!&quot;); printf(&quot;Hello!\n&quot;); cout &lt;&lt; &quot;Hello!&quot; &lt;&lt; endl; print(&quot;Hello!&quot;); var_dump(&quot;Hello!&quot;); println!(&quot;Hello!&quot;);]]></content>
+      <categories>
+        <category>comments</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[从简单题目看冒泡、插入、选择排序]]></title>

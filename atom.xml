@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-04-08T14:35:08.589Z</updated>
+  <updated>2019-04-08T14:13:28.105Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,38 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>留个言呗</title>
-    <link href="http://yoursite.com/2048/10/24/%E7%95%99%E8%A8%80%E8%B4%B4/"/>
-    <id>http://yoursite.com/2048/10/24/留言贴/</id>
-    <published>2048-10-23T16:10:24.000Z</published>
-    <updated>2019-04-08T14:35:08.589Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>System.out.println(&quot;Hello！&quot;);echo(&quot;Hello!&quot;);alert(&quot;Hello!&quot;);console.log(&quot;Hello!&quot;);printf(&quot;Hello!\n&quot;);cout &lt;&lt; &quot;Hello!&quot; &lt;&lt; endl;print(&quot;Hello!&quot;);var_dump(&quot;Hello!&quot;);println!(&quot;Hello!&quot;);</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;pre&gt;&lt;code&gt;System.out.println(&amp;quot;Hello！&amp;quot;);
-
-echo(&amp;quot;Hello!&amp;quot;);
-
-alert(&amp;quot;Hello!&amp;quot;);
-
-console.log(&amp;quot;Hello!&amp;quot;);
-
-      
-    
-    </summary>
-    
-      <category term="SunnyDay" scheme="http://yoursite.com/categories/SunnyDay/"/>
-    
-    
-      <category term="留言贴" scheme="http://yoursite.com/tags/%E7%95%99%E8%A8%80%E8%B4%B4/"/>
-    
-  </entry>
   
   <entry>
     <title>构造、静态代码块面试题</title>
@@ -210,6 +178,36 @@ console.log(&amp;quot;Hello!&amp;quot;);
       <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
     
       <category term="blog" scheme="http://yoursite.com/tags/blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2019/01/01/%E7%95%99%E8%A8%80%E8%B4%B4/"/>
+    <id>http://yoursite.com/2019/01/01/留言贴/</id>
+    <published>2018-12-31T16:10:24.000Z</published>
+    <updated>2019-04-13T15:53:03.278Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>System.out.println(&quot;Hello！&quot;);echo(&quot;Hello!&quot;);alert(&quot;Hello!&quot;);console.log(&quot;Hello!&quot;);printf(&quot;Hello!\n&quot;);cout &lt;&lt; &quot;Hello!&quot; &lt;&lt; endl;print(&quot;Hello!&quot;);var_dump(&quot;Hello!&quot;);println!(&quot;Hello!&quot;);</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;pre&gt;&lt;code&gt;System.out.println(&amp;quot;Hello！&amp;quot;);
+
+echo(&amp;quot;Hello!&amp;quot;);
+
+alert(&amp;quot;Hello!&amp;quot;);
+
+console.log(&amp;quot;Hello!&amp;quot;);
+
+      
+    
+    </summary>
+    
+      <category term="comments" scheme="http://yoursite.com/categories/comments/"/>
+    
     
   </entry>
   
