@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[构造、静态代码块面试题]]></title>
-    <url>%2F2019%2F04%2F08%2F%E6%9E%84%E9%80%A0%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%9D%97%2F</url>
-    <content type="text"><![CDATA[复习构造代码块的执行时机：每次我们调用构造方法的时候都会先执行构造代码块中的代码，然后才去执行对应的构造方法中的代码。 静态代码块的执行时机：静态代码块其实就是在类加载的时候执行，一个类只会加载一次，所以静态代码块也最多只会执行一次。 public class Test01 { { System.out.println(&quot;Test01的构造代码块&quot;); } static { System.out.println(&quot;Test01的静态代码块&quot;); } public Test01() { System.out.println(&quot;Test01的构造方法&quot;); } public static void main(String[] args) { Student stu = new Student(); Student stu2 = new Student(); } } class Student { { System.out.println(&quot;Student的构造代码块&quot;); } static { System.out.println(&quot;Student的静态代码块&quot;); } public Student() { System.out.println(&quot;Student的构造方法&quot;); } } 答案：Test01的静态代码块 Student的静态代码块 Student的构造代码块Student的构造方法 Student的构造代码块 Student的构造方法 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java语法</tag>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[单例模式]]></title>
     <url>%2F2019%2F04%2F06%2F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%2F</url>
     <content type="text"><![CDATA[理解设计模式（Design pattern）代表了最佳的实践，通常被有经验的面向对象的软件开发人员所采用。设计模式是软件开发人员在软件开发过程中面临的一般问题的解决方案。这些解决方案是众多软件开发人员经过相当长的一段时间的试验和错误总结出来的。 何为单例模式单例模式(Singleton)，又称单态模式或者单件模式。即保证一个类仅有一个实例，并提供一个访问它的全局访问点。目的是即控制特定的类只产生一个对象，也允许在一定情况下灵活的改变对象的个数。 如何实现先看一段代码 public class Thing { private Thing(){ } private static Thing instance = new Thing(); //这段代码保证了Thread safe public static Thing getInstance(){ return instance; ｝ ｝ 测试类 public class TestDemo { public static void main(String[] args) { Thing t1 = Thing.getInstance(); Thing t2 = Thing.getInstance(); System.out.println(t1); System.out.println(t2); } } 输出t1和t2的结果是一致的。可以发现，我们将构造方法私有化了，这使得外面的类无法通过引用来创建对象；同时为了保证类的可用性，就必须提供一个自己的对象以及访问这个对象的静态方法。因此，我们应该明白：单例模式只有一个角色，而客户通过调用类的方法来创建对象。 还有什么在上面的Thing类中我们“迫不及待”的创建了对象，但如果这个对象我们很长时间都没有使用就浪费了内存空间，因此称之为饿汉式。存在另一种写法，即懒汉式。看这段代码 private static Thing instance; public static Thing getInstance(){ if (instance==null){ instance = new Thing(); } return instance; } 很明显，当程序真正需要这个对象的时候我们才开始创建。但是这在多线程情况下是有问题的，为了防止多线程环境中产生多个实例，我们做出改进，使用同步处理。 private static Thing instance; public static Thing getInstance(){ //如果是对象还没创建的时候使用同步，如果对象已经创建完了，就不要同步了 ，这样效率就可以提高 if (instance==null){ synchronized (Thing.class){ if (instance==null){ //说明对象还没创建，所以里面使用了同步s instance = new Thing(); } } } return instance; } 这里我们使用的是同步代码块，为什么不要同步方法呢？ private static Thing instance; public synchronized static Thing getInstance(){ if (instance==null){ instance = new Thing(); } return instance; } 通过使用同步方法，迫使每个线程在进入这个方法前要等候别的进程离开该方法。但同步会降低性能，并且这里只有第一次执行该方法时才会正在需要同步。之后每一次调用这个方法，同步都是浪费的。 存在的问题在学习单例模式时，通过这方面的书籍了解到以下问题 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
@@ -43,8 +31,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Java语法</tag>
         <tag>面试</tag>
+        <tag>Java语法</tag>
       </tags>
   </entry>
   <entry>
@@ -72,6 +60,30 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[eclipse的maven插件安装]]></title>
+    <url>%2F2018%2F09%2F07%2Feclipse%E6%8F%92%E4%BB%B6maven%2F</url>
+    <content type="text"><![CDATA[以eclipse kepler为例，官网下载地址：http://www.eclipse.org/downloads/packages/release/Kepler/SR2 1.打开eclipse，help–install new software… 2.workwith里输入：http://download.eclipse.org/releases/kepler，输入完会有提示地址出现，点击回车静待... 3.在filter框中输入maven便能定位要安装的插件 4.选择“Collaboration”-“m2e - Maven Integration for Eclipse”，并点击next按钮进行安装 5.安装完成重启eclipse即可 6.配置你的maven 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
+      <categories>
+        <category>开发工具</category>
+      </categories>
+      <tags>
+        <tag>eclipse</tag>
+        <tag>maven</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[构造、静态代码块面试题]]></title>
+    <url>%2F2018%2F06%2F05%2F%E6%9E%84%E9%80%A0%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%9D%97%2F</url>
+    <content type="text"><![CDATA[复习构造代码块的执行时机：每次我们调用构造方法的时候都会先执行构造代码块中的代码，然后才去执行对应的构造方法中的代码。 静态代码块的执行时机：静态代码块其实就是在类加载的时候执行，一个类只会加载一次，所以静态代码块也最多只会执行一次。 public class Test01 { { System.out.println(&quot;Test01的构造代码块&quot;); } static { System.out.println(&quot;Test01的静态代码块&quot;); } public Test01() { System.out.println(&quot;Test01的构造方法&quot;); } public static void main(String[] args) { Student stu = new Student(); Student stu2 = new Student(); } } class Student { { System.out.println(&quot;Student的构造代码块&quot;); } static { System.out.println(&quot;Student的静态代码块&quot;); } public Student() { System.out.println(&quot;Student的构造方法&quot;); } } 答案：Test01的静态代码块 Student的静态代码块 Student的构造代码块Student的构造方法 Student的构造代码块 Student的构造方法 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>Java语法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[从简单题目看冒泡、插入、选择排序]]></title>
     <url>%2F2018%2F03%2F03%2F%E6%8E%92%E5%BA%8F1%2F</url>
     <content type="text"><![CDATA[问题的引入从键盘输入10个整数并按从大到小的顺序排列，输出结果冒泡排序基本思想：比较所有相邻的两个元素，如果第一个数比第二个数大就交换它们两个。最后的数字应该最大得到升序排列。 package top.jgw; import java.util.Arrays; import java.util.Scanner; public class BubbleSort { public static void main(String[] args) { Scanner ra = new Scanner(System.in); System.out.print(&quot;请输入10个数：&quot;); int[] arr = new int[10]; for(int a=0;a&lt;10;a++){ arr[a] = ra.nextInt(); } System.out.println(&quot;排序前的arr：&quot;+Arrays.toString(arr)); for(int i=arr.length-1;i&gt;0;i--){ for(int j=1;j&lt;=i;j++){ if(arr[j-1]&gt;arr[j]){ int temp = arr[j-1]; arr[j-1] = arr[j]; arr[j] = temp; } } } System.out.println(&quot;排序后的arr ：&quot;+Arrays.toString(arr)); } } 结论：冒泡排序是一种稳定的排序方法。 若文件初状为正序，则一趟起泡就可完成排序，排序码的比较次数为n-1，且没有记录移动，时间复杂度是O(n) 若文件初态为逆序，则需要n-1趟起泡，每趟进行n-i次排序码的比较，且每次比较都移动三次，比较和移动次数均达到最大值∶O(n2) 起泡排序平均时间复杂度为O(n2) 插入排序基本思想：每一步将一个待排序的记录，按其顺序码大小插入到前面已经排序的序列的合适位置（从后向前找到合适位置后），直到全部插入排序完为止。 package top.jgw; import java.util.Arrays; import java.util.Scanner; public class InsertionSort { public static void main(String[] args){ int i,j; int temp=0; Scanner ra=new Scanner(System.in); System.out.print(&quot;请输入10个数：&quot;); int arr[]=new int[10]; for(int a=0;a&lt;10;a++){ arr[a]=ra.nextInt(); } System.out.println(&quot;排序前的arr: &quot;+Arrays.toString(arr)); for(i=1;i&lt;arr.length;i++){ temp=arr[i]; for(j=i-1;j&gt;=0 &amp;&amp; temp&lt;arr[j];j--){ arr[j+1]=arr[j]; } arr[j+1]=temp; } System.out.println(&quot;排序后的arr：&quot;+Arrays.toString(arr)); } } 结论：直接插入排序也是稳定的排序。文件初态不同时，直接插入排序所耗费的时间有很大差异。若文件初态为正序，则每个待插入的记录只需要比较一次就能够找到合适的位置插入，故算法的时间复杂度为O(n)，这时最好的情况。若初态为反序，则第i个待插入记录需要比较i+1次才能找到合适位置插入，故时间复杂度为O(n2)，这时最坏的情况。 选择排序基本思想：每一次排序都从待排序序列中选择一个最小元素放到已排好的序列的末端，重复此步骤可得到升序序列。 package top.jgw; import java.util.Arrays; import java.util.Scanner; public class SelectionSort { public static void main(String[] args){ Scanner ra=new Scanner(System.in); System.out.print(&quot;请输入10个数: &quot;); int arr[]=new int[10]; for(int a=0;a&lt;10;a++){ arr[a]=ra.nextInt(); } System.out.println(&quot;排序前的arr: &quot;+Arrays.toString(arr)); int temp=0; for(int i=0;i&lt;arr.length-1;i++){ for(int j=i+1;j&lt;arr.length;j++){ if(arr[i]&gt;arr[j]){ temp=arr[i]; arr[i]=arr[j]; arr[j]=temp; } } } System.out.println(&quot;排序后的arr: &quot;+Arrays.toString(arr)); } } 结论：简单选择排序是不稳定的排序，时间复杂度：T(n)=O(n2)。 日后补充… 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
@@ -80,18 +92,6 @@
       </categories>
       <tags>
         <tag>排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[eclipse的maven插件安装]]></title>
-    <url>%2F2018%2F02%2F07%2Feclipse%E6%8F%92%E4%BB%B6maven%2F</url>
-    <content type="text"><![CDATA[以eclipse kepler为例，官网下载地址：http://www.eclipse.org/downloads/packages/release/Kepler/SR2 1.打开eclipse，help–install new software… 2.workwith里输入：http://download.eclipse.org/releases/kepler，输入完会有提示地址出现，点击回车静待... 3.在filter框中输入maven便能定位要安装的插件 4.选择“Collaboration”-“m2e - Maven Integration for Eclipse”，并点击next按钮进行安装 5.安装完成重启eclipse即可 6.配置你的maven 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
-      <categories>
-        <category>开发工具</category>
-      </categories>
-      <tags>
-        <tag>eclipse</tag>
-        <tag>maven</tag>
       </tags>
   </entry>
   <entry>
