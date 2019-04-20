@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java语法,面试,">
+  <meta name="keywords" content="面试,Java语法,">
 
 
 
@@ -82,7 +82,7 @@
 
 
 <meta name="description" content="复习构造代码块的执行时机：每次我们调用构造方法的时候都会先执行构造代码块中的代码，然后才去执行对应的构造方法中的代码。 静态代码块的执行时机：静态代码块其实就是在类加载的时候执行，一个类只会加载一次，所以静态代码块也最多只会执行一次。 public class Test01 {     {         System.out.println(&amp;quot;Test01的构造代码块&amp;quot;);">
-<meta name="keywords" content="Java语法,面试">
+<meta name="keywords" content="面试,Java语法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="构造、静态代码块面试题">
 <meta property="og:url" content="http://yoursite.com/2019/04/08/构造静态代码块/index.html">
@@ -372,6 +372,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/08/构造静态代码块/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/08/构造静态代码块/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -501,6 +511,24 @@ class Student {
     
 
     
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    杂 涅
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2019/04/08/构造静态代码块/" title="构造、静态代码块面试题">http://yoursite.com/2019/04/08/构造静态代码块/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
 	
 	<div>
     
@@ -512,9 +540,9 @@ class Student {
       
         <div class="post-tags">
           
-            <a href="/tags/Java语法/" rel="tag"><i class="fa fa-tag"></i> Java语法</a>
-          
             <a href="/tags/面试/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
+          
+            <a href="/tags/Java语法/" rel="tag"><i class="fa fa-tag"></i> Java语法</a>
           
         </div>
       
@@ -566,7 +594,7 @@ class Student {
 
   
     <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80MzYyNC8yMDE2Mw"></div>
+      <div id="SOHUCS"></div>
     </div>
 
   
@@ -897,26 +925,37 @@ class Student {
 
 
   
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
   
-
-
-
-
-
-
-
-
-
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'XO0jozUWbKq88eANuQma5BKv-gzGzoHsz',
+        appKey: 'BQnAawulBKcFBNOB4Q7sHTTe',
+        placeholder: '欢迎留言',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 
