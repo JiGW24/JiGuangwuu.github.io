@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://jiguangwu.top/comments/index.html</loc>
+    
+    <lastmod>2019-04-22T13:18:00.521Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://jiguangwu.top/2018/09/07/eclipse%E6%8F%92%E4%BB%B6maven/</loc>
     
     <lastmod>2019-04-20T14:21:32.251Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://jiguangwu.top/2018/06/05/%E6%9E%84%E9%80%A0%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%9D%97/</loc>
     
     <lastmod>2019-04-20T14:21:15.551Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://jiguangwu.top/comments/index.html</loc>
-    
-    <lastmod>2019-04-14T15:02:23.018Z</lastmod>
     
   </url>
   
