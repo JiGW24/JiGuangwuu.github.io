@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[单例模式]]></title>
-    <url>%2F2019%2F12%2F06%2F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%2F</url>
-    <content type="text"><![CDATA[理解设计模式（Design pattern）代表了最佳的实践，通常被有经验的面向对象的软件开发人员所采用。设计模式是软件开发人员在软件开发过程中面临的一般问题的解决方案。这些解决方案是众多软件开发人员经过相当长的一段时间的试验和错误总结出来的。 何为单例模式单例模式(Singleton)，又称单态模式或者单件模式。即保证一个类仅有一个实例，并提供一个访问它的全局访问点。目的是即控制特定的类只产生一个对象，也允许在一定情况下灵活的改变对象的个数。 如何实现先看一段代码 public class Thing { private Thing(){ } private static Thing instance = new Thing(); //这段代码保证了Thread safe public static Thing getInstance(){ return instance; ｝ ｝ 测试类 public class TestDemo { public static void main(String[] args) { Thing t1 = Thing.getInstance(); Thing t2 = Thing.getInstance(); System.out.println(t1); System.out.println(t2); } } 输出t1和t2的结果是一致的。可以发现，我们将构造方法私有化了，这使得外面的类无法通过引用来创建对象；同时为了保证类的可用性，就必须提供一个自己的对象以及访问这个对象的静态方法。因此，我们应该明白：单例模式只有一个角色，而客户通过调用类的方法来创建对象。 还有什么在上面的Thing类中我们“迫不及待”的创建了对象，但如果这个对象我们很长时间都没有使用就浪费了内存空间，因此称之为饿汉式。存在另一种写法，即懒汉式。看这段代码 private static Thing instance; public static Thing getInstance(){ if (instance==null){ instance = new Thing(); } return instance; } 很明显，当程序真正需要这个对象的时候我们才开始创建。但是这在多线程情况下是有问题的，为了防止多线程环境中产生多个实例，我们做出改进，使用同步处理。 private static Thing instance; public static Thing getInstance(){ //如果是对象还没创建的时候使用同步，如果对象已经创建完了，就不要同步了 ，这样效率就可以提高 if (instance==null){ synchronized (Thing.class){ if (instance==null){ //说明对象还没创建，所以里面使用了同步s instance = new Thing(); } } } return instance; } 这里我们使用的是同步代码块，为什么不要同步方法呢？ private static Thing instance; public synchronized static Thing getInstance(){ if (instance==null){ instance = new Thing(); } return instance; } 通过使用同步方法，迫使每个线程在进入这个方法前要等候别的进程离开该方法。但同步会降低性能，并且这里只有第一次执行该方法时才会正在需要同步。之后每一次调用这个方法，同步都是浪费的。 存在的问题在学习单例模式时，通过这方面的书籍了解到以下问题 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>interview</tag>
-        <tag>designPattern</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[XML解析]]></title>
     <url>%2F2019%2F04%2F24%2FXML%E8%A7%A3%E6%9E%90%2F</url>
     <content type="text"><![CDATA[解析 操作xml文档，将文档的数据读取到内存中。 解析方式DOM 将标记语言文档一次性加载进内存，在内存中形成一棵dom树 优点：操作方便，可以对文档进行CRUD的所有操作 缺点：占内存 SAX 逐行读取，基于事件驱动 优点：不占内存，相比DOM效率更高 缺点：只能读取，不能增删改 解析器常见解析器 1. JAXP：sun公司提供的解析器，支持dom和sax两种思想 2. DOM4J：一款非常优秀的解析器 3. Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。 4. PULL：Android操作系统内置的解析器，sax方式的。 DOM4J本文中利用dom4j和xpath的支持进行解析，DOM4J中还提供了其他几种遍历节点的方法，例如枚举(Iterator)、递归、visitor模式等等。 范例 1. 导包 dom4j-1.6.1.jar jaxen-1.1-beta-6.jar 2. public class TestDemo01 { @Test public void method() throws DocumentException { //创建解析器 SAXReader saxReader = new SAXReader(); //解析xml Document document = saxReader.read(TestDemo01.class.getClassLoader().getResourceAsStream(&quot;student.xml&quot;)); //获取根标签 Element rootElement = document.getRootElement(); /*System.out.println(rootElement); //获取子标签 List elements = rootElement.elements(); //获取第一个 Object stu1 = elements.get(0); System.out.println(stu1); System.out.println(&quot;----------&quot;); //student个数 List student = rootElement.elements(&quot;student&quot;); int size = student.size(); System.out.println(size); System.out.println(&quot;----------&quot;); //获取第一个学号 Element stu = rootElement.element(&quot;student&quot;); String s1 = stu.attributeValue(&quot;number&quot;); System.out.println(s1); System.out.println(&quot;----------&quot;); //获取第一个年龄 Element age1 = stu.element(&quot;age&quot;); String text = age1.getText(); System.out.println(text); // 即每一级便签和下一级标签用element方法获取第一个 } } 3. 结合xpath Element element = (Element)rootElement.selectSingleNode(&quot;//student[@number=&apos;heima_0002&apos;]&quot;); System.out.println(element); //xpath语法可通过xpath API文档查询 可能出现的问题在idea中编程时，使用Schema约束会在写xml文件是自动出现 xmlns=”http://www.itcast.cn/xml&quot;，使用这样的xml编码方式再结合xpath进行解析时，会发生找不到结果的问题 &lt;students xmlns=&quot;http://www.itcast.cn/xml&quot;&gt; &lt;student number=&quot;heima_0001&quot;&gt; &lt;name&gt;zhangsan&lt;/name&gt; &lt;age&gt;24&lt;/age&gt; &lt;sex&gt;male&lt;/sex&gt; &lt;/student&gt; &lt;/students&gt; 如获取 Element element = (Element)rootElement.selectSingleNode(&quot;//student[@number=&apos;heima_0002&apos;]&quot;); System.out.println(element); 结果为null Jsoup步骤： 1. 导入jar包 jsoup-1.11.2.jar JsoupXpath-0.3.2.jar 2. 获取Document对象 3. 获取对应的标签Element对象 4. 获取数据 代码： //2.1获取student.xml的path String path = JsoupDemo1.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath(); //2.2解析xml文档，加载文档进内存，获取dom树---&gt;Document Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;); //3.获取元素对象 Element Elements elements = document.getElementsByTag(&quot;name&quot;); System.out.println(elements.size()); //3.1获取第一个name的Element对象 Element element = elements.get(0); //3.2获取数据 String name = element.text(); System.out.println(name); 对象的使用： 1. Jsoup：工具类，可以解析html或xml文档，返回Document * parse：解析html或xml文档，返回Document * parse​(File in, String charsetName)：解析xml或html文件的。 * parse​(String html)：解析xml或html字符串 * parse​(URL url, int timeoutMillis)：通过网络路径获取指定的html或xml的文档对象 2. Document：文档对象。代表内存中的dom树 * 获取Element对象 * getElementById​(String id)：根据id属性值获取唯一的element对象 * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合 * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合 * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合 3. Elements：元素Element对象的集合。可以当做 ArrayList&lt;Element&gt;来使用 4. Element：元素对象 1. 获取子元素对象 * getElementById​(String id)：根据id属性值获取唯一的element对象 * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合 * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合 * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合 2. 获取属性值 * String attr(String key)：根据属性名称获取属性值 3. 获取文本内容 * String text():获取文本内容 * String html():获取标签体的所有内容(包括字标签的字符串内容) 5. Node：节点对象 * 是Document和Element的父类 快捷查询方式： 1. selector:选择器 * 使用的方法：Elements select​(String cssQuery) * 语法：参考Selector类中定义的语法 2. XPath：XPath即为XML路径语言，它是一种用来确定XML（标准通用标记语言的子集）文档中某部分位置的语言 * 使用Jsoup的Xpath需要额外导入jar包。 * 查询w3cshool参考手册，使用xpath的语法完成查询 * 代码： //1.获取student.xml的path String path = JsoupDemo6.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath(); //2.获取Document对象 Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;); //3.根据document对象，创建JXDocument对象 JXDocument jxDocument = new JXDocument(document); //4.结合xpath语法查询 //4.1查询所有student标签 List&lt;JXNode&gt; jxNodes = jxDocument.selN(&quot;//student&quot;); for (JXNode jxNode : jxNodes) { System.out.println(jxNode); } System.out.println(&quot;--------------------&quot;); //4.2查询所有student标签下的name标签 List&lt;JXNode&gt; jxNodes2 = jxDocument.selN(&quot;//student/name&quot;); for (JXNode jxNode : jxNodes2) { System.out.println(jxNode); } System.out.println(&quot;--------------------&quot;); //4.3查询student标签下带有id属性的name标签 List&lt;JXNode&gt; jxNodes3 = jxDocument.selN(&quot;//student/name[@id]&quot;); for (JXNode jxNode : jxNodes3) { System.out.println(jxNode); } System.out.println(&quot;--------------------&quot;); //4.4查询student标签下带有id属性的name标签 并且id属性值为itcast List&lt;JXNode&gt; jxNodes4 = jxDocument.selN(&quot;//student/name[@id=&apos;itcast&apos;]&quot;); for (JXNode jxNode : jxNodes4) { System.out.println(jxNode); }]]></content>
@@ -46,6 +34,18 @@
       </categories>
       <tags>
         <tag>mood</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[单例模式]]></title>
+    <url>%2F2019%2F03%2F26%2F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%2F</url>
+    <content type="text"><![CDATA[理解设计模式（Design pattern）代表了最佳的实践，通常被有经验的面向对象的软件开发人员所采用。设计模式是软件开发人员在软件开发过程中面临的一般问题的解决方案。这些解决方案是众多软件开发人员经过相当长的一段时间的试验和错误总结出来的。 何为单例模式单例模式(Singleton)，又称单态模式或者单件模式。即保证一个类仅有一个实例，并提供一个访问它的全局访问点。目的是即控制特定的类只产生一个对象，也允许在一定情况下灵活的改变对象的个数。 如何实现先看一段代码 public class Thing { private Thing(){ } private static Thing instance = new Thing(); //这段代码保证了Thread safe public static Thing getInstance(){ return instance; ｝ ｝ 测试类 public class TestDemo { public static void main(String[] args) { Thing t1 = Thing.getInstance(); Thing t2 = Thing.getInstance(); System.out.println(t1); System.out.println(t2); } } 输出t1和t2的结果是一致的。可以发现，我们将构造方法私有化了，这使得外面的类无法通过引用来创建对象；同时为了保证类的可用性，就必须提供一个自己的对象以及访问这个对象的静态方法。因此，我们应该明白：单例模式只有一个角色，而客户通过调用类的方法来创建对象。 还有什么在上面的Thing类中我们“迫不及待”的创建了对象，但如果这个对象我们很长时间都没有使用就浪费了内存空间，因此称之为饿汉式。存在另一种写法，即懒汉式。看这段代码 private static Thing instance; public static Thing getInstance(){ if (instance==null){ instance = new Thing(); } return instance; } 很明显，当程序真正需要这个对象的时候我们才开始创建。但是这在多线程情况下是有问题的，为了防止多线程环境中产生多个实例，我们做出改进，使用同步处理。 private static Thing instance; public static Thing getInstance(){ //如果是对象还没创建的时候使用同步，如果对象已经创建完了，就不要同步了 ，这样效率就可以提高 if (instance==null){ synchronized (Thing.class){ if (instance==null){ //说明对象还没创建，所以里面使用了同步s instance = new Thing(); } } } return instance; } 这里我们使用的是同步代码块，为什么不要同步方法呢？ private static Thing instance; public synchronized static Thing getInstance(){ if (instance==null){ instance = new Thing(); } return instance; } 通过使用同步方法，迫使每个线程在进入这个方法前要等候别的进程离开该方法。但同步会降低性能，并且这里只有第一次执行该方法时才会正在需要同步。之后每一次调用这个方法，同步都是浪费的。 存在的问题在学习单例模式时，通过这方面的书籍了解到以下问题 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>interview</tag>
+        <tag>designPattern</tag>
       </tags>
   </entry>
   <entry>
@@ -92,8 +92,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>interview</tag>
         <tag>java</tag>
+        <tag>interview</tag>
       </tags>
   </entry>
   <entry>
@@ -104,8 +104,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>interview</tag>
         <tag>java</tag>
+        <tag>interview</tag>
       </tags>
   </entry>
   <entry>
