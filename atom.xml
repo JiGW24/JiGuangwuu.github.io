@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jiguangwu.top/"/>
-  <updated>2019-04-08T14:12:15.036Z</updated>
+  <updated>2019-04-26T14:27:43.633Z</updated>
   <id>http://jiguangwu.top/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>单例模式</title>
-    <link href="http://jiguangwu.top/2019/04/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://jiguangwu.top/2019/04/06/设计模式之单例模式/</id>
-    <published>2019-04-06T13:02:09.000Z</published>
-    <updated>2019-04-08T14:12:15.036Z</updated>
+    <link href="http://jiguangwu.top/2019/12/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://jiguangwu.top/2019/12/06/设计模式之单例模式/</id>
+    <published>2019-12-06T13:02:09.000Z</published>
+    <updated>2019-04-26T14:27:43.633Z</updated>
     
     <content type="html"><![CDATA[<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p>设计模式（Design pattern）代表了最佳的实践，通常被有经验的面向对象的软件开发人员所采用。设计模式是软件开发人员在软件开发过程中面临的一般问题的解决方案。这些解决方案是众多软件开发人员经过相当长的一段时间的试验和错误总结出来的。</p><h1 id="何为单例模式"><a href="#何为单例模式" class="headerlink" title="何为单例模式"></a>何为单例模式</h1><p>单例模式(Singleton)，又称单态模式或者单件模式。即保证一个类仅有一个实例，并提供一个访问它的全局访问点。<br>目的是即控制特定的类只产生一个对象，也允许在一定情况下灵活的改变对象的个数。</p><h1 id="如何实现"><a href="#如何实现" class="headerlink" title="如何实现"></a>如何实现</h1><p>先看一段代码</p><pre><code>public class Thing {    private Thing(){    }    private static  Thing instance = new Thing();    //这段代码保证了Thread safe    public static Thing getInstance(){        return instance;    ｝｝    </code></pre><p>测试类</p><pre><code>public class TestDemo {    public static void main(String[] args) {        Thing t1 = Thing.getInstance();        Thing t2 = Thing.getInstance();        System.out.println(t1);        System.out.println(t2);    }}</code></pre><p>输出t1和t2的结果是一致的。<br>可以发现，我们将构造方法私有化了，这使得外面的类无法通过引用来创建对象；同时为了保证类的可用性，就必须提供一个自己的对象以及访问这个对象的静态方法。<br>因此，我们应该明白：<br>单例模式只有一个角色，而客户通过调用类的方法来创建对象。</p><p><img src="https://i.loli.net/2019/04/08/5cab563abef10.png" alt="单例原理"></p><h1 id="还有什么"><a href="#还有什么" class="headerlink" title="还有什么"></a>还有什么</h1><p>在上面的Thing类中我们“迫不及待”的创建了对象，但如果这个对象我们很长时间都没有使用就浪费了内存空间，因此称之为<strong>饿汉式</strong>。存在另一种写法，即<strong>懒汉式</strong>。<br>看这段代码</p><pre><code>private static Thing instance;public static Thing getInstance(){                    if (instance==null){               instance = new Thing();            }            return instance;}</code></pre><p>很明显，当程序真正需要这个对象的时候我们才开始创建。但是这在多线程情况下是有问题的，为了防止多线程环境中产生多个实例，我们做出改进，使用同步处理。</p><pre><code>private static Thing instance;public static Thing getInstance(){     //如果是对象还没创建的时候使用同步，如果对象已经创建完了，就不要同步了  ，这样效率就可以提高    if (instance==null){        synchronized (Thing.class){            if (instance==null){            //说明对象还没创建，所以里面使用了同步s               instance = new Thing();            }        }    }    return instance;}</code></pre><p>这里我们使用的是同步代码块，为什么不要同步方法呢？</p><pre><code> private static Thing instance;public synchronized static Thing getInstance(){    if (instance==null){        instance = new Thing();    }    return instance;}</code></pre><p>通过使用同步方法，迫使每个线程在进入这个方法前要等候别的进程离开该方法。但同步会降低性能，并且这里只有第一次执行该方法时才会正在需要同步。之后每一次调用这个方法，同步都是浪费的。</p><h1 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h1><p>在学习单例模式时，通过这方面的书籍了解到以下问题</p><p><img src="https://i.loli.net/2019/04/08/5cab564492dd7.png" alt></p><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">Star Or Follow</a>，感谢。</p>]]></content>
     
@@ -37,9 +37,70 @@
       <category term="设计模式" scheme="http://jiguangwu.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
     
-      <category term="面试" scheme="http://jiguangwu.top/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="interview" scheme="http://jiguangwu.top/tags/interview/"/>
     
-      <category term="单例模式" scheme="http://jiguangwu.top/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+      <category term="designPattern" scheme="http://jiguangwu.top/tags/designPattern/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XML解析</title>
+    <link href="http://jiguangwu.top/2019/04/24/XML%E8%A7%A3%E6%9E%90/"/>
+    <id>http://jiguangwu.top/2019/04/24/XML解析/</id>
+    <published>2019-04-24T02:10:45.000Z</published>
+    <updated>2019-04-26T13:16:36.703Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><hr><p>操作xml文档，将文档的数据读取到内存中。</p><h2 id="解析方式"><a href="#解析方式" class="headerlink" title="解析方式"></a>解析方式</h2><pre><code>DOM 将标记语言文档一次性加载进内存，在内存中形成一棵dom树优点：操作方便，可以对文档进行CRUD的所有操作缺点：占内存SAX 逐行读取，基于事件驱动优点：不占内存，相比DOM效率更高缺点：只能读取，不能增删改</code></pre><h2 id="解析器"><a href="#解析器" class="headerlink" title="解析器"></a>解析器</h2><p>常见解析器</p><pre><code>1. JAXP：sun公司提供的解析器，支持dom和sax两种思想2. DOM4J：一款非常优秀的解析器3. Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。4. PULL：Android操作系统内置的解析器，sax方式的。</code></pre><h3 id="DOM4J"><a href="#DOM4J" class="headerlink" title="DOM4J"></a>DOM4J</h3><p>本文中利用dom4j和xpath的支持进行解析，DOM4J中还提供了其他几种遍历节点的方法，例如枚举(Iterator)、递归、visitor模式等等。</p><p>范例</p><pre><code>1. 导包    dom4j-1.6.1.jar    jaxen-1.1-beta-6.jar2.     public class TestDemo01 {            @Test            public void method() throws DocumentException {            //创建解析器            SAXReader saxReader = new SAXReader();            //解析xml            Document document = saxReader.read(TestDemo01.class.getClassLoader().getResourceAsStream(&quot;student.xml&quot;));            //获取根标签            Element rootElement = document.getRootElement();            /*System.out.println(rootElement);            //获取子标签            List elements = rootElement.elements();            //获取第一个            Object stu1 = elements.get(0);            System.out.println(stu1);            System.out.println(&quot;----------&quot;);            //student个数            List student = rootElement.elements(&quot;student&quot;);            int size = student.size();            System.out.println(size);            System.out.println(&quot;----------&quot;);            //获取第一个学号            Element stu = rootElement.element(&quot;student&quot;);            String s1 = stu.attributeValue(&quot;number&quot;);            System.out.println(s1);            System.out.println(&quot;----------&quot;);            //获取第一个年龄            Element age1 = stu.element(&quot;age&quot;);            String text = age1.getText();            System.out.println(text);            // 即每一级便签和下一级标签用element方法获取第一个        }    }3. 结合xpath            Element element = (Element)rootElement.selectSingleNode(&quot;//student[@number=&apos;heima_0002&apos;]&quot;);            System.out.println(element);//xpath语法可通过xpath API文档查询</code></pre><h4 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h4><p>在idea中编程时，使用Schema约束会在写xml文件是自动出现 <strong>xmlns=”<a href="http://www.itcast.cn/xml&quot;" target="_blank" rel="noopener">http://www.itcast.cn/xml&quot;</a></strong>，使用这样的xml编码方式再结合xpath进行解析时，会发生找不到结果的问题</p><pre><code>&lt;students xmlns=&quot;http://www.itcast.cn/xml&quot;&gt;    &lt;student number=&quot;heima_0001&quot;&gt;    &lt;name&gt;zhangsan&lt;/name&gt;    &lt;age&gt;24&lt;/age&gt;    &lt;sex&gt;male&lt;/sex&gt;    &lt;/student&gt;&lt;/students&gt;</code></pre><p>如获取</p><pre><code>Element element = (Element)rootElement.selectSingleNode(&quot;//student[@number=&apos;heima_0002&apos;]&quot;);  System.out.println(element);</code></pre><p>结果为<strong>null</strong></p><h3 id="Jsoup"><a href="#Jsoup" class="headerlink" title="Jsoup"></a>Jsoup</h3><p>步骤：</p><pre><code>1. 导入jar包        jsoup-1.11.2.jar        JsoupXpath-0.3.2.jar2. 获取Document对象3. 获取对应的标签Element对象4. 获取数据</code></pre><p>代码：</p><pre><code>//2.1获取student.xml的path  String path = JsoupDemo1.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();  //2.2解析xml文档，加载文档进内存，获取dom树---&gt;Document  Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);  //3.获取元素对象 Element  Elements elements = document.getElementsByTag(&quot;name&quot;);  System.out.println(elements.size());  //3.1获取第一个name的Element对象  Element element = elements.get(0);  //3.2获取数据  String name = element.text();  System.out.println(name);</code></pre><p>对象的使用：</p><pre><code>1. Jsoup：工具类，可以解析html或xml文档，返回Document    * parse：解析html或xml文档，返回Document        * parse​(File in, String charsetName)：解析xml或html文件的。        * parse​(String html)：解析xml或html字符串        * parse​(URL url, int timeoutMillis)：通过网络路径获取指定的html或xml的文档对象2. Document：文档对象。代表内存中的dom树    * 获取Element对象        * getElementById​(String id)：根据id属性值获取唯一的element对象        * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合        * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合        * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合3. Elements：元素Element对象的集合。可以当做 ArrayList&lt;Element&gt;来使用4. Element：元素对象    1. 获取子元素对象        * getElementById​(String id)：根据id属性值获取唯一的element对象        * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合        * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合        * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合    2. 获取属性值        * String attr(String key)：根据属性名称获取属性值    3. 获取文本内容        * String text():获取文本内容        * String html():获取标签体的所有内容(包括字标签的字符串内容)5. Node：节点对象    * 是Document和Element的父类</code></pre><p>快捷查询方式：</p><pre><code>1. selector:选择器    * 使用的方法：Elements    select​(String cssQuery)        * 语法：参考Selector类中定义的语法2. XPath：XPath即为XML路径语言，它是一种用来确定XML（标准通用标记语言的子集）文档中某部分位置的语言    * 使用Jsoup的Xpath需要额外导入jar包。    * 查询w3cshool参考手册，使用xpath的语法完成查询    * 代码：        //1.获取student.xml的path        String path = JsoupDemo6.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();        //2.获取Document对象        Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);        //3.根据document对象，创建JXDocument对象        JXDocument jxDocument = new JXDocument(document);        //4.结合xpath语法查询        //4.1查询所有student标签        List&lt;JXNode&gt; jxNodes = jxDocument.selN(&quot;//student&quot;);        for (JXNode jxNode : jxNodes) {            System.out.println(jxNode);        }        System.out.println(&quot;--------------------&quot;);        //4.2查询所有student标签下的name标签        List&lt;JXNode&gt; jxNodes2 = jxDocument.selN(&quot;//student/name&quot;);        for (JXNode jxNode : jxNodes2) {            System.out.println(jxNode);        }        System.out.println(&quot;--------------------&quot;);        //4.3查询student标签下带有id属性的name标签        List&lt;JXNode&gt; jxNodes3 = jxDocument.selN(&quot;//student/name[@id]&quot;);        for (JXNode jxNode : jxNodes3) {            System.out.println(jxNode);        }        System.out.println(&quot;--------------------&quot;);        //4.4查询student标签下带有id属性的name标签 并且id属性值为itcast        List&lt;JXNode&gt; jxNodes4 = jxDocument.selN(&quot;//student/name[@id=&apos;itcast&apos;]&quot;);        for (JXNode jxNode : jxNodes4) {            System.out.println(jxNode);        }</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;解析&quot;&gt;&lt;a href=&quot;#解析&quot; class=&quot;headerlink&quot; title=&quot;解析&quot;&gt;&lt;/a&gt;解析&lt;/h1&gt;&lt;hr&gt;
+&lt;p&gt;操作xml文档，将文档的数据读取到内存中。&lt;/p&gt;
+&lt;h2 id=&quot;解析方式&quot;&gt;&lt;a href=&quot;#解析方式&quot; class=&quot;he
+      
+    
+    </summary>
+    
+      <category term="JavaWeb" scheme="http://jiguangwu.top/categories/JavaWeb/"/>
+    
+    
+      <category term="xml" scheme="http://jiguangwu.top/tags/xml/"/>
+    
+      <category term="xpath" scheme="http://jiguangwu.top/tags/xpath/"/>
+    
+      <category term="DOM4J" scheme="http://jiguangwu.top/tags/DOM4J/"/>
+    
+      <category term="Jsoup" scheme="http://jiguangwu.top/tags/Jsoup/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XML简介与约束</title>
+    <link href="http://jiguangwu.top/2019/04/22/XML%E5%85%A5%E9%97%A8/"/>
+    <id>http://jiguangwu.top/2019/04/22/XML入门/</id>
+    <published>2019-04-22T02:10:45.000Z</published>
+    <updated>2019-04-26T13:15:12.774Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><hr><ul><li>XML是可扩展标记语言（Extensible Markup Language），可扩展即标签都是自定义的。</li><li><p>功能：存储数据    </p><pre><code>1. 配置文件2. 在网络中传输</code></pre></li><li><p>与HTML的区别</p><pre><code>1. xml标签都是自定义的，html标签是预定义。2. xml的语法严格（严格区分大小写），html语法松散3. xml是存储数据的，html是展示数据</code></pre></li><li><p>各个平台之间的数据传输类型，但现在已经被JSON替换了。XML可以存储简单、小量的数据。</p></li></ul><h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><hr><h2 id="写法"><a href="#写法" class="headerlink" title="写法"></a>写法</h2><p>注意：</p><ul><li>属性值必须使用引号(单双都可)引起来</li><li>标签名称区分大小写</li></ul><p>示例</p><pre><code>    &lt;?xml version=&apos;1.0&apos; ?&gt;&lt;users&gt;    &lt;user id=&apos;1&apos;&gt;        &lt;name&gt;zhangsan&lt;/name&gt;        &lt;age&gt;23&lt;/age&gt;        &lt;gender&gt;男&lt;/gender&gt;    &lt;/user&gt;    &lt;user id=&apos;2&apos;&gt;        &lt;name&gt;lisi&lt;/name&gt;        &lt;age&gt;25&lt;/age&gt;        &lt;gender&gt;男&lt;/gender&gt;    &lt;/user&gt;&lt;/users&gt;</code></pre><h2 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h2><pre><code>1. 文档声明    1. 格式：&lt;?xml 属性列表 ?&gt;    2. 属性列表：        * version：版本号，必须的属性        * encoding：编码方式。告知解析引擎当前文档使用的字符集，默认值：ISO-8859-1        * standalone：是否独立            * 取值：                * yes：不依赖其他文件                * no：依赖其他文件2. 指令(了解)：结合css的    * &lt;?xml-stylesheet type=&quot;text/css&quot; href=&quot;a.css&quot; ?&gt;3. 标签：标签名称自定义的    * 规则：        * 名称可以包含字母、数字以及其他的字符         * 名称不能以数字或者标点符号开始         * 名称不能以字母 xml（或者 XML、Xml 等等）开始         * 名称不能包含空格 4. 属性：    id属性值唯一5. 文本：    * CDATA区：在该区域中的数据会被原样展示        * 格式：  &lt;![CDATA[ 数据 ]]&gt;</code></pre><h2 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h2><p>约束为规定XML文档的编写规则。</p><p>第一种约束 <strong>DTD</strong></p><pre><code>外部dtd：将约束的规则定义在外部的dtd文件中                    * 本地：&lt;!DOCTYPE 根标签名 SYSTEM &quot;dtd文件的位置&quot;&gt;                    * 网络：&lt;!DOCTYPE 根标签名 PUBLIC &quot;dtd文件名字&quot; &quot;dtd文件的位置URL&quot;&gt;内部dtd：写在内部</code></pre><p>外部范例</p><pre><code>//student.dtd文件&lt;!ELEMENT students (student+) &gt;&lt;!ELEMENT student (name,age,sex)&gt;&lt;!ELEMENT name (#PCDATA)&gt;&lt;!ELEMENT age (#PCDATA)&gt;&lt;!ELEMENT sex (#PCDATA)&gt;&lt;!ATTLIST student number ID #REQUIRED&gt;//student.xml文件&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;&lt;!DOCTYPE students SYSTEM &quot;student.dtd&quot;&gt;&lt;students&gt;    &lt;student number=&quot;s001&quot;&gt;        &lt;name&gt;zhangsan&lt;/name&gt;        &lt;age&gt;abc&lt;/age&gt;        &lt;sex&gt;hehe&lt;/sex&gt;    &lt;/student&gt;    &lt;student number=&quot;s002&quot;&gt;        &lt;name&gt;lisi&lt;/name&gt;        &lt;age&gt;24&lt;/age&gt;        &lt;sex&gt;female&lt;/sex&gt;    &lt;/student&gt;&lt;/students&gt;</code></pre><p>第二种约束 <strong>Schema</strong></p><p>引入</p><pre><code>    1. 填写xml文档的根元素    2. 引入xsi前缀.  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;    3. 引入xsd文件命名空间.  xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;    4. 为每一个xsd约束声明一个前缀,作为标识  xmlns=&quot;http://www.itcast.cn/xml&quot;&lt;students   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;        xmlns=&quot;http://www.itcast.cn/xml&quot;        xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;&gt;</code></pre><p>范例</p><p>student.xsd</p><pre><code>&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;xsd:schema xmlns=&quot;http://www.itcast.cn/xml&quot;            xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;            targetNamespace=&quot;http://www.itcast.cn/xml&quot; elementFormDefault=&quot;qualified&quot;&gt;    &lt;xsd:element name=&quot;students&quot; type=&quot;studentsType&quot;/&gt;    &lt;xsd:complexType name=&quot;studentsType&quot;&gt;        &lt;xsd:sequence&gt;            &lt;xsd:element name=&quot;student&quot; type=&quot;studentType&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;        &lt;/xsd:sequence&gt;    &lt;/xsd:complexType&gt;    &lt;xsd:complexType name=&quot;studentType&quot;&gt;        &lt;xsd:sequence&gt;            &lt;xsd:element name=&quot;name&quot; type=&quot;xsd:string&quot;/&gt;            &lt;xsd:element name=&quot;age&quot; type=&quot;ageType&quot; /&gt;            &lt;xsd:element name=&quot;sex&quot; type=&quot;sexType&quot; /&gt;        &lt;/xsd:sequence&gt;        &lt;xsd:attribute name=&quot;number&quot; type=&quot;numberType&quot; use=&quot;required&quot;/&gt;    &lt;/xsd:complexType&gt;    &lt;xsd:simpleType name=&quot;sexType&quot;&gt;        &lt;xsd:restriction base=&quot;xsd:string&quot;&gt;            &lt;xsd:enumeration value=&quot;male&quot;/&gt;            &lt;xsd:enumeration value=&quot;female&quot;/&gt;        &lt;/xsd:restriction&gt;    &lt;/xsd:simpleType&gt;    &lt;xsd:simpleType name=&quot;ageType&quot;&gt;        &lt;xsd:restriction base=&quot;xsd:integer&quot;&gt;            &lt;xsd:minInclusive value=&quot;0&quot;/&gt;            &lt;xsd:maxInclusive value=&quot;256&quot;/&gt;        &lt;/xsd:restriction&gt;    &lt;/xsd:simpleType&gt;    &lt;xsd:simpleType name=&quot;numberType&quot;&gt;        &lt;xsd:restriction base=&quot;xsd:string&quot;&gt;            &lt;xsd:pattern value=&quot;heima_\d{4}&quot;/&gt;        &lt;/xsd:restriction&gt;    &lt;/xsd:simpleType&gt;&lt;/xsd:schema&gt;</code></pre><p>student.xml</p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;&lt;students   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;            xmlns=&quot;http://www.itcast.cn/xml&quot;            xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;&gt;    &lt;student number=&quot;heima_0001&quot;&gt;        &lt;name&gt;tom&lt;/name&gt;        &lt;age&gt;18&lt;/age&gt;        &lt;sex&gt;male&lt;/sex&gt;    &lt;/student&gt;&lt;/students&gt;</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;XML是可扩展标记语言（Extensible Markup Language），可扩展即标签都是自定义的。&lt;/li&gt;
+
+      
+    
+    </summary>
+    
+      <category term="JavaWeb" scheme="http://jiguangwu.top/categories/JavaWeb/"/>
+    
+    
+      <category term="xml" scheme="http://jiguangwu.top/tags/xml/"/>
     
   </entry>
   
@@ -48,7 +109,7 @@
     <link href="http://jiguangwu.top/2019/04/05/190405/"/>
     <id>http://jiguangwu.top/2019/04/05/190405/</id>
     <published>2019-04-05T01:28:09.000Z</published>
-    <updated>2019-04-11T15:53:05.215Z</updated>
+    <updated>2019-04-26T01:31:08.687Z</updated>
     
     <content type="html"><![CDATA[<h1 id="有时间写下来这一段历程"><a href="#有时间写下来这一段历程" class="headerlink" title="有时间写下来这一段历程"></a>有时间写下来这一段历程</h1><p><img src="https://i.loli.net/2019/04/05/5ca771980ba09.png" alt="1"></p>]]></content>
     
@@ -64,16 +125,98 @@
       <category term="生活" scheme="http://jiguangwu.top/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="心情" scheme="http://jiguangwu.top/tags/%E5%BF%83%E6%83%85/"/>
+      <category term="mood" scheme="http://jiguangwu.top/tags/mood/"/>
     
   </entry>
   
   <entry>
-    <title>关于多态的一道面试题</title>
-    <link href="http://jiguangwu.top/2019/02/11/%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%80%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
-    <id>http://jiguangwu.top/2019/02/11/多态的一道面试题/</id>
-    <published>2019-02-11T06:55:29.000Z</published>
-    <updated>2019-04-08T14:13:36.522Z</updated>
+    <title>更换电脑或重装系统时的博客配置</title>
+    <link href="http://jiguangwu.top/2019/03/21/%E5%8D%9A%E5%AE%A2%E9%87%8D%E9%85%8D%E7%BD%AE/"/>
+    <id>http://jiguangwu.top/2019/03/21/博客重配置/</id>
+    <published>2019-03-21T05:25:29.000Z</published>
+    <updated>2019-04-26T14:28:29.300Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。</p><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul><li>安装node.js</li><li>安装Git</li><li>备份你的本地博客目录的部分文件夹</li></ul><p><a href="http://jiguangwu.top/2018/01/10/hexo/#more" title="下载点此">node.js和Git的安装包参考</a></p><p>拷贝文件夹如下</p><blockquote><p>_config.yml</p><p>theme/</p><p>source/</p><p>scaffolds/</p><p>package.json</p><p>.gitignore</p></blockquote><h2 id="配置你的Git"><a href="#配置你的Git" class="headerlink" title="配置你的Git"></a>配置你的Git</h2><p>桌面右键选择bash here,设置用户名称和邮件地址。</p><blockquote><p>1 $ git config –global user.name “username”</p><p>2 $ git config –global user.email “<a href="mailto:username@xxxx.com" target="_blank" rel="noopener">username@xxxx.com</a>“</p></blockquote><h2 id="配置SSH-Key"><a href="#配置SSH-Key" class="headerlink" title="配置SSH Key"></a>配置SSH Key</h2><p>输入</p><blockquote><p>$ ssh-keygen -t rsa -C “你的邮件地址”</p></blockquote><p>然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh<br>打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.<br>这里名称随便取，在下面粘贴内容保存即可。</p><p>我们回来测试下是否把SSH配置成功了。<br>继续在bash里输入</p><blockquote><p> $ ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a></p></blockquote><p>如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..<br>看到这个意味着已成功！</p><h2 id="正式工作"><a href="#正式工作" class="headerlink" title="正式工作"></a>正式工作</h2><p>接下来时hexo和一些组件的安装，恭喜了很快了。</p><h1 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h1><p>我们打开cmd命令行，输入</p><blockquote><p>npm install -g hexo</p></blockquote><p>这里可能会很慢，所以推荐使用淘宝镜像。</p><blockquote><p>npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a></p></blockquote><p>验证是否安装成功使用：</p><blockquote><p>cnpm -v</p></blockquote><p>安装了淘宝镜像后，都使用cnpm指令：</p><blockquote><p>cnpm install -g hexo   // 安装 hexo</p></blockquote><p>验证Hexo是否安装成功使用：</p><blockquote><p>hexo -v</p></blockquote><h1 id="安装一些组件"><a href="#安装一些组件" class="headerlink" title="安装一些组件"></a>安装一些组件</h1><blockquote><p> npm install hexo-deployer-git –save  // 文章部署到 git 的模块（下面为选择安装）</p><p> npm install hexo-generator-feed –save  // 建立 RSS 订阅</p><p> npm install hexo-generator-sitemap –save // 建立站点地图</p></blockquote><h1 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h1><p>输入指令</p><blockquote><p>hexo generate</p><p>hexo deploy</p></blockquote><p>没有报错就OK了。<br>这里讲讲hexo的一些快捷命令</p><blockquote><p>hexo g == hexo generate</p><p>hexo d == hexo deploy</p><p>hexo s == hexo server</p><p>hexo n == hexo new</p></blockquote><h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>尝试部署文章并使用以下指令更新部署</p><blockquote><p>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p></blockquote><p>成功部署，恭喜你！博客重配置成功！</p><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">Star Or Follow</a>，感谢。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。&lt;/p&gt;
+&lt;h2 id=&quot;准备&quot;&gt;&lt;a href=
+      
+    
+    </summary>
+    
+      <category term="HexoAndBlog" scheme="http://jiguangwu.top/categories/HexoAndBlog/"/>
+    
+    
+      <category term="hexo" scheme="http://jiguangwu.top/tags/hexo/"/>
+    
+      <category term="blog" scheme="http://jiguangwu.top/tags/blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何将本地项目部署到Github</title>
+    <link href="http://jiguangwu.top/2019/02/05/%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0github/"/>
+    <id>http://jiguangwu.top/2019/02/05/部署项目到github/</id>
+    <published>2019-02-05T01:28:09.000Z</published>
+    <updated>2019-04-26T01:32:54.247Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>众所周知，GitHub是一个面向开源及私有软件项目的托管平台，那我们该如何将本地项目导入到Github上呢，这里，我写一个简单的教程，希望对你有所帮助。</p><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>确定你的Git安装了，如果需要<a href="http://jiguangwu.top/2018/01/10/hexo/#more" title="下载参考">点击此处</a></p><h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>首先在Github上新建一个repository，命名随意（以我为例，新建了一个Demo），勾选如图，create。</p><p><img src="https://i.loli.net/2019/03/26/5c9a1697490d0.png" alt="1"></p><p>然后，进入你的repository,打开settings，可以看到Github Pages的设置，在source中选择master branch。</p><p><img src="https://i.loli.net/2019/03/26/5c9a16d480146.png" alt="2"></p><p>最后，选择完会刷新页面，在去看Gith Pages时，会有显示一个网址，这就是你之后访问你项目页面的网址。<br><img src="https://i.loli.net/2019/03/26/5c9a16df8e603.png" alt="3"></p><h2 id="快了"><a href="#快了" class="headerlink" title="快了"></a>快了</h2><p>在一个盘里右键点击git bash here，打开bash命令行。如图，输入命令在D盘创建了文件夹Demo，第三个命令是克隆地址，格式为</p><blockquote><p><a href="https://github.com/用户名/项目名.git" target="_blank" rel="noopener">https://github.com/用户名/项目名.git</a></p></blockquote><p><img src="https://i.loli.net/2019/03/26/5c9a16eab9cd1.png" alt="4"></p><p>这时候你会发现你的D盘会多个Demo文件夹，打开它，进入根目录。</p><p>将自己的项目文件粘贴到这个根目录中。</p><p><img src="https://i.loli.net/2019/03/26/5c9a16eca4230.png" alt="5"></p><p><img src="https://i.loli.net/2019/03/26/5c9a16eebd4f2.png" alt="6"></p><p>执行如下命令，</p><p><img src="https://i.loli.net/2019/03/26/5c9a171336786.png" alt="7"></p><p>这里面注意，第一次操作需要你输入相关账号和密码，到时根据提示输入即可<br><img src="https://i.loli.net/2019/03/26/5c9a171e9432f.png" alt="8"></p><p><img src="https://i.loli.net/2019/03/26/5c9a1723ac514.png" alt="9"></p><h2 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h2><p>利用那个网址测试即可。</p><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">starorfollow</a>，感谢。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;众所周知，GitHub是一个面向开源及私有软件项目的托管平台，那我们该如何将本地项目导入到Github上呢，这里，我写一个简单的教程，希望对
+      
+    
+    </summary>
+    
+      <category term="HexoAndBlog" scheme="http://jiguangwu.top/categories/HexoAndBlog/"/>
+    
+    
+      <category term="blog" scheme="http://jiguangwu.top/tags/blog/"/>
+    
+      <category term="github" scheme="http://jiguangwu.top/tags/github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>eclipse的maven插件安装</title>
+    <link href="http://jiguangwu.top/2018/09/07/eclipse%E6%8F%92%E4%BB%B6maven/"/>
+    <id>http://jiguangwu.top/2018/09/07/eclipse插件maven/</id>
+    <published>2018-09-07T05:25:29.000Z</published>
+    <updated>2019-04-26T01:31:21.069Z</updated>
+    
+    <content type="html"><![CDATA[<p>以eclipse kepler为例，<br>官网下载地址：<a href="http://www.eclipse.org/downloads/packages/release/Kepler/SR2" target="_blank" rel="noopener">http://www.eclipse.org/downloads/packages/release/Kepler/SR2</a></p><p>1.打开eclipse，help–install new software…</p><p>2.workwith里输入：<a href="http://download.eclipse.org/releases/kepler，输入完会有提示地址出现，点击回车静待.." target="_blank" rel="noopener">http://download.eclipse.org/releases/kepler，输入完会有提示地址出现，点击回车静待..</a>.</p><p>3.在filter框中输入maven便能定位要安装的插件<br><img src="https://i.imgur.com/vyBFPux.png" alt></p><p>4.选择“Collaboration”-“m2e - Maven Integration for Eclipse”，并点击next按钮进行安装</p><p>5.安装完成重启eclipse即可</p><p>6.配置你的maven</p><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">Star Or Follow</a>，感谢。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;以eclipse kepler为例，&lt;br&gt;官网下载地址：&lt;a href=&quot;http://www.eclipse.org/downloads/packages/release/Kepler/SR2&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http:/
+      
+    
+    </summary>
+    
+      <category term="IDE" scheme="http://jiguangwu.top/categories/IDE/"/>
+    
+    
+      <category term="eclipse" scheme="http://jiguangwu.top/tags/eclipse/"/>
+    
+      <category term="maven" scheme="http://jiguangwu.top/tags/maven/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>多态的一道面试题</title>
+    <link href="http://jiguangwu.top/2018/08/11/%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%80%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://jiguangwu.top/2018/08/11/多态的一道面试题/</id>
+    <published>2018-08-11T06:55:29.000Z</published>
+    <updated>2019-04-26T14:27:24.654Z</updated>
     
     <content type="html"><![CDATA[<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>类A：</p><pre><code>class A {     public String show(D obj){         return (&quot;A and D&quot;);      }       public String show(A obj){                return (&quot;A and A&quot;);     }   }   </code></pre><p>类B：</p><pre><code>class B extends A{      public String show(B obj){         return (&quot;B and B&quot;);      }      public String show(A obj){         return (&quot;B and A&quot;);      }   }  </code></pre><p>类C：</p><pre><code>class C extends B{}</code></pre><p>类D：</p><pre><code>class D extends B{}</code></pre><p>测试类：</p><pre><code>class  DynamicTest{       public static void main(String[] args){   A a1 = new A();     A a2 = new B();     B b = new B();     C c = new C();      D d = new D();     System.out.println(a1.show(b));      System.out.println(a1.show(c));     System.out.println(a1.show(d));     System.out.println(a2.show(b));                                  System.out.println(a2.show(c));                                System.out.println(a2.show(d));           System.out.println(b.show(b));       System.out.println(b.show(c));     System.out.println(b.show(d));         }}</code></pre><p>答案：</p><pre><code>System.out.println(a1.show(b));       AASystem.out.println(a1.show(c));     AASystem.out.println(a1.show(d));      ADSystem.out.println(a2.show(b));     BA     编译看左边，看右边可有重写              System.out.println(a2.show(c));     BA   同样，看可有重写！                    System.out.println(a2.show(d));     AD   编译看左边，但没有重写System.out.println(b.show(b));       BB   System.out.println(b.show(c));      BB   这里父类和爷爷类都可以，取最近的System.out.println(b.show(d));           AD   B是A的子类 ，会把A的方法都继承</code></pre><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">Star Or Follow</a>，感谢。</p>]]></content>
     
@@ -92,91 +235,9 @@
       <category term="Java" scheme="http://jiguangwu.top/categories/Java/"/>
     
     
-      <category term="Java语法" scheme="http://jiguangwu.top/tags/Java%E8%AF%AD%E6%B3%95/"/>
+      <category term="interview" scheme="http://jiguangwu.top/tags/interview/"/>
     
-      <category term="面试" scheme="http://jiguangwu.top/tags/%E9%9D%A2%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何将本地项目部署到Github</title>
-    <link href="http://jiguangwu.top/2019/02/05/%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0github/"/>
-    <id>http://jiguangwu.top/2019/02/05/部署项目到github/</id>
-    <published>2019-02-05T01:28:09.000Z</published>
-    <updated>2019-03-26T12:24:59.057Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>众所周知，GitHub是一个面向开源及私有软件项目的托管平台，那我们该如何将本地项目导入到Github上呢，这里，我写一个简单的教程，希望对你有所帮助。</p><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>确定你的Git安装了，如果需要<a href="http://jiguangwu.top/2018/01/10/hexo/#more" title="下载参考">点击此处</a></p><h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>首先在Github上新建一个repository，命名随意（以我为例，新建了一个Demo），勾选如图，create。</p><p><img src="https://i.loli.net/2019/03/26/5c9a1697490d0.png" alt="1"></p><p>然后，进入你的repository,打开settings，可以看到Github Pages的设置，在source中选择master branch。</p><p><img src="https://i.loli.net/2019/03/26/5c9a16d480146.png" alt="2"></p><p>最后，选择完会刷新页面，在去看Gith Pages时，会有显示一个网址，这就是你之后访问你项目页面的网址。<br><img src="https://i.loli.net/2019/03/26/5c9a16df8e603.png" alt="3"></p><h2 id="快了"><a href="#快了" class="headerlink" title="快了"></a>快了</h2><p>在一个盘里右键点击git bash here，打开bash命令行。如图，输入命令在D盘创建了文件夹Demo，第三个命令是克隆地址，格式为</p><blockquote><p><a href="https://github.com/用户名/项目名.git" target="_blank" rel="noopener">https://github.com/用户名/项目名.git</a></p></blockquote><p><img src="https://i.loli.net/2019/03/26/5c9a16eab9cd1.png" alt="4"></p><p>这时候你会发现你的D盘会多个Demo文件夹，打开它，进入根目录。</p><p>将自己的项目文件粘贴到这个根目录中。</p><p><img src="https://i.loli.net/2019/03/26/5c9a16eca4230.png" alt="5"></p><p><img src="https://i.loli.net/2019/03/26/5c9a16eebd4f2.png" alt="6"></p><p>执行如下命令，</p><p><img src="https://i.loli.net/2019/03/26/5c9a171336786.png" alt="7"></p><p>这里面注意，第一次操作需要你输入相关账号和密码，到时根据提示输入即可<br><img src="https://i.loli.net/2019/03/26/5c9a171e9432f.png" alt="8"></p><p><img src="https://i.loli.net/2019/03/26/5c9a1723ac514.png" alt="9"></p><h2 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h2><p>利用那个网址测试即可。</p><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">starorfollow</a>，感谢。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;众所周知，GitHub是一个面向开源及私有软件项目的托管平台，那我们该如何将本地项目导入到Github上呢，这里，我写一个简单的教程，希望对
-      
-    
-    </summary>
-    
-      <category term="Github" scheme="http://jiguangwu.top/categories/Github/"/>
-    
-    
-      <category term="git" scheme="http://jiguangwu.top/tags/git/"/>
-    
-      <category term="repository" scheme="http://jiguangwu.top/tags/repository/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>换电脑或重装系统时的博客配置</title>
-    <link href="http://jiguangwu.top/2019/01/21/%E5%8D%9A%E5%AE%A2%E9%87%8D%E9%85%8D%E7%BD%AE/"/>
-    <id>http://jiguangwu.top/2019/01/21/博客重配置/</id>
-    <published>2019-01-21T05:25:29.000Z</published>
-    <updated>2019-04-08T14:13:51.581Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。</p><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul><li>安装node.js</li><li>安装Git</li><li>备份你的本地博客目录的部分文件夹</li></ul><p><a href="http://jiguangwu.top/2018/01/10/hexo/#more" title="下载点此">node.js和Git的安装包参考</a></p><p>拷贝文件夹如下</p><blockquote><p>_config.yml</p><p>theme/</p><p>source/</p><p>scaffolds/</p><p>package.json</p><p>.gitignore</p></blockquote><h2 id="配置你的Git"><a href="#配置你的Git" class="headerlink" title="配置你的Git"></a>配置你的Git</h2><p>桌面右键选择bash here,设置用户名称和邮件地址。</p><blockquote><p>1 $ git config –global user.name “username”</p><p>2 $ git config –global user.email “<a href="mailto:username@xxxx.com" target="_blank" rel="noopener">username@xxxx.com</a>“</p></blockquote><h2 id="配置SSH-Key"><a href="#配置SSH-Key" class="headerlink" title="配置SSH Key"></a>配置SSH Key</h2><p>输入</p><blockquote><p>$ ssh-keygen -t rsa -C “你的邮件地址”</p></blockquote><p>然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh<br>打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.<br>这里名称随便取，在下面粘贴内容保存即可。</p><p>我们回来测试下是否把SSH配置成功了。<br>继续在bash里输入</p><blockquote><p> $ ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a></p></blockquote><p>如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..<br>看到这个意味着已成功！</p><h2 id="正式工作"><a href="#正式工作" class="headerlink" title="正式工作"></a>正式工作</h2><p>接下来时hexo和一些组件的安装，恭喜了很快了。</p><h1 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h1><p>我们打开cmd命令行，输入</p><blockquote><p>npm install -g hexo</p></blockquote><p>这里可能会很慢，所以推荐使用淘宝镜像。</p><blockquote><p>npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a></p></blockquote><p>验证是否安装成功使用：</p><blockquote><p>cnpm -v</p></blockquote><p>安装了淘宝镜像后，都使用cnpm指令：</p><blockquote><p>cnpm install -g hexo   // 安装 hexo</p></blockquote><p>验证Hexo是否安装成功使用：</p><blockquote><p>hexo -v</p></blockquote><h1 id="安装一些组件"><a href="#安装一些组件" class="headerlink" title="安装一些组件"></a>安装一些组件</h1><blockquote><p> npm install hexo-deployer-git –save  // 文章部署到 git 的模块（下面为选择安装）</p><p> npm install hexo-generator-feed –save  // 建立 RSS 订阅</p><p> npm install hexo-generator-sitemap –save // 建立站点地图</p></blockquote><h1 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h1><p>输入指令</p><blockquote><p>hexo generate</p><p>hexo deploy</p></blockquote><p>没有报错就OK了。<br>这里讲讲hexo的一些快捷命令</p><blockquote><p>hexo g == hexo generate</p><p>hexo d == hexo deploy</p><p>hexo s == hexo server</p><p>hexo n == hexo new</p></blockquote><h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>尝试部署文章并使用以下指令更新部署</p><blockquote><p>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p></blockquote><p>成功部署，恭喜你！博客重配置成功！</p><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">Star Or Follow</a>，感谢。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。&lt;/p&gt;
-&lt;h2 id=&quot;准备&quot;&gt;&lt;a href=
-      
-    
-    </summary>
-    
-      <category term="hexo" scheme="http://jiguangwu.top/categories/hexo/"/>
-    
-    
-      <category term="hexo" scheme="http://jiguangwu.top/tags/hexo/"/>
-    
-      <category term="blog" scheme="http://jiguangwu.top/tags/blog/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>eclipse的maven插件安装</title>
-    <link href="http://jiguangwu.top/2018/09/07/eclipse%E6%8F%92%E4%BB%B6maven/"/>
-    <id>http://jiguangwu.top/2018/09/07/eclipse插件maven/</id>
-    <published>2018-09-07T05:25:29.000Z</published>
-    <updated>2019-04-20T14:21:32.251Z</updated>
-    
-    <content type="html"><![CDATA[<p>以eclipse kepler为例，<br>官网下载地址：<a href="http://www.eclipse.org/downloads/packages/release/Kepler/SR2" target="_blank" rel="noopener">http://www.eclipse.org/downloads/packages/release/Kepler/SR2</a></p><p>1.打开eclipse，help–install new software…</p><p>2.workwith里输入：<a href="http://download.eclipse.org/releases/kepler，输入完会有提示地址出现，点击回车静待.." target="_blank" rel="noopener">http://download.eclipse.org/releases/kepler，输入完会有提示地址出现，点击回车静待..</a>.</p><p>3.在filter框中输入maven便能定位要安装的插件<br><img src="https://i.imgur.com/vyBFPux.png" alt></p><p>4.选择“Collaboration”-“m2e - Maven Integration for Eclipse”，并点击next按钮进行安装</p><p>5.安装完成重启eclipse即可</p><p>6.配置你的maven</p><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">Star Or Follow</a>，感谢。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;以eclipse kepler为例，&lt;br&gt;官网下载地址：&lt;a href=&quot;http://www.eclipse.org/downloads/packages/release/Kepler/SR2&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http:/
-      
-    
-    </summary>
-    
-      <category term="开发工具" scheme="http://jiguangwu.top/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
-    
-    
-      <category term="eclipse" scheme="http://jiguangwu.top/tags/eclipse/"/>
-    
-      <category term="maven" scheme="http://jiguangwu.top/tags/maven/"/>
+      <category term="java" scheme="http://jiguangwu.top/tags/java/"/>
     
   </entry>
   
@@ -185,7 +246,7 @@
     <link href="http://jiguangwu.top/2018/06/05/%E6%9E%84%E9%80%A0%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%9D%97/"/>
     <id>http://jiguangwu.top/2018/06/05/构造静态代码块/</id>
     <published>2018-06-05T08:08:56.000Z</published>
-    <updated>2019-04-20T14:21:15.551Z</updated>
+    <updated>2019-04-26T01:00:44.512Z</updated>
     
     <content type="html"><![CDATA[<h1 id="复习"><a href="#复习" class="headerlink" title="复习"></a>复习</h1><p>构造代码块的执行时机：每次我们调用构造方法的时候都会先执行构造代码块中的代码，然后才去执行对应的构造方法中的代码。</p><p>静态代码块的执行时机：静态代码块其实就是在类加载的时候执行，一个类只会加载一次，所以静态代码块也最多只会执行一次。</p><pre><code>public class Test01 {    {        System.out.println(&quot;Test01的构造代码块&quot;);    }    static {        System.out.println(&quot;Test01的静态代码块&quot;);    }    public Test01() {        System.out.println(&quot;Test01的构造方法&quot;);    }    public static void main(String[] args) {        Student stu = new Student();        Student stu2 = new Student();    }}class Student {    {        System.out.println(&quot;Student的构造代码块&quot;);    }    static {        System.out.println(&quot;Student的静态代码块&quot;);    }    public Student() {        System.out.println(&quot;Student的构造方法&quot;);    }}</code></pre><p>答案：Test01的静态代码块 Student的静态代码块 Student的构造代码块<br>Student的构造方法  Student的构造代码块  Student的构造方法</p><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">Star Or Follow</a>，感谢。</p>]]></content>
     
@@ -202,18 +263,18 @@
       <category term="Java" scheme="http://jiguangwu.top/categories/Java/"/>
     
     
-      <category term="Java语法" scheme="http://jiguangwu.top/tags/Java%E8%AF%AD%E6%B3%95/"/>
+      <category term="interview" scheme="http://jiguangwu.top/tags/interview/"/>
     
-      <category term="面试" scheme="http://jiguangwu.top/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="java" scheme="http://jiguangwu.top/tags/java/"/>
     
   </entry>
   
   <entry>
-    <title>从简单题目看冒泡、插入、选择排序</title>
+    <title>冒泡、插入、选择排序</title>
     <link href="http://jiguangwu.top/2018/03/03/%E6%8E%92%E5%BA%8F1/"/>
     <id>http://jiguangwu.top/2018/03/03/排序1/</id>
     <published>2018-03-03T08:34:33.000Z</published>
-    <updated>2019-04-08T14:13:16.531Z</updated>
+    <updated>2019-04-26T01:01:42.847Z</updated>
     
     <content type="html"><![CDATA[<h1 id="问题的引入"><a href="#问题的引入" class="headerlink" title="问题的引入"></a>问题的引入</h1><h2 id="从键盘输入10个整数并按从大到小的顺序排列，输出结果"><a href="#从键盘输入10个整数并按从大到小的顺序排列，输出结果" class="headerlink" title="从键盘输入10个整数并按从大到小的顺序排列，输出结果"></a><em>从键盘输入10个整数并按从大到小的顺序排列，输出结果</em></h2><h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>基本思想：比较所有相邻的两个元素，如果第一个数比第二个数大就交换它们两个。最后的数字应该最大得到升序排列。</p><p><img src="https://i.imgur.com/sTuENJp.png" alt></p><pre><code>package top.jgw;import java.util.Arrays;import java.util.Scanner;public class BubbleSort {     public static void main(String[] args) {           Scanner ra = new Scanner(System.in);           System.out.print(&quot;请输入10个数：&quot;);           int[] arr = new int[10];           for(int a=0;a&lt;10;a++){            arr[a] = ra.nextInt();            }      System.out.println(&quot;排序前的arr：&quot;+Arrays.toString(arr));       for(int i=arr.length-1;i&gt;0;i--){        for(int j=1;j&lt;=i;j++){            if(arr[j-1]&gt;arr[j]){                 int temp = arr[j-1];                 arr[j-1] = arr[j];                 arr[j] = temp;              }        }  }  System.out.println(&quot;排序后的arr ：&quot;+Arrays.toString(arr));  }}</code></pre><p>结论：冒泡排序是一种稳定的排序方法。　</p><ul><li>若文件初状为正序，则一趟起泡就可完成排序，排序码的比较次数为n-1，且没有记录移动，时间复杂度是O(n)</li><li>若文件初态为逆序，则需要n-1趟起泡，每趟进行n-i次排序码的比较，且每次比较都移动三次，比较和移动次数均达到最大值∶O(n2)</li><li>起泡排序平均时间复杂度为O(n2)</li></ul><h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>基本思想：每一步将一个待排序的记录，按其顺序码大小插入到前面已经排序的序列的合适位置（从后向前找到合适位置后），直到全部插入排序完为止。</p><p><img src="https://i.imgur.com/rrF3K6J.png" alt></p><pre><code>package top.jgw;import java.util.Arrays;import java.util.Scanner;public class InsertionSort {    public static void main(String[] args){        int i,j;        int temp=0;        Scanner ra=new Scanner(System.in);        System.out.print(&quot;请输入10个数：&quot;);        int arr[]=new int[10];        for(int a=0;a&lt;10;a++){            arr[a]=ra.nextInt();        }    System.out.println(&quot;排序前的arr: &quot;+Arrays.toString(arr));    for(i=1;i&lt;arr.length;i++){        temp=arr[i];        for(j=i-1;j&gt;=0 &amp;&amp; temp&lt;arr[j];j--){            arr[j+1]=arr[j];        }            arr[j+1]=temp;        }    System.out.println(&quot;排序后的arr：&quot;+Arrays.toString(arr));    }}</code></pre><p>结论：直接插入排序也是稳定的排序。<br>文件初态不同时，直接插入排序所耗费的时间有很大差异。若文件初态为正序，则每个待插入的记录只需要比较一次就能够找到合适的位置插入，故算法的时间复杂度为O(n)，这时最好的情况。若初态为反序，则第i个待插入记录需要比较i+1次才能找到合适位置插入，故时间复杂度为O(n2)，这时最坏的情况。</p><h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>基本思想：每一次排序都从待排序序列中选择一个最小元素放到已排好的序列的末端，重复此步骤可得到升序序列。</p><p><img src="https://i.imgur.com/Cmkm5Do.png" alt></p><pre><code>package top.jgw;import java.util.Arrays;import java.util.Scanner;public class SelectionSort {public static void main(String[] args){    Scanner ra=new Scanner(System.in);    System.out.print(&quot;请输入10个数: &quot;);    int arr[]=new int[10];    for(int a=0;a&lt;10;a++){        arr[a]=ra.nextInt();    }    System.out.println(&quot;排序前的arr: &quot;+Arrays.toString(arr));    int temp=0;    for(int i=0;i&lt;arr.length-1;i++){        for(int j=i+1;j&lt;arr.length;j++){            if(arr[i]&gt;arr[j]){                temp=arr[i];                arr[i]=arr[j];                arr[j]=temp;            }        }        }    System.out.println(&quot;排序后的arr: &quot;+Arrays.toString(arr));    }}</code></pre><p>结论：简单选择排序是不稳定的排序，时间复杂度：T(n)=O(n2)。</p><p><em>日后补充…</em></p><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">Star Or Follow</a>，感谢。</p>]]></content>
     
@@ -226,10 +287,10 @@
     
     </summary>
     
-      <category term="算法" scheme="http://jiguangwu.top/categories/%E7%AE%97%E6%B3%95/"/>
+      <category term="数据结构与算法" scheme="http://jiguangwu.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="排序" scheme="http://jiguangwu.top/tags/%E6%8E%92%E5%BA%8F/"/>
+      <category term="sort" scheme="http://jiguangwu.top/tags/sort/"/>
     
   </entry>
   
@@ -238,7 +299,7 @@
     <link href="http://jiguangwu.top/2018/01/10/hexo/"/>
     <id>http://jiguangwu.top/2018/01/10/hexo/</id>
     <published>2018-01-10T05:25:29.000Z</published>
-    <updated>2019-04-08T14:12:59.986Z</updated>
+    <updated>2019-04-26T00:59:30.067Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本人开始并非使用next主题，这个大家可以去hexo官网<a href="https://hexo.io/themes/" target="_blank" rel="noopener">themes</a>处挑选自己喜欢的。<br>注意：点击主题预览图可以去预览下，点击主题名就可以去GitHub页面copy了。<br>但个人觉得next主题更好，bug少，拓展性强。好了，废话少说，进入正题。</p><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul><li>注册github账号</li><li>安装node.js  </li><li>链接：<a href="https://pan.baidu.com/s/1mji9SmO" target="_blank" rel="noopener">https://pan.baidu.com/s/1mji9SmO</a> 密码：fjw1</li><li>安装git </li><li>链接：<a href="https://pan.baidu.com/s/1dGUlqEH" target="_blank" rel="noopener">https://pan.baidu.com/s/1dGUlqEH</a> 密码：q9ws<br>我的电脑是Windows10，其他你根据我提供的百度云链接下载即可。安装git时全打勾。</li></ul><h2 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h2><p>新建一个 你的用户名.github.io的仓库，比如说你的GitHub用户名是abc,那么你新建仓库名叫abc.github.io,你的博客搭建好之后访问的网站也就是 <a href="https://abc.github.io了。" target="_blank" rel="noopener">https://abc.github.io了。</a></p><p><img src="https://i.loli.net/2019/03/26/5c9a1bdf14b7a.png" alt></p><p><img src="https://i.loli.net/2019/03/26/5c9a1be09c749.png" alt><br>那怎么删除仓库呢？？？<br>打开settings</p><p><img src="https://i.loli.net/2019/03/26/5c9a1be6b70f2.png" alt></p><p><img src="https://i.loli.net/2019/03/26/5c9a1be31d9a3.png" alt></p><h2 id="创建博客根目录"><a href="#创建博客根目录" class="headerlink" title="创建博客根目录"></a>创建博客根目录</h2><p>在一个磁盘里创建一个文件夹，比如我，在D盘创建了一个blog文件夹。</p><h1 id="正式工作"><a href="#正式工作" class="headerlink" title="正式工作"></a>正式工作</h1><h2 id="配置SSH-Key"><a href="#配置SSH-Key" class="headerlink" title="配置SSH Key"></a>配置SSH Key</h2><p>桌面右键打开git bash here,输入</p><blockquote><p> $ cd ~/. ssh // 检查本机已存在的 ssh 密钥</p></blockquote><p>再接着输入</p><blockquote><p>ssh-keygen -t rsa -C “你的邮件地址”</p></blockquote><p>然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh<br>打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.<br>这里名称随便取，在下面粘贴内容保存即可，有需要打勾就打勾。</p><p>我们回来测试下是否把SSH配置成功了。<br>继续在bash里输入</p><blockquote><p>$ ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a></p></blockquote><p>如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..<br>看到这个意味着已成功！</p><h2 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h2><blockquote><p> $ git config –global user.name “xxx”// 你的github用户名，比如上面的abc<br>$ git config –global user.email  “<a href="mailto:xxx@qq.com" target="_blank" rel="noopener">xxx@qq.com</a>“// 填写你的github注册邮箱</p></blockquote><h1 id="使用hexo"><a href="#使用hexo" class="headerlink" title="使用hexo"></a>使用hexo</h1><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>我们打开cmd命令行，输入</p><blockquote><p> npm install -g hexo</p></blockquote><p>这里可能会很慢，所以推荐使用淘宝镜像。</p><blockquote><p>安装：<code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code> </p><p>验证是否安装成功使用：<code>cnpm -v</code><br>这里使用使用： <code>cnpm install -g hexo安装</code>hexo</p><p>验证Hexo是否安装成功使用：<code>hexo -v</code> </p></blockquote><h2 id="初始化hexo"><a href="#初始化hexo" class="headerlink" title="初始化hexo"></a>初始化hexo</h2><p>打开我们之前创建的文件夹，比如我的blog，右击鼠标，打开git bash here,输入</p><blockquote><p>$ hexo init</p></blockquote><p>我们的文件夹会自动下载一些文件到这个blog目录里。</p><p>继续输入</p><blockquote><p>$ hexo g<br>$ hexo s</p></blockquote><p>hexo s是指启动服务，成功打开后会有提示，登录localhost:4000即可看到初始页面，到这里你的blog就基本搭建好了。</p><h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><p>在bash里输入</p><blockquote><p> $ hexo new post “文章名”</p></blockquote><p>然后去blog/source/_posts就可以看到</p><h2 id="上传到GitHub"><a href="#上传到GitHub" class="headerlink" title="上传到GitHub"></a>上传到GitHub</h2><p>配置_config.yml中的deploy部分，注意这里的_config.yml文件是blog根目录，并非themes里的同名文件。<br>配置如下(xxx为你的GitHub名)</p><blockquote><p> deploy:<br>  type: git<br>  repository: <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:xxx/xxx.github.io.git<br>  branch: master</p></blockquote><p>再次注意：关于_config.yml文件的配置，冒号后一定要加个空格，否则就无法部署了。</p><p>一切完成后在bash中继续输入</p><blockquote><p> npm install hexo-deployer-git –save #这里是安装插件，不然无法deploy</p></blockquote><p>然后输入以下就可以了</p><blockquote><p> hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p></blockquote><p>成功后会提示：Deploy done：git  证明成功啦。这是打开你的xxx.github.io就可以看到网页啦！</p><h2 id="主题设置"><a href="#主题设置" class="headerlink" title="主题设置"></a>主题设置</h2><p>打开<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">next使用文档</a>有详细的教程。<br>主题教程以及拓展：<br><img src="https://i.imgur.com/lotL1do.png" alt></p><h1 id="绑定个性域名"><a href="#绑定个性域名" class="headerlink" title="绑定个性域名"></a>绑定个性域名</h1><h2 id="申请域名"><a href="#申请域名" class="headerlink" title="申请域名"></a>申请域名</h2><p>在阿里云或腾讯云申请域名。我是在阿里云申请的，实名认证很快，推荐。</p><h2 id="解析域名"><a href="#解析域名" class="headerlink" title="解析域名"></a>解析域名</h2><p>按我的内容来即可。<br><img src="https://i.loli.net/2019/03/26/5c9a1b95b0be7.png" alt></p><h2 id="部署域名"><a href="#部署域名" class="headerlink" title="部署域名"></a>部署域名</h2><p>在blog根目录的source文件夹中新建无后缀文件 CNAME。里面内容只写上你的域名即可，注意不需要www<br>按之前的顺序deploy即可</p><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">Star Or Follow</a>，感谢。</p>]]></content>
     
@@ -251,7 +312,7 @@
     
     </summary>
     
-      <category term="hexo" scheme="http://jiguangwu.top/categories/hexo/"/>
+      <category term="HexoAndBlog" scheme="http://jiguangwu.top/categories/HexoAndBlog/"/>
     
     
       <category term="hexo" scheme="http://jiguangwu.top/tags/hexo/"/>
@@ -265,7 +326,7 @@
     <link href="http://jiguangwu.top/2018/01/07/%E5%87%BA%E5%8F%91/"/>
     <id>http://jiguangwu.top/2018/01/07/出发/</id>
     <published>2018-01-07T12:18:31.000Z</published>
-    <updated>2019-03-21T15:00:06.499Z</updated>
+    <updated>2019-04-26T01:33:09.508Z</updated>
     
     <content type="html"><![CDATA[<p>去做就是啦。</p><p>总结了一七再去展望一八，哈哈我是真想做个技术流人才然后……<br>忙着结束手头上的事情，项目等等，想着去全身心投入到学习中，这是促进我去搭建自己的独立博客的初衷，去学习，去整理，去分享。<br>大学也浪了大半了，两次六级考试都几乎零准备，湖泊你说咋写来着？</p><p>要说新年计划的话，最近打算好好总结Java的知识，以及对基本框架，数据结构与算法的学习，对博客的维护与优化，还有考研的准备！</p><p>新年快乐！<br><img src="https://i.loli.net/2018/01/07/5a5211e581fdc.png" alt></p>]]></content>
     
@@ -282,7 +343,7 @@
       <category term="生活" scheme="http://jiguangwu.top/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="随笔" scheme="http://jiguangwu.top/tags/%E9%9A%8F%E7%AC%94/"/>
+      <category term="mood" scheme="http://jiguangwu.top/tags/mood/"/>
     
   </entry>
   
