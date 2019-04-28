@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="xml,xpath,DOM4J,Jsoup,">
 
 
 
@@ -81,16 +81,18 @@
 
 
 
-<meta name="description" content="人生如逆旅  我亦是行人">
-<meta property="og:type" content="website">
-<meta property="og:title" content="JiGW&#39;s Blog">
-<meta property="og:url" content="http://jiguangwu.top/categories/HexoAndBlog/index.html">
+<meta name="description" content="解析 操作xml文档，将文档的数据读取到内存中。 解析方式DOM 将标记语言文档一次性加载进内存，在内存中形成一棵dom树 优点：操作方便，可以对文档进行CRUD的所有操作 缺点：占内存  SAX 逐行读取，基于事件驱动 优点：不占内存，相比DOM效率更高 缺点：只能读取，不能增删改 解析器常见解析器 1. JAXP：sun公司提供的解析器，支持dom和sax两种思想 2. DOM4J：一款非常优">
+<meta name="keywords" content="xml,xpath,DOM4J,Jsoup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XML解析">
+<meta property="og:url" content="http://jiguangwu.top/2019/04/26/XML解析/index.html">
 <meta property="og:site_name" content="JiGW&#39;s Blog">
-<meta property="og:description" content="人生如逆旅  我亦是行人">
+<meta property="og:description" content="解析 操作xml文档，将文档的数据读取到内存中。 解析方式DOM 将标记语言文档一次性加载进内存，在内存中形成一棵dom树 优点：操作方便，可以对文档进行CRUD的所有操作 缺点：占内存  SAX 逐行读取，基于事件驱动 优点：不占内存，相比DOM效率更高 缺点：只能读取，不能增删改 解析器常见解析器 1. JAXP：sun公司提供的解析器，支持dom和sax两种思想 2. DOM4J：一款非常优">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-27T02:26:29.452Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JiGW&#39;s Blog">
-<meta name="twitter:description" content="人生如逆旅  我亦是行人">
+<meta name="twitter:title" content="XML解析">
+<meta name="twitter:description" content="解析 操作xml文档，将文档的数据读取到内存中。 解析方式DOM 将标记语言文档一次性加载进内存，在内存中形成一棵dom树 优点：操作方便，可以对文档进行CRUD的所有操作 缺点：占内存  SAX 逐行读取，基于事件驱动 优点：不占内存，相比DOM效率更高 缺点：只能读取，不能增删改 解析器常见解析器 1. JAXP：sun公司提供的解析器，支持dom和sax两种思想 2. DOM4J：一款非常优">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://jiguangwu.top/categories/HexoAndBlog/">
+  <link rel="canonical" href="http://jiguangwu.top/2019/04/26/XML解析/">
 
 
 
 
 
-  <title>分类: HexoAndBlog | JiGW's Blog</title>
+  <title>XML解析 | JiGW's Blog</title>
   
 
 
@@ -145,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -291,105 +293,433 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block category">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>HexoAndBlog<small>分类</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://jiguangwu.top/2019/04/26/XML解析/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杂 涅">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://i.loli.net/2019/04/11/5caee86e9a349.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JiGW's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/03/30/博客重配置/" itemprop="url">
-              
-                <span itemprop="name">更换电脑或重装系统时的博客配置</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">XML解析</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-30T13:25:29+08:00" content="2019-03-30">
-          03-30
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-26T20:10:45+08:00">
+                2019-04-26
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/26/XML解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/26/XML解析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,333
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/05/部署项目到github/" itemprop="url">
-              
-                <span itemprop="name">如何将本地项目部署到Github</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-05T09:28:09+08:00" content="2019-02-05">
-          02-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
+        <h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><hr>
+<p>操作xml文档，将文档的数据读取到内存中。</p>
+<h2 id="解析方式"><a href="#解析方式" class="headerlink" title="解析方式"></a>解析方式</h2><pre><code>DOM 将标记语言文档一次性加载进内存，在内存中形成一棵dom树
+优点：操作方便，可以对文档进行CRUD的所有操作
+缺点：占内存
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+SAX 逐行读取，基于事件驱动
+优点：不占内存，相比DOM效率更高
+缺点：只能读取，不能增删改
+</code></pre><h2 id="解析器"><a href="#解析器" class="headerlink" title="解析器"></a>解析器</h2><p>常见解析器</p>
+<pre><code>1. JAXP：sun公司提供的解析器，支持dom和sax两种思想
+2. DOM4J：一款非常优秀的解析器
+3. Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。
+4. PULL：Android操作系统内置的解析器，sax方式的。
+</code></pre><h3 id="DOM4J"><a href="#DOM4J" class="headerlink" title="DOM4J"></a>DOM4J</h3><p>本文中利用dom4j和xpath的支持进行解析，DOM4J中还提供了其他几种遍历节点的方法，例如枚举(Iterator)、递归、visitor模式等等。</p>
+<p>范例</p>
+<pre><code>1. 导包
+    dom4j-1.6.1.jar
+    jaxen-1.1-beta-6.jar
+2. 
+    public class TestDemo01 {
+            @Test
+            public void method() throws DocumentException {
+            //创建解析器
+            SAXReader saxReader = new SAXReader();
+            //解析xml
+            Document document = saxReader.read(TestDemo01.class.getClassLoader().getResourceAsStream(&quot;student.xml&quot;));
+            //获取根标签
+            Element rootElement = document.getRootElement();
+            /*System.out.println(rootElement);
+            //获取子标签
+            List elements = rootElement.elements();
+            //获取第一个
+            Object stu1 = elements.get(0);
+            System.out.println(stu1);
+            System.out.println(&quot;----------&quot;);
+            //student个数
+            List student = rootElement.elements(&quot;student&quot;);
+            int size = student.size();
+            System.out.println(size);
+            System.out.println(&quot;----------&quot;);
+            //获取第一个学号
+            Element stu = rootElement.element(&quot;student&quot;);
+            String s1 = stu.attributeValue(&quot;number&quot;);
+            System.out.println(s1);
+            System.out.println(&quot;----------&quot;);
+            //获取第一个年龄
+            Element age1 = stu.element(&quot;age&quot;);
+            String text = age1.getText();
+            System.out.println(text);
+            // 即每一级便签和下一级标签用element方法获取第一个
+        }
+    }
+3. 结合xpath
+            Element element = (Element)rootElement.selectSingleNode(&quot;//student[@number=&apos;heima_0002&apos;]&quot;);
+            System.out.println(element);
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/10/hexo/" itemprop="url">
-              
-                <span itemprop="name">hexo＋next主题搭建GitHub blog干货教程</span>
-              
-            </a>
-        
-      </h2>
+//xpath语法可通过xpath API文档查询
+</code></pre><h4 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h4><p>在idea中编程时，使用Schema约束会在写xml文件是自动出现 <strong>xmlns=”<a href="http://www.itcast.cn/xml&quot;" target="_blank" rel="noopener">http://www.itcast.cn/xml&quot;</a></strong>，使用这样的xml编码方式再结合xpath进行解析时，会发生找不到结果的问题</p>
+<pre><code>&lt;students xmlns=&quot;http://www.itcast.cn/xml&quot;&gt;
+    &lt;student number=&quot;heima_0001&quot;&gt;
+    &lt;name&gt;zhangsan&lt;/name&gt;
+    &lt;age&gt;24&lt;/age&gt;
+    &lt;sex&gt;male&lt;/sex&gt;
+    &lt;/student&gt;
+&lt;/students&gt;
+</code></pre><p>如获取</p>
+<pre><code>Element element = (Element)rootElement.selectSingleNode(&quot;//student[@number=&apos;heima_0002&apos;]&quot;);
+  System.out.println(element);
+</code></pre><p>结果为<strong>null</strong></p>
+<h3 id="Jsoup"><a href="#Jsoup" class="headerlink" title="Jsoup"></a>Jsoup</h3><p>步骤：</p>
+<pre><code>1. 导入jar包
+        jsoup-1.11.2.jar
+        JsoupXpath-0.3.2.jar
+2. 获取Document对象
+3. 获取对应的标签Element对象
+4. 获取数据
+</code></pre><p>代码：</p>
+<pre><code>//2.1获取student.xml的path
+  String path = JsoupDemo1.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();
+  //2.2解析xml文档，加载文档进内存，获取dom树---&gt;Document
+  Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);
+  //3.获取元素对象 Element
+  Elements elements = document.getElementsByTag(&quot;name&quot;);
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-01-10T13:25:29+08:00" content="2018-01-10">
-          01-10
-        </time>
-      </div>
+  System.out.println(elements.size());
+  //3.1获取第一个name的Element对象
+  Element element = elements.get(0);
+  //3.2获取数据
+  String name = element.text();
+  System.out.println(name);
+</code></pre><p>对象的使用：</p>
+<pre><code>1. Jsoup：工具类，可以解析html或xml文档，返回Document
+    * parse：解析html或xml文档，返回Document
+        * parse​(File in, String charsetName)：解析xml或html文件的。
+        * parse​(String html)：解析xml或html字符串
+        * parse​(URL url, int timeoutMillis)：通过网络路径获取指定的html或xml的文档对象
+2. Document：文档对象。代表内存中的dom树
+    * 获取Element对象
+        * getElementById​(String id)：根据id属性值获取唯一的element对象
+        * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合
+        * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合
+        * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合
+3. Elements：元素Element对象的集合。可以当做 ArrayList&lt;Element&gt;来使用
+4. Element：元素对象
+    1. 获取子元素对象
+        * getElementById​(String id)：根据id属性值获取唯一的element对象
+        * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合
+        * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合
+        * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合
 
-    </header>
-  </article>
+    2. 获取属性值
+        * String attr(String key)：根据属性名称获取属性值
+    3. 获取文本内容
+        * String text():获取文本内容
+        * String html():获取标签体的所有内容(包括字标签的字符串内容)
+5. Node：节点对象
+    * 是Document和Element的父类
+</code></pre><p>快捷查询方式：</p>
+<pre><code>1. selector:选择器
+    * 使用的方法：Elements    select​(String cssQuery)
+        * 语法：参考Selector类中定义的语法
+2. XPath：XPath即为XML路径语言，它是一种用来确定XML（标准通用标记语言的子集）文档中某部分位置的语言
+    * 使用Jsoup的Xpath需要额外导入jar包。
+    * 查询w3cshool参考手册，使用xpath的语法完成查询
+    * 代码：
+        //1.获取student.xml的path
+        String path = JsoupDemo6.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();
+        //2.获取Document对象
+        Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);
 
+        //3.根据document对象，创建JXDocument对象
+        JXDocument jxDocument = new JXDocument(document);
 
+        //4.结合xpath语法查询
+        //4.1查询所有student标签
+        List&lt;JXNode&gt; jxNodes = jxDocument.selN(&quot;//student&quot;);
+        for (JXNode jxNode : jxNodes) {
+            System.out.println(jxNode);
+        }
+
+        System.out.println(&quot;--------------------&quot;);
+
+        //4.2查询所有student标签下的name标签
+        List&lt;JXNode&gt; jxNodes2 = jxDocument.selN(&quot;//student/name&quot;);
+        for (JXNode jxNode : jxNodes2) {
+            System.out.println(jxNode);
+        }
+
+        System.out.println(&quot;--------------------&quot;);
+
+        //4.3查询student标签下带有id属性的name标签
+        List&lt;JXNode&gt; jxNodes3 = jxDocument.selN(&quot;//student/name[@id]&quot;);
+        for (JXNode jxNode : jxNodes3) {
+            System.out.println(jxNode);
+        }
+        System.out.println(&quot;--------------------&quot;);
+        //4.4查询student标签下带有id属性的name标签 并且id属性值为itcast
+
+        List&lt;JXNode&gt; jxNodes4 = jxDocument.selN(&quot;//student/name[@id=&apos;itcast&apos;]&quot;);
+        for (JXNode jxNode : jxNodes4) {
+            System.out.println(jxNode);
+        }
+</code></pre>
       
     </div>
+    
+    
+    
+	
+	
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>谢谢请我喝茶</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://i.loli.net/2019/03/21/5c935cc6210ba.jpg" alt="杂 涅 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://i.loli.net/2019/03/21/5c9373b08bd29.png" alt="杂 涅 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    杂 涅
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://jiguangwu.top/2019/04/26/XML解析/" title="XML解析">http://jiguangwu.top/2019/04/26/XML解析/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+	
+	<div>
+    
+    
+    
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/xml/" rel="tag"><i class="fa fa-tag"></i> xml</a>
+          
+            <a href="/tags/xpath/" rel="tag"><i class="fa fa-tag"></i> xpath</a>
+          
+            <a href="/tags/DOM4J/" rel="tag"><i class="fa fa-tag"></i> DOM4J</a>
+          
+            <a href="/tags/Jsoup/" rel="tag"><i class="fa fa-tag"></i> Jsoup</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/05/190405/" rel="next" title="关于我的考研">
+                <i class="fa fa-chevron-left"></i> 关于我的考研
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -397,6 +727,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -417,8 +756,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -509,6 +857,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#解析"><span class="nav-number">1.</span> <span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解析方式"><span class="nav-number">1.1.</span> <span class="nav-text">解析方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析器"><span class="nav-number">1.2.</span> <span class="nav-text">解析器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM4J"><span class="nav-number">1.2.1.</span> <span class="nav-text">DOM4J</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可能出现的问题"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">可能出现的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jsoup"><span class="nav-number">1.2.2.</span> <span class="nav-text">Jsoup</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -664,6 +1028,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jiguangwu.top/"/>
-  <updated>2019-04-26T13:16:36.703Z</updated>
+  <updated>2019-04-27T02:26:29.452Z</updated>
   <id>http://jiguangwu.top/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>XML解析</title>
-    <link href="http://jiguangwu.top/2019/04/24/XML%E8%A7%A3%E6%9E%90/"/>
-    <id>http://jiguangwu.top/2019/04/24/XML解析/</id>
-    <published>2019-04-24T02:10:45.000Z</published>
-    <updated>2019-04-26T13:16:36.703Z</updated>
+    <link href="http://jiguangwu.top/2019/04/26/XML%E8%A7%A3%E6%9E%90/"/>
+    <id>http://jiguangwu.top/2019/04/26/XML解析/</id>
+    <published>2019-04-26T12:10:45.000Z</published>
+    <updated>2019-04-27T02:26:29.452Z</updated>
     
     <content type="html"><![CDATA[<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><hr><p>操作xml文档，将文档的数据读取到内存中。</p><h2 id="解析方式"><a href="#解析方式" class="headerlink" title="解析方式"></a>解析方式</h2><pre><code>DOM 将标记语言文档一次性加载进内存，在内存中形成一棵dom树优点：操作方便，可以对文档进行CRUD的所有操作缺点：占内存SAX 逐行读取，基于事件驱动优点：不占内存，相比DOM效率更高缺点：只能读取，不能增删改</code></pre><h2 id="解析器"><a href="#解析器" class="headerlink" title="解析器"></a>解析器</h2><p>常见解析器</p><pre><code>1. JAXP：sun公司提供的解析器，支持dom和sax两种思想2. DOM4J：一款非常优秀的解析器3. Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。4. PULL：Android操作系统内置的解析器，sax方式的。</code></pre><h3 id="DOM4J"><a href="#DOM4J" class="headerlink" title="DOM4J"></a>DOM4J</h3><p>本文中利用dom4j和xpath的支持进行解析，DOM4J中还提供了其他几种遍历节点的方法，例如枚举(Iterator)、递归、visitor模式等等。</p><p>范例</p><pre><code>1. 导包    dom4j-1.6.1.jar    jaxen-1.1-beta-6.jar2.     public class TestDemo01 {            @Test            public void method() throws DocumentException {            //创建解析器            SAXReader saxReader = new SAXReader();            //解析xml            Document document = saxReader.read(TestDemo01.class.getClassLoader().getResourceAsStream(&quot;student.xml&quot;));            //获取根标签            Element rootElement = document.getRootElement();            /*System.out.println(rootElement);            //获取子标签            List elements = rootElement.elements();            //获取第一个            Object stu1 = elements.get(0);            System.out.println(stu1);            System.out.println(&quot;----------&quot;);            //student个数            List student = rootElement.elements(&quot;student&quot;);            int size = student.size();            System.out.println(size);            System.out.println(&quot;----------&quot;);            //获取第一个学号            Element stu = rootElement.element(&quot;student&quot;);            String s1 = stu.attributeValue(&quot;number&quot;);            System.out.println(s1);            System.out.println(&quot;----------&quot;);            //获取第一个年龄            Element age1 = stu.element(&quot;age&quot;);            String text = age1.getText();            System.out.println(text);            // 即每一级便签和下一级标签用element方法获取第一个        }    }3. 结合xpath            Element element = (Element)rootElement.selectSingleNode(&quot;//student[@number=&apos;heima_0002&apos;]&quot;);            System.out.println(element);//xpath语法可通过xpath API文档查询</code></pre><h4 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h4><p>在idea中编程时，使用Schema约束会在写xml文件是自动出现 <strong>xmlns=”<a href="http://www.itcast.cn/xml&quot;" target="_blank" rel="noopener">http://www.itcast.cn/xml&quot;</a></strong>，使用这样的xml编码方式再结合xpath进行解析时，会发生找不到结果的问题</p><pre><code>&lt;students xmlns=&quot;http://www.itcast.cn/xml&quot;&gt;    &lt;student number=&quot;heima_0001&quot;&gt;    &lt;name&gt;zhangsan&lt;/name&gt;    &lt;age&gt;24&lt;/age&gt;    &lt;sex&gt;male&lt;/sex&gt;    &lt;/student&gt;&lt;/students&gt;</code></pre><p>如获取</p><pre><code>Element element = (Element)rootElement.selectSingleNode(&quot;//student[@number=&apos;heima_0002&apos;]&quot;);  System.out.println(element);</code></pre><p>结果为<strong>null</strong></p><h3 id="Jsoup"><a href="#Jsoup" class="headerlink" title="Jsoup"></a>Jsoup</h3><p>步骤：</p><pre><code>1. 导入jar包        jsoup-1.11.2.jar        JsoupXpath-0.3.2.jar2. 获取Document对象3. 获取对应的标签Element对象4. 获取数据</code></pre><p>代码：</p><pre><code>//2.1获取student.xml的path  String path = JsoupDemo1.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();  //2.2解析xml文档，加载文档进内存，获取dom树---&gt;Document  Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);  //3.获取元素对象 Element  Elements elements = document.getElementsByTag(&quot;name&quot;);  System.out.println(elements.size());  //3.1获取第一个name的Element对象  Element element = elements.get(0);  //3.2获取数据  String name = element.text();  System.out.println(name);</code></pre><p>对象的使用：</p><pre><code>1. Jsoup：工具类，可以解析html或xml文档，返回Document    * parse：解析html或xml文档，返回Document        * parse​(File in, String charsetName)：解析xml或html文件的。        * parse​(String html)：解析xml或html字符串        * parse​(URL url, int timeoutMillis)：通过网络路径获取指定的html或xml的文档对象2. Document：文档对象。代表内存中的dom树    * 获取Element对象        * getElementById​(String id)：根据id属性值获取唯一的element对象        * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合        * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合        * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合3. Elements：元素Element对象的集合。可以当做 ArrayList&lt;Element&gt;来使用4. Element：元素对象    1. 获取子元素对象        * getElementById​(String id)：根据id属性值获取唯一的element对象        * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合        * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合        * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合    2. 获取属性值        * String attr(String key)：根据属性名称获取属性值    3. 获取文本内容        * String text():获取文本内容        * String html():获取标签体的所有内容(包括字标签的字符串内容)5. Node：节点对象    * 是Document和Element的父类</code></pre><p>快捷查询方式：</p><pre><code>1. selector:选择器    * 使用的方法：Elements    select​(String cssQuery)        * 语法：参考Selector类中定义的语法2. XPath：XPath即为XML路径语言，它是一种用来确定XML（标准通用标记语言的子集）文档中某部分位置的语言    * 使用Jsoup的Xpath需要额外导入jar包。    * 查询w3cshool参考手册，使用xpath的语法完成查询    * 代码：        //1.获取student.xml的path        String path = JsoupDemo6.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath();        //2.获取Document对象        Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;);        //3.根据document对象，创建JXDocument对象        JXDocument jxDocument = new JXDocument(document);        //4.结合xpath语法查询        //4.1查询所有student标签        List&lt;JXNode&gt; jxNodes = jxDocument.selN(&quot;//student&quot;);        for (JXNode jxNode : jxNodes) {            System.out.println(jxNode);        }        System.out.println(&quot;--------------------&quot;);        //4.2查询所有student标签下的name标签        List&lt;JXNode&gt; jxNodes2 = jxDocument.selN(&quot;//student/name&quot;);        for (JXNode jxNode : jxNodes2) {            System.out.println(jxNode);        }        System.out.println(&quot;--------------------&quot;);        //4.3查询student标签下带有id属性的name标签        List&lt;JXNode&gt; jxNodes3 = jxDocument.selN(&quot;//student/name[@id]&quot;);        for (JXNode jxNode : jxNodes3) {            System.out.println(jxNode);        }        System.out.println(&quot;--------------------&quot;);        //4.4查询student标签下带有id属性的name标签 并且id属性值为itcast        List&lt;JXNode&gt; jxNodes4 = jxDocument.selN(&quot;//student/name[@id=&apos;itcast&apos;]&quot;);        for (JXNode jxNode : jxNodes4) {            System.out.println(jxNode);        }</code></pre>]]></content>
     
@@ -50,34 +50,6 @@
   </entry>
   
   <entry>
-    <title>XML简介与约束</title>
-    <link href="http://jiguangwu.top/2019/04/22/XML%E5%85%A5%E9%97%A8/"/>
-    <id>http://jiguangwu.top/2019/04/22/XML入门/</id>
-    <published>2019-04-22T02:10:45.000Z</published>
-    <updated>2019-04-26T13:15:12.774Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><hr><ul><li>XML是可扩展标记语言（Extensible Markup Language），可扩展即标签都是自定义的。</li><li><p>功能：存储数据    </p><pre><code>1. 配置文件2. 在网络中传输</code></pre></li><li><p>与HTML的区别</p><pre><code>1. xml标签都是自定义的，html标签是预定义。2. xml的语法严格（严格区分大小写），html语法松散3. xml是存储数据的，html是展示数据</code></pre></li><li><p>各个平台之间的数据传输类型，但现在已经被JSON替换了。XML可以存储简单、小量的数据。</p></li></ul><h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><hr><h2 id="写法"><a href="#写法" class="headerlink" title="写法"></a>写法</h2><p>注意：</p><ul><li>属性值必须使用引号(单双都可)引起来</li><li>标签名称区分大小写</li></ul><p>示例</p><pre><code>    &lt;?xml version=&apos;1.0&apos; ?&gt;&lt;users&gt;    &lt;user id=&apos;1&apos;&gt;        &lt;name&gt;zhangsan&lt;/name&gt;        &lt;age&gt;23&lt;/age&gt;        &lt;gender&gt;男&lt;/gender&gt;    &lt;/user&gt;    &lt;user id=&apos;2&apos;&gt;        &lt;name&gt;lisi&lt;/name&gt;        &lt;age&gt;25&lt;/age&gt;        &lt;gender&gt;男&lt;/gender&gt;    &lt;/user&gt;&lt;/users&gt;</code></pre><h2 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h2><pre><code>1. 文档声明    1. 格式：&lt;?xml 属性列表 ?&gt;    2. 属性列表：        * version：版本号，必须的属性        * encoding：编码方式。告知解析引擎当前文档使用的字符集，默认值：ISO-8859-1        * standalone：是否独立            * 取值：                * yes：不依赖其他文件                * no：依赖其他文件2. 指令(了解)：结合css的    * &lt;?xml-stylesheet type=&quot;text/css&quot; href=&quot;a.css&quot; ?&gt;3. 标签：标签名称自定义的    * 规则：        * 名称可以包含字母、数字以及其他的字符         * 名称不能以数字或者标点符号开始         * 名称不能以字母 xml（或者 XML、Xml 等等）开始         * 名称不能包含空格 4. 属性：    id属性值唯一5. 文本：    * CDATA区：在该区域中的数据会被原样展示        * 格式：  &lt;![CDATA[ 数据 ]]&gt;</code></pre><h2 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h2><p>约束为规定XML文档的编写规则。</p><p>第一种约束 <strong>DTD</strong></p><pre><code>外部dtd：将约束的规则定义在外部的dtd文件中                    * 本地：&lt;!DOCTYPE 根标签名 SYSTEM &quot;dtd文件的位置&quot;&gt;                    * 网络：&lt;!DOCTYPE 根标签名 PUBLIC &quot;dtd文件名字&quot; &quot;dtd文件的位置URL&quot;&gt;内部dtd：写在内部</code></pre><p>外部范例</p><pre><code>//student.dtd文件&lt;!ELEMENT students (student+) &gt;&lt;!ELEMENT student (name,age,sex)&gt;&lt;!ELEMENT name (#PCDATA)&gt;&lt;!ELEMENT age (#PCDATA)&gt;&lt;!ELEMENT sex (#PCDATA)&gt;&lt;!ATTLIST student number ID #REQUIRED&gt;//student.xml文件&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;&lt;!DOCTYPE students SYSTEM &quot;student.dtd&quot;&gt;&lt;students&gt;    &lt;student number=&quot;s001&quot;&gt;        &lt;name&gt;zhangsan&lt;/name&gt;        &lt;age&gt;abc&lt;/age&gt;        &lt;sex&gt;hehe&lt;/sex&gt;    &lt;/student&gt;    &lt;student number=&quot;s002&quot;&gt;        &lt;name&gt;lisi&lt;/name&gt;        &lt;age&gt;24&lt;/age&gt;        &lt;sex&gt;female&lt;/sex&gt;    &lt;/student&gt;&lt;/students&gt;</code></pre><p>第二种约束 <strong>Schema</strong></p><p>引入</p><pre><code>    1. 填写xml文档的根元素    2. 引入xsi前缀.  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;    3. 引入xsd文件命名空间.  xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;    4. 为每一个xsd约束声明一个前缀,作为标识  xmlns=&quot;http://www.itcast.cn/xml&quot;&lt;students   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;        xmlns=&quot;http://www.itcast.cn/xml&quot;        xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;&gt;</code></pre><p>范例</p><p>student.xsd</p><pre><code>&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;xsd:schema xmlns=&quot;http://www.itcast.cn/xml&quot;            xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;            targetNamespace=&quot;http://www.itcast.cn/xml&quot; elementFormDefault=&quot;qualified&quot;&gt;    &lt;xsd:element name=&quot;students&quot; type=&quot;studentsType&quot;/&gt;    &lt;xsd:complexType name=&quot;studentsType&quot;&gt;        &lt;xsd:sequence&gt;            &lt;xsd:element name=&quot;student&quot; type=&quot;studentType&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;        &lt;/xsd:sequence&gt;    &lt;/xsd:complexType&gt;    &lt;xsd:complexType name=&quot;studentType&quot;&gt;        &lt;xsd:sequence&gt;            &lt;xsd:element name=&quot;name&quot; type=&quot;xsd:string&quot;/&gt;            &lt;xsd:element name=&quot;age&quot; type=&quot;ageType&quot; /&gt;            &lt;xsd:element name=&quot;sex&quot; type=&quot;sexType&quot; /&gt;        &lt;/xsd:sequence&gt;        &lt;xsd:attribute name=&quot;number&quot; type=&quot;numberType&quot; use=&quot;required&quot;/&gt;    &lt;/xsd:complexType&gt;    &lt;xsd:simpleType name=&quot;sexType&quot;&gt;        &lt;xsd:restriction base=&quot;xsd:string&quot;&gt;            &lt;xsd:enumeration value=&quot;male&quot;/&gt;            &lt;xsd:enumeration value=&quot;female&quot;/&gt;        &lt;/xsd:restriction&gt;    &lt;/xsd:simpleType&gt;    &lt;xsd:simpleType name=&quot;ageType&quot;&gt;        &lt;xsd:restriction base=&quot;xsd:integer&quot;&gt;            &lt;xsd:minInclusive value=&quot;0&quot;/&gt;            &lt;xsd:maxInclusive value=&quot;256&quot;/&gt;        &lt;/xsd:restriction&gt;    &lt;/xsd:simpleType&gt;    &lt;xsd:simpleType name=&quot;numberType&quot;&gt;        &lt;xsd:restriction base=&quot;xsd:string&quot;&gt;            &lt;xsd:pattern value=&quot;heima_\d{4}&quot;/&gt;        &lt;/xsd:restriction&gt;    &lt;/xsd:simpleType&gt;&lt;/xsd:schema&gt;</code></pre><p>student.xml</p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;&lt;students   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;            xmlns=&quot;http://www.itcast.cn/xml&quot;            xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;&gt;    &lt;student number=&quot;heima_0001&quot;&gt;        &lt;name&gt;tom&lt;/name&gt;        &lt;age&gt;18&lt;/age&gt;        &lt;sex&gt;male&lt;/sex&gt;    &lt;/student&gt;&lt;/students&gt;</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;hr&gt;
-&lt;ul&gt;
-&lt;li&gt;XML是可扩展标记语言（Extensible Markup Language），可扩展即标签都是自定义的。&lt;/li&gt;
-
-      
-    
-    </summary>
-    
-      <category term="JavaWeb" scheme="http://jiguangwu.top/categories/JavaWeb/"/>
-    
-    
-      <category term="xml" scheme="http://jiguangwu.top/tags/xml/"/>
-    
-  </entry>
-  
-  <entry>
     <title>关于我的考研</title>
     <link href="http://jiguangwu.top/2019/04/05/190405/"/>
     <id>http://jiguangwu.top/2019/04/05/190405/</id>
@@ -99,6 +71,34 @@
     
     
       <category term="mood" scheme="http://jiguangwu.top/tags/mood/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>更换电脑或重装系统时的博客配置</title>
+    <link href="http://jiguangwu.top/2019/03/30/%E5%8D%9A%E5%AE%A2%E9%87%8D%E9%85%8D%E7%BD%AE/"/>
+    <id>http://jiguangwu.top/2019/03/30/博客重配置/</id>
+    <published>2019-03-30T05:25:29.000Z</published>
+    <updated>2019-04-27T02:25:46.829Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。</p><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul><li>安装node.js</li><li>安装Git</li><li>备份你的本地博客目录的部分文件夹</li></ul><p><a href="http://jiguangwu.top/2018/01/10/hexo/#more" title="下载点此">node.js和Git的安装包参考</a></p><p>拷贝文件夹如下</p><blockquote><p>_config.yml</p><p>theme/</p><p>source/</p><p>scaffolds/</p><p>package.json</p><p>.gitignore</p></blockquote><h2 id="配置你的Git"><a href="#配置你的Git" class="headerlink" title="配置你的Git"></a>配置你的Git</h2><p>桌面右键选择bash here,设置用户名称和邮件地址。</p><blockquote><p>1 $ git config –global user.name “username”</p><p>2 $ git config –global user.email “<a href="mailto:username@xxxx.com" target="_blank" rel="noopener">username@xxxx.com</a>“</p></blockquote><h2 id="配置SSH-Key"><a href="#配置SSH-Key" class="headerlink" title="配置SSH Key"></a>配置SSH Key</h2><p>输入</p><blockquote><p>$ ssh-keygen -t rsa -C “你的邮件地址”</p></blockquote><p>然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh<br>打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.<br>这里名称随便取，在下面粘贴内容保存即可。</p><p>我们回来测试下是否把SSH配置成功了。<br>继续在bash里输入</p><blockquote><p> $ ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a></p></blockquote><p>如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..<br>看到这个意味着已成功！</p><h2 id="正式工作"><a href="#正式工作" class="headerlink" title="正式工作"></a>正式工作</h2><p>接下来时hexo和一些组件的安装，恭喜了很快了。</p><h1 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h1><p>我们打开cmd命令行，输入</p><blockquote><p>npm install -g hexo</p></blockquote><p>这里可能会很慢，所以推荐使用淘宝镜像。</p><blockquote><p>npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a></p></blockquote><p>验证是否安装成功使用：</p><blockquote><p>cnpm -v</p></blockquote><p>安装了淘宝镜像后，都使用cnpm指令：</p><blockquote><p>cnpm install -g hexo   // 安装 hexo</p></blockquote><p>验证Hexo是否安装成功使用：</p><blockquote><p>hexo -v</p></blockquote><h1 id="安装一些组件"><a href="#安装一些组件" class="headerlink" title="安装一些组件"></a>安装一些组件</h1><blockquote><p> npm install hexo-deployer-git –save  // 文章部署到 git 的模块（下面为选择安装）</p><p> npm install hexo-generator-feed –save  // 建立 RSS 订阅</p><p> npm install hexo-generator-sitemap –save // 建立站点地图</p></blockquote><h1 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h1><p>输入指令</p><blockquote><p>hexo generate</p><p>hexo deploy</p></blockquote><p>没有报错就OK了。<br>这里讲讲hexo的一些快捷命令</p><blockquote><p>hexo g == hexo generate</p><p>hexo d == hexo deploy</p><p>hexo s == hexo server</p><p>hexo n == hexo new</p></blockquote><h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>尝试部署文章并使用以下指令更新部署</p><blockquote><p>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p></blockquote><p>成功部署，恭喜你！博客重配置成功！</p><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">Star Or Follow</a>，感谢。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。&lt;/p&gt;
+&lt;h2 id=&quot;准备&quot;&gt;&lt;a href=
+      
+    
+    </summary>
+    
+      <category term="HexoAndBlog" scheme="http://jiguangwu.top/categories/HexoAndBlog/"/>
+    
+    
+      <category term="hexo" scheme="http://jiguangwu.top/tags/hexo/"/>
+    
+      <category term="blog" scheme="http://jiguangwu.top/tags/blog/"/>
     
   </entry>
   
@@ -130,34 +130,6 @@
   </entry>
   
   <entry>
-    <title>更换电脑或重装系统时的博客配置</title>
-    <link href="http://jiguangwu.top/2019/03/21/%E5%8D%9A%E5%AE%A2%E9%87%8D%E9%85%8D%E7%BD%AE/"/>
-    <id>http://jiguangwu.top/2019/03/21/博客重配置/</id>
-    <published>2019-03-21T05:25:29.000Z</published>
-    <updated>2019-04-26T14:28:29.300Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。</p><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul><li>安装node.js</li><li>安装Git</li><li>备份你的本地博客目录的部分文件夹</li></ul><p><a href="http://jiguangwu.top/2018/01/10/hexo/#more" title="下载点此">node.js和Git的安装包参考</a></p><p>拷贝文件夹如下</p><blockquote><p>_config.yml</p><p>theme/</p><p>source/</p><p>scaffolds/</p><p>package.json</p><p>.gitignore</p></blockquote><h2 id="配置你的Git"><a href="#配置你的Git" class="headerlink" title="配置你的Git"></a>配置你的Git</h2><p>桌面右键选择bash here,设置用户名称和邮件地址。</p><blockquote><p>1 $ git config –global user.name “username”</p><p>2 $ git config –global user.email “<a href="mailto:username@xxxx.com" target="_blank" rel="noopener">username@xxxx.com</a>“</p></blockquote><h2 id="配置SSH-Key"><a href="#配置SSH-Key" class="headerlink" title="配置SSH Key"></a>配置SSH Key</h2><p>输入</p><blockquote><p>$ ssh-keygen -t rsa -C “你的邮件地址”</p></blockquote><p>然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh<br>打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.<br>这里名称随便取，在下面粘贴内容保存即可。</p><p>我们回来测试下是否把SSH配置成功了。<br>继续在bash里输入</p><blockquote><p> $ ssh -T <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a></p></blockquote><p>如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..<br>看到这个意味着已成功！</p><h2 id="正式工作"><a href="#正式工作" class="headerlink" title="正式工作"></a>正式工作</h2><p>接下来时hexo和一些组件的安装，恭喜了很快了。</p><h1 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h1><p>我们打开cmd命令行，输入</p><blockquote><p>npm install -g hexo</p></blockquote><p>这里可能会很慢，所以推荐使用淘宝镜像。</p><blockquote><p>npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a></p></blockquote><p>验证是否安装成功使用：</p><blockquote><p>cnpm -v</p></blockquote><p>安装了淘宝镜像后，都使用cnpm指令：</p><blockquote><p>cnpm install -g hexo   // 安装 hexo</p></blockquote><p>验证Hexo是否安装成功使用：</p><blockquote><p>hexo -v</p></blockquote><h1 id="安装一些组件"><a href="#安装一些组件" class="headerlink" title="安装一些组件"></a>安装一些组件</h1><blockquote><p> npm install hexo-deployer-git –save  // 文章部署到 git 的模块（下面为选择安装）</p><p> npm install hexo-generator-feed –save  // 建立 RSS 订阅</p><p> npm install hexo-generator-sitemap –save // 建立站点地图</p></blockquote><h1 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h1><p>输入指令</p><blockquote><p>hexo generate</p><p>hexo deploy</p></blockquote><p>没有报错就OK了。<br>这里讲讲hexo的一些快捷命令</p><blockquote><p>hexo g == hexo generate</p><p>hexo d == hexo deploy</p><p>hexo s == hexo server</p><p>hexo n == hexo new</p></blockquote><h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>尝试部署文章并使用以下指令更新部署</p><blockquote><p>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p></blockquote><p>成功部署，恭喜你！博客重配置成功！</p><p>如果觉得有用，不如给个<a href="https://github.com/JiGuangwuu/JiGuangwuu.github.io" target="_blank" rel="noopener">Star Or Follow</a>，感谢。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。&lt;/p&gt;
-&lt;h2 id=&quot;准备&quot;&gt;&lt;a href=
-      
-    
-    </summary>
-    
-      <category term="HexoAndBlog" scheme="http://jiguangwu.top/categories/HexoAndBlog/"/>
-    
-    
-      <category term="hexo" scheme="http://jiguangwu.top/tags/hexo/"/>
-    
-      <category term="blog" scheme="http://jiguangwu.top/tags/blog/"/>
-    
-  </entry>
-  
-  <entry>
     <title>如何将本地项目部署到Github</title>
     <link href="http://jiguangwu.top/2019/02/05/%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0github/"/>
     <id>http://jiguangwu.top/2019/02/05/部署项目到github/</id>
@@ -181,6 +153,34 @@
       <category term="blog" scheme="http://jiguangwu.top/tags/blog/"/>
     
       <category term="github" scheme="http://jiguangwu.top/tags/github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XML简介与约束</title>
+    <link href="http://jiguangwu.top/2018/12/22/XML%E5%85%A5%E9%97%A8/"/>
+    <id>http://jiguangwu.top/2018/12/22/XML入门/</id>
+    <published>2018-12-22T02:10:45.000Z</published>
+    <updated>2019-04-27T02:23:54.595Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><hr><ul><li>XML是可扩展标记语言（Extensible Markup Language），可扩展即标签都是自定义的。</li><li><p>功能：存储数据    </p><pre><code>1. 配置文件2. 在网络中传输</code></pre></li><li><p>与HTML的区别</p><pre><code>1. xml标签都是自定义的，html标签是预定义。2. xml的语法严格（严格区分大小写），html语法松散3. xml是存储数据的，html是展示数据</code></pre></li><li><p>各个平台之间的数据传输类型，但现在已经被JSON替换了。XML可以存储简单、小量的数据。</p></li></ul><h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><hr><h2 id="写法"><a href="#写法" class="headerlink" title="写法"></a>写法</h2><p>注意：</p><ul><li>属性值必须使用引号(单双都可)引起来</li><li>标签名称区分大小写</li></ul><p>示例</p><pre><code>    &lt;?xml version=&apos;1.0&apos; ?&gt;&lt;users&gt;    &lt;user id=&apos;1&apos;&gt;        &lt;name&gt;zhangsan&lt;/name&gt;        &lt;age&gt;23&lt;/age&gt;        &lt;gender&gt;男&lt;/gender&gt;    &lt;/user&gt;    &lt;user id=&apos;2&apos;&gt;        &lt;name&gt;lisi&lt;/name&gt;        &lt;age&gt;25&lt;/age&gt;        &lt;gender&gt;男&lt;/gender&gt;    &lt;/user&gt;&lt;/users&gt;</code></pre><h2 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h2><pre><code>1. 文档声明    1. 格式：&lt;?xml 属性列表 ?&gt;    2. 属性列表：        * version：版本号，必须的属性        * encoding：编码方式。告知解析引擎当前文档使用的字符集，默认值：ISO-8859-1        * standalone：是否独立            * 取值：                * yes：不依赖其他文件                * no：依赖其他文件2. 指令(了解)：结合css的    * &lt;?xml-stylesheet type=&quot;text/css&quot; href=&quot;a.css&quot; ?&gt;3. 标签：标签名称自定义的    * 规则：        * 名称可以包含字母、数字以及其他的字符         * 名称不能以数字或者标点符号开始         * 名称不能以字母 xml（或者 XML、Xml 等等）开始         * 名称不能包含空格 4. 属性：    id属性值唯一5. 文本：    * CDATA区：在该区域中的数据会被原样展示        * 格式：  &lt;![CDATA[ 数据 ]]&gt;</code></pre><h2 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h2><p>约束为规定XML文档的编写规则。</p><p>第一种约束 <strong>DTD</strong></p><pre><code>外部dtd：将约束的规则定义在外部的dtd文件中                    * 本地：&lt;!DOCTYPE 根标签名 SYSTEM &quot;dtd文件的位置&quot;&gt;                    * 网络：&lt;!DOCTYPE 根标签名 PUBLIC &quot;dtd文件名字&quot; &quot;dtd文件的位置URL&quot;&gt;内部dtd：写在内部</code></pre><p>外部范例</p><pre><code>//student.dtd文件&lt;!ELEMENT students (student+) &gt;&lt;!ELEMENT student (name,age,sex)&gt;&lt;!ELEMENT name (#PCDATA)&gt;&lt;!ELEMENT age (#PCDATA)&gt;&lt;!ELEMENT sex (#PCDATA)&gt;&lt;!ATTLIST student number ID #REQUIRED&gt;//student.xml文件&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;&lt;!DOCTYPE students SYSTEM &quot;student.dtd&quot;&gt;&lt;students&gt;    &lt;student number=&quot;s001&quot;&gt;        &lt;name&gt;zhangsan&lt;/name&gt;        &lt;age&gt;abc&lt;/age&gt;        &lt;sex&gt;hehe&lt;/sex&gt;    &lt;/student&gt;    &lt;student number=&quot;s002&quot;&gt;        &lt;name&gt;lisi&lt;/name&gt;        &lt;age&gt;24&lt;/age&gt;        &lt;sex&gt;female&lt;/sex&gt;    &lt;/student&gt;&lt;/students&gt;</code></pre><p>第二种约束 <strong>Schema</strong></p><p>引入</p><pre><code>    1. 填写xml文档的根元素    2. 引入xsi前缀.  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;    3. 引入xsd文件命名空间.  xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;    4. 为每一个xsd约束声明一个前缀,作为标识  xmlns=&quot;http://www.itcast.cn/xml&quot;&lt;students   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;        xmlns=&quot;http://www.itcast.cn/xml&quot;        xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;&gt;</code></pre><p>范例</p><p>student.xsd</p><pre><code>&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;xsd:schema xmlns=&quot;http://www.itcast.cn/xml&quot;            xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;            targetNamespace=&quot;http://www.itcast.cn/xml&quot; elementFormDefault=&quot;qualified&quot;&gt;    &lt;xsd:element name=&quot;students&quot; type=&quot;studentsType&quot;/&gt;    &lt;xsd:complexType name=&quot;studentsType&quot;&gt;        &lt;xsd:sequence&gt;            &lt;xsd:element name=&quot;student&quot; type=&quot;studentType&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;        &lt;/xsd:sequence&gt;    &lt;/xsd:complexType&gt;    &lt;xsd:complexType name=&quot;studentType&quot;&gt;        &lt;xsd:sequence&gt;            &lt;xsd:element name=&quot;name&quot; type=&quot;xsd:string&quot;/&gt;            &lt;xsd:element name=&quot;age&quot; type=&quot;ageType&quot; /&gt;            &lt;xsd:element name=&quot;sex&quot; type=&quot;sexType&quot; /&gt;        &lt;/xsd:sequence&gt;        &lt;xsd:attribute name=&quot;number&quot; type=&quot;numberType&quot; use=&quot;required&quot;/&gt;    &lt;/xsd:complexType&gt;    &lt;xsd:simpleType name=&quot;sexType&quot;&gt;        &lt;xsd:restriction base=&quot;xsd:string&quot;&gt;            &lt;xsd:enumeration value=&quot;male&quot;/&gt;            &lt;xsd:enumeration value=&quot;female&quot;/&gt;        &lt;/xsd:restriction&gt;    &lt;/xsd:simpleType&gt;    &lt;xsd:simpleType name=&quot;ageType&quot;&gt;        &lt;xsd:restriction base=&quot;xsd:integer&quot;&gt;            &lt;xsd:minInclusive value=&quot;0&quot;/&gt;            &lt;xsd:maxInclusive value=&quot;256&quot;/&gt;        &lt;/xsd:restriction&gt;    &lt;/xsd:simpleType&gt;    &lt;xsd:simpleType name=&quot;numberType&quot;&gt;        &lt;xsd:restriction base=&quot;xsd:string&quot;&gt;            &lt;xsd:pattern value=&quot;heima_\d{4}&quot;/&gt;        &lt;/xsd:restriction&gt;    &lt;/xsd:simpleType&gt;&lt;/xsd:schema&gt;</code></pre><p>student.xml</p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;&lt;students   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;            xmlns=&quot;http://www.itcast.cn/xml&quot;            xsi:schemaLocation=&quot;http://www.itcast.cn/xml  student.xsd&quot;&gt;    &lt;student number=&quot;heima_0001&quot;&gt;        &lt;name&gt;tom&lt;/name&gt;        &lt;age&gt;18&lt;/age&gt;        &lt;sex&gt;male&lt;/sex&gt;    &lt;/student&gt;&lt;/students&gt;</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;XML是可扩展标记语言（Extensible Markup Language），可扩展即标签都是自定义的。&lt;/li&gt;
+
+      
+    
+    </summary>
+    
+      <category term="JavaWeb" scheme="http://jiguangwu.top/categories/JavaWeb/"/>
+    
+    
+      <category term="xml" scheme="http://jiguangwu.top/tags/xml/"/>
     
   </entry>
   
