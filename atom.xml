@@ -185,6 +185,33 @@
   </entry>
   
   <entry>
+    <title>Tomcat问题和项目部署</title>
+    <link href="http://jiguangwu.top/2018/10/09/Tomcat%E9%97%AE%E9%A2%98/"/>
+    <id>http://jiguangwu.top/2018/10/09/Tomcat问题/</id>
+    <published>2018-10-09T09:19:45.000Z</published>
+    <updated>2019-04-28T15:55:03.636Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Tomcat可能出现的问题"><a href="#Tomcat可能出现的问题" class="headerlink" title="Tomcat可能出现的问题"></a>Tomcat可能出现的问题</h1><hr><pre><code>1. 黑窗口一闪而过：    * 原因： 没有正确配置JAVA_HOME环境变量    * 解决方案：正确配置JAVA_HOME环境变量，并在path中添加%JAVA_HOME%\bin;2. 启动报错：    1. 暴力修改：找到占用的端口号，并且找到对应的进程，杀死该进程        * 命令行输入netstat -ano，查询到端口豪对应进程的PID    2. 温柔修改：修改自身的端口号        * conf/server.xml        * &lt;Connector port=&quot;8888&quot; protocol=&quot;HTTP/1.1&quot;           connectionTimeout=&quot;20000&quot;           redirectPort=&quot;8445&quot; /&gt;        * 一般会将tomcat的默认端口号修改为80。80端口号是http协议的默认端口号。            * 好处：在访问时，就不用输入端口号</code></pre><h1 id="在Tomcat中部署项目的方式"><a href="#在Tomcat中部署项目的方式" class="headerlink" title="在Tomcat中部署项目的方式"></a>在Tomcat中部署项目的方式</h1><hr><pre><code>1. 直接将项目放到webapps目录下即可。    * /WebProject：项目的访问路径--&gt;虚拟目录    * 简化部署：将项目打成一个war包，再将war包放置到webapps目录下。        * war包会自动解压缩2. 配置conf/server.xml文件    在&lt;Host&gt;标签体中配置    &lt;Context docBase=&quot;D:\WebProject&quot; path=&quot;/demo&quot; /&gt;    * docBase:项目存放的路径    * path：虚拟目录3. 在conf\Catalina\localhost创建任意名称的xml文件。在文件中编写    &lt;Context docBase=&quot;D:\WebProject&quot; /&gt;    * 虚拟目录：xml文件的名称4. 在IDE中</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Tomcat可能出现的问题&quot;&gt;&lt;a href=&quot;#Tomcat可能出现的问题&quot; class=&quot;headerlink&quot; title=&quot;Tomcat可能出现的问题&quot;&gt;&lt;/a&gt;Tomcat可能出现的问题&lt;/h1&gt;&lt;hr&gt;
+&lt;pre&gt;&lt;code&gt;1. 黑窗口一闪而过：
+ 
+      
+    
+    </summary>
+    
+      <category term="JavaWeb" scheme="http://jiguangwu.top/categories/JavaWeb/"/>
+    
+    
+      <category term="Tomcat" scheme="http://jiguangwu.top/tags/Tomcat/"/>
+    
+  </entry>
+  
+  <entry>
     <title>eclipse的maven插件安装</title>
     <link href="http://jiguangwu.top/2018/09/07/eclipse%E6%8F%92%E4%BB%B6maven/"/>
     <id>http://jiguangwu.top/2018/09/07/eclipse插件maven/</id>
