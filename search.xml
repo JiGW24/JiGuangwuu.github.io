@@ -73,17 +73,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Tomcat问题和项目部署]]></title>
-    <url>%2F2018%2F10%2F09%2FTomcat%E9%97%AE%E9%A2%98%2F</url>
-    <content type="text"><![CDATA[Tomcat可能出现的问题 1. 黑窗口一闪而过： * 原因： 没有正确配置JAVA_HOME环境变量 * 解决方案：正确配置JAVA_HOME环境变量，并在path中添加%JAVA_HOME%\bin; 2. 启动报错： 1. 暴力修改：找到占用的端口号，并且找到对应的进程，杀死该进程 * 命令行输入netstat -ano，查询到端口豪对应进程的PID 2. 温柔修改：修改自身的端口号 * conf/server.xml * &lt;Connector port=&quot;8888&quot; protocol=&quot;HTTP/1.1&quot; connectionTimeout=&quot;20000&quot; redirectPort=&quot;8445&quot; /&gt; * 一般会将tomcat的默认端口号修改为80。80端口号是http协议的默认端口号。 * 好处：在访问时，就不用输入端口号 在Tomcat中部署项目的方式 1. 直接将项目放到webapps目录下即可。 * /WebProject：项目的访问路径--&gt;虚拟目录 * 简化部署：将项目打成一个war包，再将war包放置到webapps目录下。 * war包会自动解压缩 2. 配置conf/server.xml文件 在&lt;Host&gt;标签体中配置 &lt;Context docBase=&quot;D:\WebProject&quot; path=&quot;/demo&quot; /&gt; * docBase:项目存放的路径 * path：虚拟目录 3. 在conf\Catalina\localhost创建任意名称的xml文件。在文件中编写 &lt;Context docBase=&quot;D:\WebProject&quot; /&gt; * 虚拟目录：xml文件的名称 4. 在IDE中]]></content>
-      <categories>
-        <category>JavaWeb</category>
-      </categories>
-      <tags>
-        <tag>Tomcat</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[eclipse的maven插件安装]]></title>
     <url>%2F2018%2F09%2F07%2Feclipse%E6%8F%92%E4%BB%B6maven%2F</url>
     <content type="text"><![CDATA[以eclipse kepler为例，官网下载地址：http://www.eclipse.org/downloads/packages/release/Kepler/SR2 1.打开eclipse，help–install new software… 2.workwith里输入：http://download.eclipse.org/releases/kepler，输入完会有提示地址出现，点击回车静待... 3.在filter框中输入maven便能定位要安装的插件 4.选择“Collaboration”-“m2e - Maven Integration for Eclipse”，并点击next按钮进行安装 5.安装完成重启eclipse即可 6.配置你的maven 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
