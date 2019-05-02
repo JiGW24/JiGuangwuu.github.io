@@ -15,17 +15,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[关于我的考研]]></title>
-    <url>%2F2019%2F04%2F05%2F190405%2F</url>
-    <content type="text"><![CDATA[有时间写下来这一段历程]]></content>
-      <categories>
-        <category>生活</category>
-      </categories>
-      <tags>
-        <tag>mood</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[更换电脑或重装系统时的博客配置]]></title>
     <url>%2F2019%2F03%2F30%2F%E5%8D%9A%E5%AE%A2%E9%87%8D%E9%85%8D%E7%BD%AE%2F</url>
     <content type="text"><![CDATA[前言首先感谢网络上的大佬们，查阅了一些人的博客总算解决了这一难题。废话少说，下面是简单的教程。 准备 安装node.js 安装Git 备份你的本地博客目录的部分文件夹 node.js和Git的安装包参考 拷贝文件夹如下 _config.yml theme/ source/ scaffolds/ package.json .gitignore 配置你的Git桌面右键选择bash here,设置用户名称和邮件地址。 1 $ git config –global user.name “username” 2 $ git config –global user.email “username@xxxx.com“ 配置SSH Key输入 $ ssh-keygen -t rsa -C “你的邮件地址” 然后连续按三次回车，会生成id_rsa.pub文件，用记事本打开它，然后全部复制即可，待会要用。这个文件的地址：C:\Users\Administrator.ssh打开你的GitHub主页，打开设置-&gt;Deploy keys-&gt;Add deploy key.这里名称随便取，在下面粘贴内容保存即可。 我们回来测试下是否把SSH配置成功了。继续在bash里输入 $ ssh -T git@github.com 如果提示 Are you sure you want to continue connecting (yes/no)? ，输入yes，然后会看到 successfully authenticated,but github…..看到这个意味着已成功！ 正式工作接下来时hexo和一些组件的安装，恭喜了很快了。 安装hexo我们打开cmd命令行，输入 npm install -g hexo 这里可能会很慢，所以推荐使用淘宝镜像。 npm install -g cnpm –registry=https://registry.npm.taobao.org 验证是否安装成功使用： cnpm -v 安装了淘宝镜像后，都使用cnpm指令： cnpm install -g hexo // 安装 hexo 验证Hexo是否安装成功使用： hexo -v 安装一些组件 npm install hexo-deployer-git –save // 文章部署到 git 的模块（下面为选择安装） npm install hexo-generator-feed –save // 建立 RSS 订阅 npm install hexo-generator-sitemap –save // 建立站点地图 部署到Github输入指令 hexo generate hexo deploy 没有报错就OK了。这里讲讲hexo的一些快捷命令 hexo g == hexo generate hexo d == hexo deploy hexo s == hexo server hexo n == hexo new 测试尝试部署文章并使用以下指令更新部署 hexo clean &amp;&amp; hexo g &amp;&amp; hexo d 成功部署，恭喜你！博客重配置成功！ 如果觉得有用，不如给个Star Or Follow，感谢。]]></content>
@@ -47,6 +36,17 @@
       <tags>
         <tag>interview</tag>
         <tag>designPattern</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[关于我的考研]]></title>
+    <url>%2F2019%2F02%2F20%2F190405%2F</url>
+    <content type="text"><![CDATA[]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>mood</tag>
       </tags>
   </entry>
   <entry>
