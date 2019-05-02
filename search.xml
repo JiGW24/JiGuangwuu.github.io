@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[事务及隔离级别]]></title>
+    <url>%2F2019%2F05%2F02%2F%E4%BA%8B%E5%8A%A1%E5%8F%8A%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%2F</url>
+    <content type="text"><![CDATA[事务 简述事务是逻辑上的一组操作，要么都执行，要么都不执行。最简单的；例子如银行转账，双方一人账户增加多少钱，另一人账号就减少多少钱。 操作1. 开启事务： start transaction; 2. 回滚：rollback; 3. 提交：commit; 事务提交的方式： 1. 自动提交 MySQL的提交方式 2. 手动提交 Oracle的提交方式 修改事务提交的方式 查看事务的默认提交方式：SELECT @@autocommit; -- 1 代表自动提交 0 代表手动提交 修改默认提交方式： set @@autocommit = 0; 事务的四个特征 原子性：是不可分割的最小操作单位，要么同时成功，要么同时失败 持久性：当事务提交或回滚后，数据库会持久化的保存数据。 隔离性：多个事务之间。相互独立。 一致性：事务操作前后，数据总量不变 事务的隔离级别多个事务是相互隔离的、独立的，但多个事务处理同样一批数据时便会发生问题，这时就必须设置隔离级别来解决这些问题。 存在的问题 脏读(Dirty Read)：一个事务读取到另一个事务未提交的数据 不可重复读(虚读)(Unrepeatable Read)：同一个事务中，两次读取的数据不一样。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。 幻读(Phantom Read)：一个事务操作(DML)数据表中所有记录，另一个事务添加了一条数据，则第一个事务查询不到自己的修改。 有人也说还有第四种问题-丢失修改(Lost to modify)：指在一个事务读取一个数据时，另外一个事务也访问了该数据，那么在第一个事务中修改了这个数据后，第二个事务也修改了这个数据。这样第一个事务内的修改结果就被丢失，因此称为丢失修改。 例如：事务1读取某表中的数据A=20，事务2也读取A=20，事务1修改A=A-1，事务2也修改A=A-1，最终结果A=18，事务1的修改被丢失。 不可重复度和幻读区别：不可重复读的重点是修改，幻读的重点在于新增或者删除。 隔离级别 READ-UNCOMMITTED(读取未提交)： 最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读。 READ-COMMITTED(读取已提交)： 允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生。 REPEATABLE-READ(可重复读)： 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。 SERIALIZABLE(可串行化)： 最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。 特点：安全等级越来越高，但效率越来越低。 数据库查询隔离级别： * select @@tx_isolation; 数据库设置隔离级别： * set global transaction isolation level 级别字符串; 补充在Github上的JavaGuide-master仓库中写到 由 SnailClimb 和 BugSpeak 共同完成。 这里需要注意的是：与 SQL 标准不同的地方在于InnoDB 存储引擎在 **REPEATABLE-READ（可重读）**事务隔离级别下使用的是Next-Key Lock 锁算法，因此可以避免幻读的产生，这与其他数据库系统(如 SQL Server)是不同的。所以说InnoDB 存储引擎的默认支持的隔离级别是 **REPEATABLE-READ（可重读）** 已经可以完全保证事务的隔离性要求，即达到了 SQL标准的**SERIALIZABLE(可串行化)**隔离级别。 因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是**READ-COMMITTED(读取提交内容):**，但是你要知道的是InnoDB 存储引擎默认使用 **REPEATABLE-READ（可重读）**并不会有任何性能损失。 InnoDB 存储引擎在 **分布式事务** 的情况下一般会用到**SERIALIZABLE(可串行化)**隔离级别。]]></content>
+      <categories>
+        <category>Database</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Oracle</tag>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[XML解析]]></title>
     <url>%2F2019%2F04%2F26%2FXML%E8%A7%A3%E6%9E%90%2F</url>
     <content type="text"><![CDATA[解析 操作xml文档，将文档的数据读取到内存中。 解析方式DOM 将标记语言文档一次性加载进内存，在内存中形成一棵dom树 优点：操作方便，可以对文档进行CRUD的所有操作 缺点：占内存 SAX 逐行读取，基于事件驱动 优点：不占内存，相比DOM效率更高 缺点：只能读取，不能增删改 解析器常见解析器 1. JAXP：sun公司提供的解析器，支持dom和sax两种思想 2. DOM4J：一款非常优秀的解析器 3. Jsoup：jsoup 是一款Java 的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。 4. PULL：Android操作系统内置的解析器，sax方式的。 DOM4J本文中利用dom4j和xpath的支持进行解析，DOM4J中还提供了其他几种遍历节点的方法，例如枚举(Iterator)、递归、visitor模式等等。 范例 1. 导包 dom4j-1.6.1.jar jaxen-1.1-beta-6.jar 2. public class TestDemo01 { @Test public void method() throws DocumentException { //创建解析器 SAXReader saxReader = new SAXReader(); //解析xml Document document = saxReader.read(TestDemo01.class.getClassLoader().getResourceAsStream(&quot;student.xml&quot;)); //获取根标签 Element rootElement = document.getRootElement(); /*System.out.println(rootElement); //获取子标签 List elements = rootElement.elements(); //获取第一个 Object stu1 = elements.get(0); System.out.println(stu1); System.out.println(&quot;----------&quot;); //student个数 List student = rootElement.elements(&quot;student&quot;); int size = student.size(); System.out.println(size); System.out.println(&quot;----------&quot;); //获取第一个学号 Element stu = rootElement.element(&quot;student&quot;); String s1 = stu.attributeValue(&quot;number&quot;); System.out.println(s1); System.out.println(&quot;----------&quot;); //获取第一个年龄 Element age1 = stu.element(&quot;age&quot;); String text = age1.getText(); System.out.println(text); // 即每一级便签和下一级标签用element方法获取第一个 } } 3. 结合xpath Element element = (Element)rootElement.selectSingleNode(&quot;//student[@number=&apos;heima_0002&apos;]&quot;); System.out.println(element); //xpath语法可通过xpath API文档查询 可能出现的问题在idea中编程时，使用Schema约束会在写xml文件是自动出现 xmlns=”http://www.itcast.cn/xml&quot;，使用这样的xml编码方式再结合xpath进行解析时，会发生找不到结果的问题 &lt;students xmlns=&quot;http://www.itcast.cn/xml&quot;&gt; &lt;student number=&quot;heima_0001&quot;&gt; &lt;name&gt;zhangsan&lt;/name&gt; &lt;age&gt;24&lt;/age&gt; &lt;sex&gt;male&lt;/sex&gt; &lt;/student&gt; &lt;/students&gt; 如获取 Element element = (Element)rootElement.selectSingleNode(&quot;//student[@number=&apos;heima_0002&apos;]&quot;); System.out.println(element); 结果为null Jsoup步骤： 1. 导入jar包 jsoup-1.11.2.jar JsoupXpath-0.3.2.jar 2. 获取Document对象 3. 获取对应的标签Element对象 4. 获取数据 代码： //2.1获取student.xml的path String path = JsoupDemo1.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath(); //2.2解析xml文档，加载文档进内存，获取dom树---&gt;Document Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;); //3.获取元素对象 Element Elements elements = document.getElementsByTag(&quot;name&quot;); System.out.println(elements.size()); //3.1获取第一个name的Element对象 Element element = elements.get(0); //3.2获取数据 String name = element.text(); System.out.println(name); 对象的使用： 1. Jsoup：工具类，可以解析html或xml文档，返回Document * parse：解析html或xml文档，返回Document * parse​(File in, String charsetName)：解析xml或html文件的。 * parse​(String html)：解析xml或html字符串 * parse​(URL url, int timeoutMillis)：通过网络路径获取指定的html或xml的文档对象 2. Document：文档对象。代表内存中的dom树 * 获取Element对象 * getElementById​(String id)：根据id属性值获取唯一的element对象 * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合 * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合 * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合 3. Elements：元素Element对象的集合。可以当做 ArrayList&lt;Element&gt;来使用 4. Element：元素对象 1. 获取子元素对象 * getElementById​(String id)：根据id属性值获取唯一的element对象 * getElementsByTag​(String tagName)：根据标签名称获取元素对象集合 * getElementsByAttribute​(String key)：根据属性名称获取元素对象集合 * getElementsByAttributeValue​(String key, String value)：根据对应的属性名和属性值获取元素对象集合 2. 获取属性值 * String attr(String key)：根据属性名称获取属性值 3. 获取文本内容 * String text():获取文本内容 * String html():获取标签体的所有内容(包括字标签的字符串内容) 5. Node：节点对象 * 是Document和Element的父类 快捷查询方式： 1. selector:选择器 * 使用的方法：Elements select​(String cssQuery) * 语法：参考Selector类中定义的语法 2. XPath：XPath即为XML路径语言，它是一种用来确定XML（标准通用标记语言的子集）文档中某部分位置的语言 * 使用Jsoup的Xpath需要额外导入jar包。 * 查询w3cshool参考手册，使用xpath的语法完成查询 * 代码： //1.获取student.xml的path String path = JsoupDemo6.class.getClassLoader().getResource(&quot;student.xml&quot;).getPath(); //2.获取Document对象 Document document = Jsoup.parse(new File(path), &quot;utf-8&quot;); //3.根据document对象，创建JXDocument对象 JXDocument jxDocument = new JXDocument(document); //4.结合xpath语法查询 //4.1查询所有student标签 List&lt;JXNode&gt; jxNodes = jxDocument.selN(&quot;//student&quot;); for (JXNode jxNode : jxNodes) { System.out.println(jxNode); } System.out.println(&quot;--------------------&quot;); //4.2查询所有student标签下的name标签 List&lt;JXNode&gt; jxNodes2 = jxDocument.selN(&quot;//student/name&quot;); for (JXNode jxNode : jxNodes2) { System.out.println(jxNode); } System.out.println(&quot;--------------------&quot;); //4.3查询student标签下带有id属性的name标签 List&lt;JXNode&gt; jxNodes3 = jxDocument.selN(&quot;//student/name[@id]&quot;); for (JXNode jxNode : jxNodes3) { System.out.println(jxNode); } System.out.println(&quot;--------------------&quot;); //4.4查询student标签下带有id属性的name标签 并且id属性值为itcast List&lt;JXNode&gt; jxNodes4 = jxDocument.selN(&quot;//student/name[@id=&apos;itcast&apos;]&quot;); for (JXNode jxNode : jxNodes4) { System.out.println(jxNode); }]]></content>
@@ -74,7 +87,7 @@
   </entry>
   <entry>
     <title><![CDATA[Tomcat问题和项目部署]]></title>
-    <url>%2F2018%2F10%2F09%2FTomcat%E9%97%AE%E9%A2%98%2F</url>
+    <url>%2F2018%2F10%2F09%2Ftomcat%E9%85%8D%E7%BD%AE%2F</url>
     <content type="text"><![CDATA[Tomcat可能出现的问题 1. 黑窗口一闪而过： * 原因： 没有正确配置JAVA_HOME环境变量 * 解决方案：正确配置JAVA_HOME环境变量，并在path中添加%JAVA_HOME%\bin; 2. 启动报错： 1. 暴力修改：找到占用的端口号，并且找到对应的进程，杀死该进程 * 命令行输入netstat -ano，查询到端口豪对应进程的PID 2. 温柔修改：修改自身的端口号 * conf/server.xml * &lt;Connector port=&quot;8888&quot; protocol=&quot;HTTP/1.1&quot; connectionTimeout=&quot;20000&quot; redirectPort=&quot;8445&quot; /&gt; * 一般会将tomcat的默认端口号修改为80。80端口号是http协议的默认端口号。 * 好处：在访问时，就不用输入端口号 在Tomcat中部署项目的方式 1. 直接将项目放到webapps目录下即可。 * /WebProject：项目的访问路径--&gt;虚拟目录 * 简化部署：将项目打成一个war包，再将war包放置到webapps目录下。 * war包会自动解压缩 2. 配置conf/server.xml文件 在&lt;Host&gt;标签体中配置 &lt;Context docBase=&quot;D:\WebProject&quot; path=&quot;/demo&quot; /&gt; * docBase:项目存放的路径 * path：虚拟目录 3. 在conf\Catalina\localhost创建任意名称的xml文件。在文件中编写 &lt;Context docBase=&quot;D:\WebProject&quot; /&gt; * 虚拟目录：xml文件的名称 4. 在IDE中]]></content>
       <categories>
         <category>JavaWeb</category>
@@ -103,8 +116,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>interview</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -115,8 +128,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>interview</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
