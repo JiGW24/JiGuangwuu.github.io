@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jigw.top/"/>
-  <updated>2019-05-02T06:31:21.021Z</updated>
+  <updated>2019-05-27T12:52:01.080Z</updated>
   <id>http://jigw.top/</id>
   
   <author>
@@ -15,6 +15,69 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring通过DataSource获取数据库数据(非注解方式和注解形式)及Spring集成Junit测试</title>
+    <link href="http://jigw.top/2019/05/27/Spring%E9%80%9A%E8%BF%87DataSource%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE/"/>
+    <id>http://jigw.top/2019/05/27/Spring通过DataSource获取数据库数据/</id>
+    <published>2019-05-27T11:16:45.000Z</published>
+    <updated>2019-05-27T12:52:01.080Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="非注解"><a href="#非注解" class="headerlink" title="非注解"></a>非注解</h2><p>这里就不多说了，直接来源码</p><p>1.导入各坐标<br>这里包括数据库连接池(druid/c3p0)，单元测试，数据库连接驱动坐标以及spring的依赖就不一一写出了</p><pre><code>&lt;dependencies&gt;&lt;dependency&gt;  &lt;groupId&gt;org.springframework&lt;/groupId&gt;  &lt;artifactId&gt;spring-context&lt;/artifactId&gt;  &lt;version&gt;5.0.5.RELEASE&lt;/version&gt;&lt;/dependency&gt;&lt;!--druid连接池--&gt;&lt;dependency&gt;  &lt;groupId&gt;com.alibaba&lt;/groupId&gt;  &lt;artifactId&gt;druid&lt;/artifactId&gt;  &lt;version&gt;1.1.13&lt;/version&gt;&lt;/dependency&gt;</code></pre><p>2.AccountDaoImpl.java</p><pre><code>public class AccountDaoImpl implements AccountDao {private JdbcTemplate template;public void setTemplate(JdbcTemplate template) {    this.template = template;}public void findAll(){    List&lt;Map&lt;String, Object&gt;&gt; list = template.queryForList(&quot;select * from teacher&quot;);    for (Map&lt;String, Object&gt; map : list) {        for (String s : map.keySet()) {            System.out.println(s+&quot;:&quot;+map.get(s));        }    }  }}</code></pre><p>3.AccountServiceImpl.java</p><pre><code>public class AccountServiceImpl implements AccountService {    private AccountDaoImpl accountDao;    public void setAccountDao(AccountDaoImpl accountDao) {        this.accountDao = accountDao;    }    @Override    public void findAll() {        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);        AccountDao accountDao = (AccountDao) applicationContext.getBean(&quot;accountDao&quot;);        accountDao.findAll();        System.out.println(&quot;username:&quot;+username);    }}</code></pre><p>4.applicationContext.xml</p><pre><code>&lt;bean id=&quot;accountDao&quot; class=&quot;top.jigw.dao.impl.AccountDaoImpl&quot;&gt;        &lt;property name=&quot;template&quot; ref=&quot;jdbcTemplate&quot;&gt;&lt;/property&gt;    &lt;/bean&gt;    &lt;bean id=&quot;accountService&quot; class=&quot;top.jigw.service.impl.AccountServiceImpl&quot;&gt;        &lt;property name=&quot;accountDao&quot; ref=&quot;accountDao&quot;&gt;&lt;/property&gt;    &lt;/bean&gt;    &lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSourceFactory&quot; factory-method=&quot;createDataSource&quot;&gt;        &lt;constructor-arg name=&quot;properties&quot;&gt;            &lt;props&gt;                &lt;prop key=&quot;driverClassName&quot;&gt;com.mysql.jdbc.Driver&lt;/prop&gt;                &lt;prop key=&quot;url&quot;&gt;jdbc:mysql:///test&lt;/prop&gt;                &lt;prop key=&quot;username&quot;&gt;root&lt;/prop&gt;                &lt;prop key=&quot;password&quot;&gt;123456&lt;/prop&gt;            &lt;/props&gt;        &lt;/constructor-arg&gt;    &lt;/bean&gt;    &lt;bean id=&quot;jdbcTemplate&quot; class=&quot;org.springframework.jdbc.core.JdbcTemplate&quot;&gt;        &lt;constructor-arg name=&quot;dataSource&quot; ref=&quot;dataSource&quot;&gt;&lt;/constructor-arg&gt;    &lt;/bean&gt;</code></pre><p>5.单元测试</p><pre><code>public class test {    @Test    public void test01() {        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);        AccountService accountService = (AccountService) applicationContext.getBean(&quot;accountService&quot;);        accountService.findAll();    }}</code></pre><h2 id="注解形式"><a href="#注解形式" class="headerlink" title="注解形式"></a>注解形式</h2><p>1.首先同样是导入坐标</p><p>2.提取jdbc.properties</p><pre><code>jdbc.driver=com.mysql.jdbc.Driverjdbc.url=jdbc:mysql:///testjdbc.username=rootjdbc.password=123456</code></pre><p>3.了解下Spring的一些基本注解吧</p><pre><code>注解                             说明@Component        使用在类上用于实例化Bean@Controller            使用在web层类上用于实例化Bean@Service              使用在service层类上用于实例化Bean@Repository         使用在dao层类上用于实例化Bean@Autowired         使用在字段上用于根据类型依赖注入@Qualifier             结合@Autowired一起使用用于根据名称进行依赖注入@Resource         相当于@Autowired+@Qualifier，按照名称进行注入@Value             注入普通属性@Scope             标注Bean的作用范围@PostConstruct     使用在方法上标注该方法是Bean的初始化方法@PreDestroy         使用在方法上标注该方法是Bean的销毁方法@Configuration 用于指定当前类是一个 Spring 配置类，当创建容器时会从该类上加载注解@ComponentScan 用于指定 Spring 在初始化容器时要扫描的包。 作用和在 Spring 的 xml 配置文件中的 &lt;context:component-scan base-package=&quot;com.itheima&quot;/&gt;一样@Bean 使用在方法上，标注将该方法的返回值存储到 Spring 容器中@PropertySource 用于加载.properties 文件中的配置@Import 用于导入其他配置类</code></pre><p>使用注解进行开发时，需要在applicationContext.xml中配置组件扫描，作用是指定哪个包及其子包下的Bean需要<br>进行扫描以便识别使用注解配置的类、字段和方法。</p><pre><code>&lt;context:component-scan base-package=&quot;top.jigw&quot;&gt;&lt;/context:component-scan&gt;</code></pre><p>4.AccountDaoImpl.java</p><pre><code>@Repository(&quot;accountDao&quot;)public class AccountDaoImpl implements AccountDao {private JdbcTemplate template;public void setTemplate(JdbcTemplate template) {    this.template = template;}public void findAll(){    List&lt;Map&lt;String, Object&gt;&gt; list = template.queryForList(&quot;select * from teacher&quot;);    for (Map&lt;String, Object&gt; map : list) {        for (String s : map.keySet()) {            System.out.println(s+&quot;:&quot;+map.get(s));        }    }  }}</code></pre><p>5.AccountServiceImpl.java</p><pre><code>@Service(&quot;accountService&quot;)public class AccountServiceImpl implements AccountService {    private AccountDaoImpl accountDao;    public void setAccountDao(AccountDaoImpl accountDao) {        this.accountDao = accountDao;    }    @Override    public void findAll() {        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);        AccountDao accountDao = (AccountDao) applicationContext.getBean(&quot;accountDao&quot;);        accountDao.findAll();        System.out.println(&quot;username:&quot;+username);    }}</code></pre><p>6.SpringConfiguration.java</p><pre><code>@Configuration@ComponentScan(&quot;top.jigw&quot;)@Import({DataSourceConfiguration.class})public class SpringConfiguration {}</code></pre><p>7.DataSourceConfiguration.java</p><pre><code>@PropertySource(&quot;classpath:jdbc.properties&quot;)public class DataSourceConfiguration {    @Value(&quot;${jdbc.driver}&quot;)    private String driver;    @Value(&quot;${jdbc.url}&quot;)    private String url;    @Value(&quot;${jdbc.username}&quot;)    private String username;    @Value(&quot;${jdbc.password}&quot;)    private String password;    @Bean(name = &quot;dataSource&quot;)    public DataSource getDataSource(){        DruidDataSource dataSource = new DruidDataSource();        dataSource.setDriverClassName(driver);        dataSource.setUrl(url);        dataSource.setUsername(username);        dataSource.setPassword(password);        return dataSource;    }    @Bean(name = &quot;template&quot;)    public JdbcTemplate getTemplate(DataSource dataSource){        return new JdbcTemplate(dataSource);    }}</code></pre><h2 id="集成Junit测试"><a href="#集成Junit测试" class="headerlink" title="集成Junit测试"></a>集成Junit测试</h2><p>这里需要导入spring-test依赖包</p><pre><code>Spring集成Junit步骤①导入spring集成Junit的坐标②使用@Runwith注解替换原来的运行期③使用@ContextConfiguration指定配置文件或配置类④使用@Autowired注入需要测试的对象⑤创建测试方法进行测试</code></pre><p>SpringJunitTest.java</p><pre><code>@RunWith(SpringJUnit4ClassRunner.class)@ContextConfiguration(classes = SpringConfiguration.class)public class SpringJunitTest {    @Autowired    private AccountService accountService;    @Test    public void testService(){        accountService.findAll();    }}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;非注解&quot;&gt;&lt;a href=&quot;#非注解&quot; class=&quot;headerlink&quot; title=&quot;非注解&quot;&gt;&lt;/a&gt;非注解&lt;/h2&gt;&lt;p&gt;这里就不多说了，直接来源码&lt;/p&gt;
+&lt;p&gt;1.导入各坐标&lt;br&gt;这里包括数据库连接池(druid/c3p0)，单元测试，数据库连接驱
+      
+    
+    </summary>
+    
+      <category term="Spring" scheme="http://jigw.top/categories/Spring/"/>
+    
+    
+      <category term="maven" scheme="http://jigw.top/tags/maven/"/>
+    
+      <category term="druid" scheme="http://jigw.top/tags/druid/"/>
+    
+      <category term="junit" scheme="http://jigw.top/tags/junit/"/>
+    
+      <category term="Spring" scheme="http://jigw.top/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>servlet域对象</title>
+    <link href="http://jigw.top/2019/05/05/servlet%E5%9F%9F%E5%AF%B9%E8%B1%A1/"/>
+    <id>http://jigw.top/2019/05/05/servlet域对象/</id>
+    <published>2019-05-05T12:16:45.000Z</published>
+    <updated>2019-05-11T06:18:51.415Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>在学习servlet的过程中，数据共享是必须的操作。总的来说，我们要想共享数据往往是利用<font color="pink" size="3"><strong>多个servlet或对象共同操作的一个对象</strong></font>，这类对象称之为<font color="pink" size="3"><strong>作用域</strong></font>。</p><h2 id="HttpServletRequest"><a href="#HttpServletRequest" class="headerlink" title="HttpServletRequest"></a>HttpServletRequest</h2><p>针对<font color="red" size="3"><strong>一次请求</strong></font>。<br>使用该对象保存数据，一次请求(一个页面，如果是请求转发多个页面)内有效。</p><ul><li>创建：客户端想服务器端发送一次请求</li><li>销毁：服务器响应后销毁</li></ul><h2 id="HttpServletSession"><a href="#HttpServletSession" class="headerlink" title="HttpServletSession"></a>HttpServletSession</h2><p>针对<font color="red" size="3"><strong>一次会话</strong></font>。<br>使用该对象保存数据，一次会话(多次请求)有效。</p><ul><li>创建：请求未携带jsessionid时创建session对象，请求携带jsessionid但找不到对应的session时创建session对象。</li><li>销毁：<pre><code>1. 未正常关闭服务器2. 手动调用了Session的invalidate方法3. session过期了，有效时间默认为30分钟</code></pre></li></ul><h2 id="HttpServletContext"><a href="#HttpServletContext" class="headerlink" title="HttpServletContext"></a>HttpServletContext</h2><p>针对<font color="red" size="3"><strong>一个web应用</strong></font>。<br>一个web应用只有一个ServletContext对象，该对象保存的数据对整个web应用都有效。我们可以把ServletContext与其他对象描绘成水和鱼类的关系。</p><ul><li>创建：服务器启动的时候</li><li>销毁：服务器关闭的时候或者项目移除</li></ul><h3 id="三个作用域对象操作的API"><a href="#三个作用域对象操作的API" class="headerlink" title="三个作用域对象操作的API"></a>三个作用域对象操作的API</h3><p>api都是一样的,完成存取和销毁的操作</p><ul><li>存放数据：setAttribute(name,value)</li><li>获得数据：getAttribute(name)</li><li>删除数据：removeAttribute(name)</li></ul><h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>servlet为我们提供的三大域对象来帮助我们实现不同情况下的数据共享,<font color="blue" size="3"><strong>若一个业务功能使用这三个域对象都可以实现,我们一般选用最小的域对象</strong></font>.作用域越小,生命周期越短,在一定程度上可以提供程序的执行效率</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h1&gt;&lt;p&gt;在学习servlet的过程中，数据共享是必须的操作。总的来说，我们要想共享数据往往是利用&lt;font color=&quot;pink&quot; size=&quot;3
+      
+    
+    </summary>
+    
+      <category term="JavaWeb" scheme="http://jigw.top/categories/JavaWeb/"/>
+    
+    
+      <category term="servlet" scheme="http://jigw.top/tags/servlet/"/>
+    
+      <category term="request" scheme="http://jigw.top/tags/request/"/>
+    
+      <category term="session" scheme="http://jigw.top/tags/session/"/>
+    
+      <category term="ServletContext" scheme="http://jigw.top/tags/ServletContext/"/>
+    
+  </entry>
   
   <entry>
     <title>事务及隔离级别</title>
@@ -263,9 +326,9 @@
       <category term="IDE" scheme="http://jigw.top/categories/IDE/"/>
     
     
-      <category term="eclipse" scheme="http://jigw.top/tags/eclipse/"/>
-    
       <category term="maven" scheme="http://jigw.top/tags/maven/"/>
+    
+      <category term="eclipse" scheme="http://jigw.top/tags/eclipse/"/>
     
   </entry>
   
@@ -293,9 +356,9 @@
       <category term="Java" scheme="http://jigw.top/categories/Java/"/>
     
     
-      <category term="java" scheme="http://jigw.top/tags/java/"/>
-    
       <category term="interview" scheme="http://jigw.top/tags/interview/"/>
+    
+      <category term="java" scheme="http://jigw.top/tags/java/"/>
     
   </entry>
   
@@ -321,9 +384,9 @@
       <category term="Java" scheme="http://jigw.top/categories/Java/"/>
     
     
-      <category term="java" scheme="http://jigw.top/tags/java/"/>
-    
       <category term="interview" scheme="http://jigw.top/tags/interview/"/>
+    
+      <category term="java" scheme="http://jigw.top/tags/java/"/>
     
   </entry>
   

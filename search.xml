@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Spring通过DataSource获取数据库数据(非注解方式和注解形式)及Spring集成Junit测试]]></title>
+    <url>%2F2019%2F05%2F27%2FSpring%E9%80%9A%E8%BF%87DataSource%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%2F</url>
+    <content type="text"><![CDATA[非注解这里就不多说了，直接来源码 1.导入各坐标这里包括数据库连接池(druid/c3p0)，单元测试，数据库连接驱动坐标以及spring的依赖就不一一写出了 &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework&lt;/groupId&gt; &lt;artifactId&gt;spring-context&lt;/artifactId&gt; &lt;version&gt;5.0.5.RELEASE&lt;/version&gt; &lt;/dependency&gt; &lt;!--druid连接池--&gt; &lt;dependency&gt; &lt;groupId&gt;com.alibaba&lt;/groupId&gt; &lt;artifactId&gt;druid&lt;/artifactId&gt; &lt;version&gt;1.1.13&lt;/version&gt; &lt;/dependency&gt; 2.AccountDaoImpl.java public class AccountDaoImpl implements AccountDao { private JdbcTemplate template; public void setTemplate(JdbcTemplate template) { this.template = template; } public void findAll(){ List&lt;Map&lt;String, Object&gt;&gt; list = template.queryForList(&quot;select * from teacher&quot;); for (Map&lt;String, Object&gt; map : list) { for (String s : map.keySet()) { System.out.println(s+&quot;:&quot;+map.get(s)); } } } } 3.AccountServiceImpl.java public class AccountServiceImpl implements AccountService { private AccountDaoImpl accountDao; public void setAccountDao(AccountDaoImpl accountDao) { this.accountDao = accountDao; } @Override public void findAll() { ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;); AccountDao accountDao = (AccountDao) applicationContext.getBean(&quot;accountDao&quot;); accountDao.findAll(); System.out.println(&quot;username:&quot;+username); } } 4.applicationContext.xml &lt;bean id=&quot;accountDao&quot; class=&quot;top.jigw.dao.impl.AccountDaoImpl&quot;&gt; &lt;property name=&quot;template&quot; ref=&quot;jdbcTemplate&quot;&gt;&lt;/property&gt; &lt;/bean&gt; &lt;bean id=&quot;accountService&quot; class=&quot;top.jigw.service.impl.AccountServiceImpl&quot;&gt; &lt;property name=&quot;accountDao&quot; ref=&quot;accountDao&quot;&gt;&lt;/property&gt; &lt;/bean&gt; &lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSourceFactory&quot; factory-method=&quot;createDataSource&quot;&gt; &lt;constructor-arg name=&quot;properties&quot;&gt; &lt;props&gt; &lt;prop key=&quot;driverClassName&quot;&gt;com.mysql.jdbc.Driver&lt;/prop&gt; &lt;prop key=&quot;url&quot;&gt;jdbc:mysql:///test&lt;/prop&gt; &lt;prop key=&quot;username&quot;&gt;root&lt;/prop&gt; &lt;prop key=&quot;password&quot;&gt;123456&lt;/prop&gt; &lt;/props&gt; &lt;/constructor-arg&gt; &lt;/bean&gt; &lt;bean id=&quot;jdbcTemplate&quot; class=&quot;org.springframework.jdbc.core.JdbcTemplate&quot;&gt; &lt;constructor-arg name=&quot;dataSource&quot; ref=&quot;dataSource&quot;&gt;&lt;/constructor-arg&gt; &lt;/bean&gt; 5.单元测试 public class test { @Test public void test01() { ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;); AccountService accountService = (AccountService) applicationContext.getBean(&quot;accountService&quot;); accountService.findAll(); } } 注解形式1.首先同样是导入坐标 2.提取jdbc.properties jdbc.driver=com.mysql.jdbc.Driver jdbc.url=jdbc:mysql:///test jdbc.username=root jdbc.password=123456 3.了解下Spring的一些基本注解吧 注解 说明 @Component 使用在类上用于实例化Bean @Controller 使用在web层类上用于实例化Bean @Service 使用在service层类上用于实例化Bean @Repository 使用在dao层类上用于实例化Bean @Autowired 使用在字段上用于根据类型依赖注入 @Qualifier 结合@Autowired一起使用用于根据名称进行依赖注入 @Resource 相当于@Autowired+@Qualifier，按照名称进行注入 @Value 注入普通属性 @Scope 标注Bean的作用范围 @PostConstruct 使用在方法上标注该方法是Bean的初始化方法 @PreDestroy 使用在方法上标注该方法是Bean的销毁方法 @Configuration 用于指定当前类是一个 Spring 配置类，当创建容器时会从该类上加载注解 @ComponentScan 用于指定 Spring 在初始化容器时要扫描的包。 作用和在 Spring 的 xml 配置文件中的 &lt;context:component-scan base-package=&quot;com.itheima&quot;/&gt;一样 @Bean 使用在方法上，标注将该方法的返回值存储到 Spring 容器中 @PropertySource 用于加载.properties 文件中的配置 @Import 用于导入其他配置类 使用注解进行开发时，需要在applicationContext.xml中配置组件扫描，作用是指定哪个包及其子包下的Bean需要进行扫描以便识别使用注解配置的类、字段和方法。 &lt;context:component-scan base-package=&quot;top.jigw&quot;&gt;&lt;/context:component-scan&gt; 4.AccountDaoImpl.java @Repository(&quot;accountDao&quot;) public class AccountDaoImpl implements AccountDao { private JdbcTemplate template; public void setTemplate(JdbcTemplate template) { this.template = template; } public void findAll(){ List&lt;Map&lt;String, Object&gt;&gt; list = template.queryForList(&quot;select * from teacher&quot;); for (Map&lt;String, Object&gt; map : list) { for (String s : map.keySet()) { System.out.println(s+&quot;:&quot;+map.get(s)); } } } } 5.AccountServiceImpl.java @Service(&quot;accountService&quot;) public class AccountServiceImpl implements AccountService { private AccountDaoImpl accountDao; public void setAccountDao(AccountDaoImpl accountDao) { this.accountDao = accountDao; } @Override public void findAll() { ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;); AccountDao accountDao = (AccountDao) applicationContext.getBean(&quot;accountDao&quot;); accountDao.findAll(); System.out.println(&quot;username:&quot;+username); } } 6.SpringConfiguration.java @Configuration @ComponentScan(&quot;top.jigw&quot;) @Import({DataSourceConfiguration.class}) public class SpringConfiguration { } 7.DataSourceConfiguration.java @PropertySource(&quot;classpath:jdbc.properties&quot;) public class DataSourceConfiguration { @Value(&quot;${jdbc.driver}&quot;) private String driver; @Value(&quot;${jdbc.url}&quot;) private String url; @Value(&quot;${jdbc.username}&quot;) private String username; @Value(&quot;${jdbc.password}&quot;) private String password; @Bean(name = &quot;dataSource&quot;) public DataSource getDataSource(){ DruidDataSource dataSource = new DruidDataSource(); dataSource.setDriverClassName(driver); dataSource.setUrl(url); dataSource.setUsername(username); dataSource.setPassword(password); return dataSource; } @Bean(name = &quot;template&quot;) public JdbcTemplate getTemplate(DataSource dataSource){ return new JdbcTemplate(dataSource); } } 集成Junit测试这里需要导入spring-test依赖包 Spring集成Junit步骤 ①导入spring集成Junit的坐标 ②使用@Runwith注解替换原来的运行期 ③使用@ContextConfiguration指定配置文件或配置类 ④使用@Autowired注入需要测试的对象 ⑤创建测试方法进行测试 SpringJunitTest.java @RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration(classes = SpringConfiguration.class) public class SpringJunitTest { @Autowired private AccountService accountService; @Test public void testService(){ accountService.findAll(); } }]]></content>
+      <categories>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>maven</tag>
+        <tag>druid</tag>
+        <tag>junit</tag>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[servlet域对象]]></title>
+    <url>%2F2019%2F05%2F05%2Fservlet%E5%9F%9F%E5%AF%B9%E8%B1%A1%2F</url>
+    <content type="text"><![CDATA[引言在学习servlet的过程中，数据共享是必须的操作。总的来说，我们要想共享数据往往是利用多个servlet或对象共同操作的一个对象，这类对象称之为作用域。 HttpServletRequest针对一次请求。使用该对象保存数据，一次请求(一个页面，如果是请求转发多个页面)内有效。 创建：客户端想服务器端发送一次请求 销毁：服务器响应后销毁 HttpServletSession针对一次会话。使用该对象保存数据，一次会话(多次请求)有效。 创建：请求未携带jsessionid时创建session对象，请求携带jsessionid但找不到对应的session时创建session对象。 销毁：1. 未正常关闭服务器 2. 手动调用了Session的invalidate方法 3. session过期了，有效时间默认为30分钟 HttpServletContext针对一个web应用。一个web应用只有一个ServletContext对象，该对象保存的数据对整个web应用都有效。我们可以把ServletContext与其他对象描绘成水和鱼类的关系。 创建：服务器启动的时候 销毁：服务器关闭的时候或者项目移除 三个作用域对象操作的APIapi都是一样的,完成存取和销毁的操作 存放数据：setAttribute(name,value) 获得数据：getAttribute(name) 删除数据：removeAttribute(name) 小结servlet为我们提供的三大域对象来帮助我们实现不同情况下的数据共享,若一个业务功能使用这三个域对象都可以实现,我们一般选用最小的域对象.作用域越小,生命周期越短,在一定程度上可以提供程序的执行效率]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>servlet</tag>
+        <tag>request</tag>
+        <tag>session</tag>
+        <tag>ServletContext</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[事务及隔离级别]]></title>
     <url>%2F2019%2F05%2F02%2F%E4%BA%8B%E5%8A%A1%E5%8F%8A%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%2F</url>
     <content type="text"><![CDATA[事务 简述事务是逻辑上的一组操作，要么都执行，要么都不执行。最简单的；例子如银行转账，双方一人账户增加多少钱，另一人账号就减少多少钱。 操作1. 开启事务： start transaction; 2. 回滚：rollback; 3. 提交：commit; 事务提交的方式： 1. 自动提交 MySQL的提交方式 2. 手动提交 Oracle的提交方式 修改事务提交的方式 查看事务的默认提交方式：SELECT @@autocommit; -- 1 代表自动提交 0 代表手动提交 修改默认提交方式： set @@autocommit = 0; 事务的四个特征 原子性：是不可分割的最小操作单位，要么同时成功，要么同时失败 持久性：当事务提交或回滚后，数据库会持久化的保存数据。 隔离性：多个事务之间。相互独立。 一致性：事务操作前后，数据总量不变 事务的隔离级别多个事务是相互隔离的、独立的，但多个事务处理同样一批数据时便会发生问题，这时就必须设置隔离级别来解决这些问题。 存在的问题 脏读(Dirty Read)：一个事务读取到另一个事务未提交的数据 不可重复读(虚读)(Unrepeatable Read)：同一个事务中，两次读取的数据不一样。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。 幻读(Phantom Read)：一个事务操作(DML)数据表中所有记录，另一个事务添加了一条数据，则第一个事务查询不到自己的修改。 有人也说还有第四种问题-丢失修改(Lost to modify)：指在一个事务读取一个数据时，另外一个事务也访问了该数据，那么在第一个事务中修改了这个数据后，第二个事务也修改了这个数据。这样第一个事务内的修改结果就被丢失，因此称为丢失修改。 例如：事务1读取某表中的数据A=20，事务2也读取A=20，事务1修改A=A-1，事务2也修改A=A-1，最终结果A=18，事务1的修改被丢失。 不可重复度和幻读区别：不可重复读的重点是修改，幻读的重点在于新增或者删除。 隔离级别 READ-UNCOMMITTED(读取未提交)： 最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读。 READ-COMMITTED(读取已提交)： 允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生。 REPEATABLE-READ(可重复读)： 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。 SERIALIZABLE(可串行化)： 最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。 特点：安全等级越来越高，但效率越来越低。 数据库查询隔离级别： * select @@tx_isolation; 数据库设置隔离级别： * set global transaction isolation level 级别字符串; 补充在Github上的JavaGuide-master仓库中写到 由 SnailClimb 和 BugSpeak 共同完成。 这里需要注意的是：与 SQL 标准不同的地方在于InnoDB 存储引擎在 **REPEATABLE-READ（可重读）**事务隔离级别下使用的是Next-Key Lock 锁算法，因此可以避免幻读的产生，这与其他数据库系统(如 SQL Server)是不同的。所以说InnoDB 存储引擎的默认支持的隔离级别是 **REPEATABLE-READ（可重读）** 已经可以完全保证事务的隔离性要求，即达到了 SQL标准的**SERIALIZABLE(可串行化)**隔离级别。 因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是**READ-COMMITTED(读取提交内容):**，但是你要知道的是InnoDB 存储引擎默认使用 **REPEATABLE-READ（可重读）**并不会有任何性能损失。 InnoDB 存储引擎在 **分布式事务** 的情况下一般会用到**SERIALIZABLE(可串行化)**隔离级别。]]></content>
@@ -104,8 +132,8 @@
         <category>IDE</category>
       </categories>
       <tags>
-        <tag>eclipse</tag>
         <tag>maven</tag>
+        <tag>eclipse</tag>
       </tags>
   </entry>
   <entry>
@@ -116,8 +144,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>interview</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -128,8 +156,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>java</tag>
         <tag>interview</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
