@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Tomcat,">
+  <meta name="keywords" content="Spring,annotation,">
 
 
 
@@ -81,18 +81,20 @@
 
 
 
-<meta name="description" content="Tomcat可能出现的问题 1. 黑窗口一闪而过：     * 原因： 没有正确配置JAVA_HOME环境变量     * 解决方案：正确配置JAVA_HOME环境变量，并在path中添加%JAVA_HOME%\bin;  2. 启动报错：     1. 暴力修改：找到占用的端口号，并且找到对应的进程，杀死该进程         * 命令行输入netstat -ano，查询到端口豪对应进程的PID">
-<meta name="keywords" content="Tomcat">
+<meta name="description" content="前言初学Spring,相较于xml文件的配置，注解开发的确要简洁的多。但有时还是会忘了一些，故在此整合。 一般注解列表注解                                               说明 @Component                                   使用在类上用于实例化Bean @Controller">
+<meta name="keywords" content="Spring,annotation">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Tomcat问题和项目部署">
-<meta property="og:url" content="http://jiguangwu.top/2018/10/09/Tomcat问题/index.html">
+<meta property="og:title" content="Spring注解">
+<meta property="og:url" content="http://jigw.top/2019/05/29/Spring注解/index.html">
 <meta property="og:site_name" content="JiGW&#39;s Blog">
-<meta property="og:description" content="Tomcat可能出现的问题 1. 黑窗口一闪而过：     * 原因： 没有正确配置JAVA_HOME环境变量     * 解决方案：正确配置JAVA_HOME环境变量，并在path中添加%JAVA_HOME%\bin;  2. 启动报错：     1. 暴力修改：找到占用的端口号，并且找到对应的进程，杀死该进程         * 命令行输入netstat -ano，查询到端口豪对应进程的PID">
+<meta property="og:description" content="前言初学Spring,相较于xml文件的配置，注解开发的确要简洁的多。但有时还是会忘了一些，故在此整合。 一般注解列表注解                                               说明 @Component                                   使用在类上用于实例化Bean @Controller">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-28T15:55:03.636Z">
+<meta property="og:image" content="https://i.loli.net/2019/05/31/5cf08952e6ade71571.png">
+<meta property="og:updated_time" content="2019-05-31T02:37:29.441Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tomcat问题和项目部署">
-<meta name="twitter:description" content="Tomcat可能出现的问题 1. 黑窗口一闪而过：     * 原因： 没有正确配置JAVA_HOME环境变量     * 解决方案：正确配置JAVA_HOME环境变量，并在path中添加%JAVA_HOME%\bin;  2. 启动报错：     1. 暴力修改：找到占用的端口号，并且找到对应的进程，杀死该进程         * 命令行输入netstat -ano，查询到端口豪对应进程的PID">
+<meta name="twitter:title" content="Spring注解">
+<meta name="twitter:description" content="前言初学Spring,相较于xml文件的配置，注解开发的确要简洁的多。但有时还是会忘了一些，故在此整合。 一般注解列表注解                                               说明 @Component                                   使用在类上用于实例化Bean @Controller">
+<meta name="twitter:image" content="https://i.loli.net/2019/05/31/5cf08952e6ade71571.png">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://jiguangwu.top/2018/10/09/Tomcat问题/">
+  <link rel="canonical" href="http://jigw.top/2019/05/29/Spring注解/">
 
 
 
 
 
-  <title>Tomcat问题和项目部署 | JiGW's Blog</title>
+  <title>Spring注解 | JiGW's Blog</title>
   
 
 
@@ -307,12 +309,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://jiguangwu.top/2018/10/09/Tomcat问题/">
+    <link itemprop="mainEntityOfPage" href="http://jigw.top/2019/05/29/Spring注解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="杂 涅">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ww1.sinaimg.cn/large/7fa5ef76ly1g2mwv78lwyj20kb0kdac0.jpg">
+      <meta itemprop="image" content="https://i.loli.net/2019/05/30/5cefec59ee9a318283.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -324,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Tomcat问题和项目部署</h1>
+          <h1 class="post-title" itemprop="name headline">Spring注解</h1>
         
 
         <div class="post-meta">
@@ -336,8 +338,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T17:19:45+08:00">
-                2018-10-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-29T21:45:13+08:00">
+                2019-05-29
               </time>
             
 
@@ -359,8 +361,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaWeb</span>
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
                   </a>
                 </span>
 
@@ -377,8 +379,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/10/09/Tomcat问题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/09/Tomcat问题/" itemprop="commentCount"></span>
+                <a href="/2019/05/29/Spring注解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/29/Spring注解/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -400,7 +402,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  309
+                  601
                 </span>
               
 
@@ -416,7 +418,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -437,39 +439,64 @@
       
 
       
-        <h1 id="Tomcat可能出现的问题"><a href="#Tomcat可能出现的问题" class="headerlink" title="Tomcat可能出现的问题"></a>Tomcat可能出现的问题</h1><hr>
-<pre><code>1. 黑窗口一闪而过：
-    * 原因： 没有正确配置JAVA_HOME环境变量
-    * 解决方案：正确配置JAVA_HOME环境变量，并在path中添加%JAVA_HOME%\bin;
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>初学Spring,相较于xml文件的配置，注解开发的确要简洁的多。但有时还是会忘了一些，故在此整合。</p>
+<h2 id="一般注解列表"><a href="#一般注解列表" class="headerlink" title="一般注解列表"></a>一般注解列表</h2><pre><code>注解                                               说明
+@Component                                   使用在类上用于实例化Bean
+@Controller                             使用在web层类上用于实例化Bean
+@Service                                 使用在service层类上用于实例化Bean
+@Repository                         使用在dao层类上用于实例化Bean
+@Autowired                         使用在字段上用于根据类型依赖注入
+@Qualifier                             结合@Autowired一起使用用于根据名称进行依赖注入
+@Resource                         相当于@Autowired+@Qualifier，按照名称进行注入
+@Value                             注入普通属性
+@Scope                             标注Bean的作用范围
+@PostConstruct                     使用在方法上标注该方法是Bean的初始化方法
+@PreDestroy                         使用在方法上标注该方法是Bean的销毁方法
+</code></pre><p>配置组件扫描</p>
+<pre><code> &lt;!--注解的组件扫描--&gt;
+&lt;context:component-scan base-package=&quot;com.xxx&quot;&gt;&lt;/context:component-scan&gt;
+</code></pre><hr>
+<p>较新的</p>
+<pre><code>@Configuration             用于指定当前类是一个 Spring 配置类，当创建容器时会从该类上加载注解
+@ComponentScan            用于指定 Spring 在初始化容器时要扫描的包。 作用和在 Spring 的 xml 配置文件中
+的 &lt;context:component-scan base-package=&quot;com.itheima&quot;/&gt;一样
+@Bean                     使用在方法上，标注将该方法的返回值存储到 Spring 容器中
+@PropertySource             用于加载.properties 文件中的配置
+@Import                     用于导入其他配置类
+</code></pre><p>这里注意非自定义的Bean的配置</p>
+<pre><code>加载properties文件的配置：context:property-placeholder
+组件扫描的配置：context:component-scan
+</code></pre><hr>
+<p>Spring集成<font color="red">Junit测试</font>注解</p>
+<p>配置@Runwith、@ContextConfiguration注解<br>这里测试的基本流程为</p>
+<ul>
+<li>导入spring集成Junit的坐标</li>
+<li>使用@Runwith注解替换原来的运行期</li>
+<li>使用@ContextConfiguration指定配置文件或配置类</li>
+<li>使用@Autowired注入需要测试的对象</li>
+<li>创建测试方法进行测试</li>
+</ul>
+<p>Demo</p>
+<pre><code>@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {SpringConfiguration.class})
+public class SpringJunitTest {
+  @Autowired
+  private UserService userService;
+  @Test
+  public void testUserService(){
+ userService.save();
+ }
+}
+</code></pre><hr>
+<p> 基于<font color="red">AOP</font>开发的注解<br>先了解开发步骤</p>
+<p>①使用<font color="red">@Aspect</font>标注切面类</p>
+<p>②使用@通知注解标注通知方法</p>
+<p>③在配置文件中配置aop自动代理<font color="red"><a href="aop:aspectj-autoproxy/" target="_blank" rel="noopener">aop:aspectj-autoproxy/</a></font></p>
+<p>其中第②步的注解有以下<br><img src="https://i.loli.net/2019/05/31/5cf08952e6ade71571.png" alt></p>
+<h2 id="声明式事务控制的注解开发"><a href="#声明式事务控制的注解开发" class="headerlink" title="声明式事务控制的注解开发"></a>声明式事务控制的注解开发</h2><p>@Transactional 在想要添加事务的方法上使用(可加参数)</p>
+<p>@EableTransactionManagement 注解驱动(相当于annotation-driven,一般放在业务层上)</p>
+<p>@EableAspectJAutoProxy 开启AOP自动代理支持</p>
 
-2. 启动报错：
-    1. 暴力修改：找到占用的端口号，并且找到对应的进程，杀死该进程
-        * 命令行输入netstat -ano，查询到端口豪对应进程的PID
-    2. 温柔修改：修改自身的端口号
-        * conf/server.xml
-        * &lt;Connector port=&quot;8888&quot; protocol=&quot;HTTP/1.1&quot;
-           connectionTimeout=&quot;20000&quot;
-           redirectPort=&quot;8445&quot; /&gt;
-        * 一般会将tomcat的默认端口号修改为80。80端口号是http协议的默认端口号。
-            * 好处：在访问时，就不用输入端口号
-</code></pre><h1 id="在Tomcat中部署项目的方式"><a href="#在Tomcat中部署项目的方式" class="headerlink" title="在Tomcat中部署项目的方式"></a>在Tomcat中部署项目的方式</h1><hr>
-<pre><code>1. 直接将项目放到webapps目录下即可。
-    * /WebProject：项目的访问路径--&gt;虚拟目录
-    * 简化部署：将项目打成一个war包，再将war包放置到webapps目录下。
-        * war包会自动解压缩
-
-2. 配置conf/server.xml文件
-    在&lt;Host&gt;标签体中配置
-    &lt;Context docBase=&quot;D:\WebProject&quot; path=&quot;/demo&quot; /&gt;
-    * docBase:项目存放的路径
-    * path：虚拟目录
-
-3. 在conf\Catalina\localhost创建任意名称的xml文件。在文件中编写
-    &lt;Context docBase=&quot;D:\WebProject&quot; /&gt;
-    * 虚拟目录：xml文件的名称
-
-4. 在IDE中
-</code></pre>
       
     </div>
     
@@ -483,7 +510,7 @@
     
       <div>
         <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>扫码薅羊毛🤭</div>
+  <div></div>
   <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     <span>打赏</span>
   </button>
@@ -493,7 +520,7 @@
 
     
       <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="http://ww1.sinaimg.cn/large/7fa5ef76ly1g2mx13zfqwj206606774d.jpg" alt="杂 涅 支付宝">
+        <img id="alipay_qr" src="https://i.loli.net/2019/05/30/5cefec7118ca690426.png" alt="杂 涅 支付宝">
         <p>支付宝</p>
       </div>
     
@@ -515,7 +542,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://jiguangwu.top/2018/10/09/Tomcat问题/" title="Tomcat问题和项目部署">http://jiguangwu.top/2018/10/09/Tomcat问题/</a>
+    <a href="http://jigw.top/2019/05/29/Spring注解/" title="Spring注解">http://jigw.top/2019/05/29/Spring注解/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -536,7 +563,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Tomcat/" rel="tag"><i class="fa fa-tag"></i> Tomcat</a>
+            <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
+          
+            <a href="/tags/annotation/" rel="tag"><i class="fa fa-tag"></i> annotation</a>
           
         </div>
       
@@ -549,8 +578,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/07/eclipse插件maven/" rel="next" title="eclipse的maven插件安装">
-                <i class="fa fa-chevron-left"></i> eclipse的maven插件安装
+              <a href="/2019/05/27/Spring通过DataSource获取数据库数据/" rel="next" title="Spring通过DataSource获取数据库数据(非注解方式和注解形式)及Spring集成Junit测试">
+                <i class="fa fa-chevron-left"></i> Spring通过DataSource获取数据库数据(非注解方式和注解形式)及Spring集成Junit测试
               </a>
             
           </div>
@@ -559,8 +588,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/12/22/XML入门/" rel="prev" title="XML简介与约束">
-                XML简介与约束 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/31/Spring声明式事务全注解开发/" rel="prev" title="Spring声明式事务全注解开发完成转账案例">
+                Spring声明式事务全注解开发完成转账案例 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -632,7 +661,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="http://ww1.sinaimg.cn/large/7fa5ef76ly1g2mwv78lwyj20kb0kdac0.jpg" alt="杂 涅">
+              <img class="site-author-image" itemprop="image" src="https://i.loli.net/2019/05/30/5cefec59ee9a318283.jpg" alt="杂 涅">
             
               <p class="site-author-name" itemprop="name">杂 涅</p>
               <p class="site-description motion-element" itemprop="description">人生如逆旅  我亦是行人</p>
@@ -645,7 +674,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -656,7 +685,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -667,7 +696,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -729,7 +758,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat可能出现的问题"><span class="nav-number">1.</span> <span class="nav-text">Tomcat可能出现的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在Tomcat中部署项目的方式"><span class="nav-number">2.</span> <span class="nav-text">在Tomcat中部署项目的方式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般注解列表"><span class="nav-number">2.</span> <span class="nav-text">一般注解列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#声明式事务控制的注解开发"><span class="nav-number">3.</span> <span class="nav-text">声明式事务控制的注解开发</span></a></li></ol></div>
             
 
           </div>
@@ -761,8 +790,8 @@
 
 
 <div class="powered-by">
-<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
-    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>次
 </span>
 </div>
 
@@ -948,7 +977,7 @@
         notify: false,
         appId: 'XO0jozUWbKq88eANuQma5BKv-gzGzoHsz',
         appKey: 'BQnAawulBKcFBNOB4Q7sHTTe',
-        placeholder: '欢迎留言（填下一个信息即可，写上邮箱还可收到回复呦）',
+        placeholder: '来都来了，留个言吧（填下任意信息即可，写上邮箱还可收到回复呦）',
         avatar:'mm',
         guest_info:guest,
         pageSize:'10' || 10,
