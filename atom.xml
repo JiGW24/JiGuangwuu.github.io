@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jigw.top/"/>
-  <updated>2019-05-31T02:35:55.124Z</updated>
+  <updated>2019-06-01T15:58:16.306Z</updated>
   <id>http://jigw.top/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>${pageContext.request.contextPath}与web.xml问题</title>
+    <link href="http://jigw.top/2019/06/01/web_xml%E5%A4%B4%E9%97%AE%E9%A2%98/"/>
+    <id>http://jigw.top/2019/06/01/web_xml头问题/</id>
+    <published>2019-06-01T11:28:13.000Z</published>
+    <updated>2019-06-01T15:58:16.306Z</updated>
+    
+    <content type="html"><![CDATA[<p>在使用idea中的maven-webapp骨架创建web项目时，我的web.xml文件头默认为</p><pre><code>&lt;!DOCTYPE web-app PUBLIC        &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN&quot;        &quot;http://java.sun.com/dtd/web-app_2_3.dtd&quot; &gt;&lt;web-app&gt;</code></pre><p>之初，配置Spring前端控制器，全局参数…等等，<webapp>标签报红，但这并不影响项目的正常运行，因此也没换成</webapp></p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;web-app xmlns=&quot;http://java.sun.com/xml/ns/j2ee&quot;         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;         xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd&quot;         version=&quot;2.4&quot;&gt;</code></pre><p>但是，在处理SpringMVC请求去获取集合类型参数时，使用了${pageContext.request.contextPath} 表达式，比如下面</p><pre><code>&lt;script src=&quot;${pageContext.request.contextPath}/js/jquery-3.3.1.js&quot;&gt;&lt;/script&gt;    &lt;script&gt;        var userList = new Array();        userList.push({name:&quot;zhangsan&quot;,age:23});        userList.push({name:&quot;lisi&quot;,age:25});        $.ajax({            type:&quot;post&quot;,            url:&quot;${pageContext.request.contextPath}/user/success9&quot;,            data:JSON.stringify(userList),            contentType:&quot;application/json;charset=utf-8&quot;        });    &lt;/script&gt;</code></pre><p>报错如下</p><p><img src="https://i.loli.net/2019/06/01/5cf264ea37c8462438.png" alt></p><p>？？？难道使我js路径写的有问题？仔细检查并没有，此时idea控制台并没有报错详细信息。</p><p>再打开f12</p><p><img src="https://i.loli.net/2019/06/01/5cf264f4dce5d41472.png" alt></p><p>再把xml文件头改成上面那个，就好了…这里的version应该在2.4以上，因此在使用${pageContext.request.contextPath}表达式时，web.xml的头应该换成“标准形式”。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在使用idea中的maven-webapp骨架创建web项目时，我的web.xml文件头默认为&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE web-app PUBLIC
+        &amp;quot;-//Sun Microsystems, Inc.//DTD W
+      
+    
+    </summary>
+    
+      <category term="Debug日志" scheme="http://jigw.top/categories/Debug%E6%97%A5%E5%BF%97/"/>
+    
+    
+      <category term="Spring" scheme="http://jigw.top/tags/Spring/"/>
+    
+      <category term="xml" scheme="http://jigw.top/tags/xml/"/>
+    
+      <category term="SpringMVC" scheme="http://jigw.top/tags/SpringMVC/"/>
+    
+  </entry>
   
   <entry>
     <title>Spring声明式事务全注解开发完成转账案例</title>
@@ -383,9 +414,9 @@
       <category term="IDE" scheme="http://jigw.top/categories/IDE/"/>
     
     
-      <category term="maven" scheme="http://jigw.top/tags/maven/"/>
-    
       <category term="eclipse" scheme="http://jigw.top/tags/eclipse/"/>
+    
+      <category term="maven" scheme="http://jigw.top/tags/maven/"/>
     
   </entry>
   
