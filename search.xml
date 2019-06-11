@@ -19,8 +19,8 @@
         <category>Debug日志</category>
       </categories>
       <tags>
-        <tag>xml</tag>
         <tag>Spring</tag>
+        <tag>xml</tag>
         <tag>SpringMVC</tag>
       </tags>
   </entry>

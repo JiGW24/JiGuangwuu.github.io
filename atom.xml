@@ -66,9 +66,9 @@
       <category term="Debug日志" scheme="http://jigw.top/categories/Debug%E6%97%A5%E5%BF%97/"/>
     
     
-      <category term="xml" scheme="http://jigw.top/tags/xml/"/>
-    
       <category term="Spring" scheme="http://jigw.top/tags/Spring/"/>
+    
+      <category term="xml" scheme="http://jigw.top/tags/xml/"/>
     
       <category term="SpringMVC" scheme="http://jigw.top/tags/SpringMVC/"/>
     
